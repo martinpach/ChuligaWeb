@@ -1,5 +1,4 @@
 # ChuligaWeb
-<<<<<<< HEAD
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.0.
 
@@ -26,5 +25,3 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-=======
->>>>>>> 59247163d6b27f65a17e79aff7cf8d8f6b5f32f7
