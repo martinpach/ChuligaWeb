@@ -25,7 +25,10 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles/styles.scss"],
+            "styles": [
+              { "input": "src/styles/green-theme.scss" },
+              "src/styles/styles.scss"
+            ],
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles/modules"]
             },
