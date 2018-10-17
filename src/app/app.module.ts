@@ -7,8 +7,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { CoreModule } from './core/core.module';
-import { SharedModule } from './shared/shared.module';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,8 +17,7 @@ import { SharedModule } from './shared/shared.module';
     BrowserAnimationsModule,
     AngularFirestoreModule,
     AngularFireAuthModule,
-    SharedModule,
-    CoreModule
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,21 +1,21 @@
-import { LoginComponent } from './auth/login/login.component';
+import { LoginComponent } from './containers/login/login.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminHomePageComponent } from './admin-home-page/admin-home-page.component';
-import { AdminGuard } from './auth/admin.guard';
-import { LoginGuard } from '../admin/auth/login/login.guard';
+import { AdminHomePageComponent } from './containers/admin-home-page/admin-home-page.component';
+import { AdminGuard } from './guards/admin.guard';
+import { AdminLoginGuard } from './guards/admin-login.guard';
 
 const adminRoutes: Routes = [
   {
-    path: 'home',
+    path: '',
+    pathMatch: 'full',
     component: AdminHomePageComponent,
     canActivate: [AdminGuard]
   },
   {
-    path: '',
-    pathMatch: 'full',
+    path: 'login',
     component: LoginComponent,
-    canActivate: [LoginGuard]
+    canActivate: [AdminLoginGuard]
   }
 ];
 

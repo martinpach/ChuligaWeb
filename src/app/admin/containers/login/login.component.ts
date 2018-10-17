@@ -1,7 +1,12 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ApiService } from '../../../shared/api.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { AdminAuthService } from '../../services/admin-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,27 +18,28 @@ export class LoginComponent implements OnInit {
   areCredentialsValid: boolean = true;
 
   constructor(
-    private api: ApiService,
+    private adminAuth: AdminAuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {}
 
   onSubmit(form: NgForm) {
-    if (!form.value.email || !form.value.email) {
+    if (!form.value.email || !form.value.password) {
       return (this.areCredentialsValid = false);
     }
-    this.api
-      .loginAdmin(form.value.email, form.value.password)
+    this.adminAuth
+      .login(form.value.email, form.value.password)
       .subscribe(({ verified }) => {
         if (verified) {
           this.areCredentialsValid = true;
           form.reset();
-          this.router.navigate(['home'], { relativeTo: this.route });
+          this.router.navigate(['admin']);
         } else {
           this.areCredentialsValid = false;
         }
+        this.cd.markForCheck();
       });
   }
 }
