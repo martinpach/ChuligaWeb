@@ -31,8 +31,8 @@ export class LoginComponent implements OnInit {
     }
     this.adminAuth
       .login(form.value.email, form.value.password)
-      .subscribe(({ verified }) => {
-        if (verified) {
+      .subscribe(isVerified => {
+        if (isVerified) {
           this.areCredentialsValid = true;
           form.reset();
           this.router.navigate(['admin']);

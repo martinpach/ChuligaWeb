@@ -7,43 +7,51 @@ import {
   pluck,
   take,
   catchError,
-  shareReplay
+  shareReplay,
+  tap,
+  distinctUntilChanged,
+  map
 } from 'rxjs/operators';
+import { User } from 'firebase';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminAuthService {
   private isAdminSubject = new Subject<boolean>();
-  isAdmin = this.isAdminSubject.pipe(shareReplay(1));
+  isAdmin = this.isAdminSubject.pipe(
+    distinctUntilChanged(),
+    shareReplay(1)
+  );
 
   constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) {
-    this.isUserAdmin().subscribe(isAdmin => this.isAdminSubject.next(isAdmin));
+    this.isUserAdmin().subscribe();
   }
 
   login(email: string, password: string): Observable<any> {
     return from(
       this.afAuth.auth.signInWithEmailAndPassword(email, password)
     ).pipe(
-      switchMap(({ user }) =>
-        this.db.doc(`/admins/${user.uid}`).valueChanges()
-      ),
+      switchMap(user => this.getUserVerified(user.user.uid)),
+      tap(verified => this.isAdminSubject.next(verified)),
       take(1),
-      catchError(err => of({ verified: false }))
+      catchError(err => {
+        return of(false);
+      })
     );
   }
 
   isUserAdmin(): Observable<boolean> {
     return this.afAuth.authState.pipe(
-      switchMap(
-        user =>
-          user
-            ? this.db
-                .doc(`/admins/${user.uid}`)
-                .valueChanges()
-                .pipe(pluck('verified'))
-            : of(false)
-      )
+      switchMap(user => (user ? this.getUserVerified(user.uid) : of(false))),
+      tap(verified => this.isAdminSubject.next(verified))
     );
+  }
+
+  private getUserVerified(uid: string): Observable<boolean> {
+    return this.db
+      .doc(`/admins/${uid}`)
+      .valueChanges()
+      .pipe(map(({ verified }) => verified));
   }
 }

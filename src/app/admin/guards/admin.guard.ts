@@ -10,8 +10,12 @@ export class AdminGuard implements CanActivate {
   constructor(private adminAuth: AdminAuthService, private router: Router) {}
 
   canActivate() {
+    console.log('canActivate');
     return this.adminAuth.isAdmin.pipe(
-      tap(isAdmin => !isAdmin && this.router.navigate(['admin', 'login']))
+      tap(isAdmin => {
+        console.log(isAdmin);
+        !isAdmin && this.router.navigate(['admin', 'login']);
+      })
     );
   }
 }
