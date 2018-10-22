@@ -6,14 +6,14 @@ import { AdminHomePageComponent } from './containers/admin-home-page/admin-home-
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatButtonModule, MatIconModule } from '@angular/material';
 import { AdminNavComponent } from './components/admin-nav/admin-nav.component';
-import { AdminWelcomePageComponent } from './components/admin-welcome-page/admin-welcome-page.component';
+import { AdminNewsComponent } from './components/admin-news/admin-news.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
     AdminHomePageComponent,
     AdminNavComponent,
-    AdminWelcomePageComponent
+    AdminNewsComponent
   ],
   imports: [
     AdminRoutingModule,

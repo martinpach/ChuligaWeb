@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from '../../../shared/services/auth.service';
 import { Router } from '@angular/router';
 
@@ -8,10 +8,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./admin-home-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AdminHomePageComponent implements OnInit {
-  constructor(private auth: AuthService, private router: Router) {}
-
-  ngOnInit() {}
+export class AdminHomePageComponent {
+  constructor(private auth: AuthService, private router: Router) {
+    router.navigate(['admin', 'news']);
+  }
 
   onLogout() {
     this.auth.logout().then(() => this.router.navigate(['admin', 'login']));

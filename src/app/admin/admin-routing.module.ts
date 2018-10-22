@@ -4,14 +4,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminHomePageComponent } from './containers/admin-home-page/admin-home-page.component';
 import { AdminGuard } from './guards/admin.guard';
 import { AdminLoginGuard } from './guards/admin-login.guard';
-import { AdminWelcomePageComponent } from './components/admin-welcome-page/admin-welcome-page.component';
+import { AdminNewsComponent } from './components/admin-news/admin-news.component';
 
 const adminRoutes: Routes = [
   {
     path: '',
     component: AdminHomePageComponent,
     canActivate: [AdminGuard],
-    children: [{ path: '', component: AdminWelcomePageComponent }]
+    children: [{ path: 'news', component: AdminNewsComponent }]
   },
   {
     path: 'login',
