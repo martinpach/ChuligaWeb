@@ -1,0 +1,13 @@
+<li>
+  <div class="news-item">
+    <img [src]="itemData.picture" class="news-item__picture">
+    <div class="news-item__content">
+      <h3 class="news-item__heading">{{itemData.heading}}</h3>
+      <p>{{itemData.description}}</p>
+    </div>
+    <div class="news-item__date">{{itemData.date | date:'dd.MM.yyyy'}}</div>
+  </div>
+  <div class="news-item-overlay">
+    <span>{{overlayText}}</span>
+  </div>
+</li>

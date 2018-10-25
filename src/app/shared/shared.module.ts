@@ -6,10 +6,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { NavigationComponent } from './navigation/navigation.component';
 import { NavigationBarComponent } from './navigation/navigation-bar.component';
 import { NavigationItemDirective } from './navigation/navigation-item.directive';
+import { NewsItemComponent } from './news-item/news-item.component';
 
 @NgModule({
   imports: [CommonModule],
-  declarations: [NavigationComponent, NavigationBarComponent, NavigationItemDirective],
+  declarations: [NavigationComponent, NavigationBarComponent, NavigationItemDirective, NewsItemComponent],
   exports: [
     CommonModule,
     FormsModule,
@@ -20,7 +21,8 @@ import { NavigationItemDirective } from './navigation/navigation-item.directive'
     MatIconModule,
     NavigationComponent,
     NavigationBarComponent,
-    NavigationItemDirective
+    NavigationItemDirective,
+    NewsItemComponent
   ]
 })
 export class SharedModule {}
