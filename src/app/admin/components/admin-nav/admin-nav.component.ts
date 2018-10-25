@@ -8,6 +8,33 @@ import { Component, ChangeDetectionStrategy, Output, EventEmitter } from '@angul
 })
 export class AdminNavComponent {
   isMenuVisible = false;
+  navItems: { label: string; path: string }[] = [
+    {
+      label: 'Aktuality',
+      path: '/admin/news'
+    },
+    {
+      label: 'Program',
+      path: '/admin/2'
+    },
+    {
+      label: 'Kurzy',
+      path: '/admin/3'
+    },
+    {
+      label: 'Služby',
+      path: '/admin/4'
+    },
+    {
+      label: 'Galéria',
+      path: '/admin/5'
+    },
+    {
+      label: 'Kontakt',
+      path: '/admin/6'
+    }
+  ];
+
   @Output()
   logout = new EventEmitter();
   toggleMenu() {

@@ -11,7 +11,14 @@ const adminRoutes: Routes = [
     path: '',
     component: AdminHomePageComponent,
     canActivate: [AdminGuard],
-    children: [{ path: 'news', component: AdminNewsComponent }]
+    children: [
+      { path: 'news', component: AdminNewsComponent },
+      { path: '2', component: AdminNewsComponent },
+      { path: '3', component: AdminNewsComponent },
+      { path: '4', component: AdminNewsComponent },
+      { path: '5', component: AdminNewsComponent },
+      { path: '6', component: AdminNewsComponent }
+    ]
   },
   {
     path: 'login',

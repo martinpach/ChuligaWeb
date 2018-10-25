@@ -19,13 +19,17 @@
     }
   }
 
-  &__menu {
+  &__menu-wrapper {
     display: none;
-    list-style-type: none;
-
     @media screen and (min-width: 900px) {
-      display: flex;
+      // TODO: when initialized on mobile view and then changed to desktop view nav slider need to recalculate width
+      display: block;
     }
+  }
+
+  &__menu {
+    display: flex;
+    list-style-type: none;
 
     & > li {
       padding: 20px;
@@ -46,6 +50,7 @@
     width: 100%;
     height: 100%;
     transition: transform 0.5s;
+    z-index: 900;
 
     &.visible {
       transform: translateX(0);
@@ -63,6 +68,10 @@
 
       &:hover {
         cursor: pointer;
+        background-color: $white;
+      }
+
+      &--active {
         background-color: $white;
       }
     }
