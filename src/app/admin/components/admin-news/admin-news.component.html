@@ -1,5 +1,5 @@
 <h1>AKTUALITY</h1>
 <button mat-flat-button color="primary">PRIDAŤ</button>
 <ul>
-  <app-news-item *ngFor="let newsItem of news" [itemData]="newsItem" overlayText="UPRAVIŤ"></app-news-item>
+  <app-news-item *ngFor="let newsItem of news$ | async" [itemData]="newsItem" overlayText="UPRAVIŤ"></app-news-item>
 </ul>
