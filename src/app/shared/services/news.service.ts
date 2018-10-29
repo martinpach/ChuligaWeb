@@ -16,7 +16,7 @@ export class NewsService {
       .valueChanges()
       .pipe(
         map(news =>
-          news.map((newsItem: NewsItem) => ({
+          news.map((newsItem: any) => ({
             ...newsItem,
             date: newsItem.date.toDate() // TODO: map here or call toDate in template
           }))

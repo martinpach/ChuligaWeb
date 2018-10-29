@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
   declarations: [AppComponent],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule.enablePersistence(),
     BrowserModule,
     BrowserAnimationsModule,
     AngularFirestoreModule,
