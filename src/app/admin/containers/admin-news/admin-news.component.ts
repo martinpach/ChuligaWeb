@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { NewsItem } from '../../../shared/models';
 import { NewsService } from '../../../shared/services/news.service';
 import { Observable, Subscription } from 'rxjs';
@@ -18,25 +18,17 @@ export class AdminNewsComponent implements OnDestroy {
   limit = 2;
 
   constructor(private newsService: NewsService, private cd: ChangeDetectorRef) {
-    this.newsSubscription = newsService.getNews(ref => ref.orderBy('date', 'desc').limit(this.limit)).subscribe(news => {
-      this.news = news;
-      cd.markForCheck();
-    });
+    this.newsSubscription = newsService.getNews(ref => ref.orderBy('date', 'desc').limit(this.limit)).subscribe(news => (this.news = news));
     this.newsCount$ = newsService.getNewsCount();
   }
 
-  test() {
+  loadMoreNews() {
     this.isLoading = true;
     this.newsSubscription = this.newsService
-      .getNews(ref =>
-        ref
-          .orderBy('date', 'desc')
-          .startAfter(this.news[this.news.length - 1].date)
-          .limit(this.limit)
-      )
+      .getNews(ref => ref.orderBy('date', 'desc').limit(this.news.length + this.limit))
       .subscribe(news => {
         this.isLoading = false;
-        this.news.push(...news);
+        this.news = news;
         this.cd.markForCheck();
       });
   }

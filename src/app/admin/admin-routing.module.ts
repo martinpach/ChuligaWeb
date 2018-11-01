@@ -4,7 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminHomePageComponent } from './containers/admin-home-page/admin-home-page.component';
 import { AdminGuard } from './guards/admin.guard';
 import { AdminLoginGuard } from './guards/admin-login.guard';
-import { AdminNewsComponent } from './components/admin-news/admin-news.component';
+import { AdminNewsComponent } from './containers/admin-news/admin-news.component';
+import { AdminNewsNewComponent } from './components/admin-news-new/admin-news-new.component';
 
 const adminRoutes: Routes = [
   {
@@ -12,7 +13,11 @@ const adminRoutes: Routes = [
     component: AdminHomePageComponent,
     canActivate: [AdminGuard],
     children: [
-      { path: 'news', component: AdminNewsComponent },
+      {
+        path: 'news',
+        component: AdminNewsComponent,
+        children: [{ path: 'new', component: AdminNewsNewComponent }]
+      },
       { path: '2', component: AdminNewsComponent },
       { path: '3', component: AdminNewsComponent },
       { path: '4', component: AdminNewsComponent },

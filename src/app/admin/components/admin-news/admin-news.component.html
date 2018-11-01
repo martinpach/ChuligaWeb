@@ -1,6 +1,0 @@
-<h1>AKTUALITY</h1>
-<button mat-flat-button color="primary">PRIDAŤ</button>
-<ul>
-  <app-news-item *ngFor="let newsItem of news" [itemData]="newsItem" overlayText="UPRAVIŤ"></app-news-item>
-</ul>
-<button mat-stroked-button color="primary" *ngIf="news && news.length < (newsCount$ | async)" (click)="test()" [disabled]="isLoading">načítať ďalšie</button>
