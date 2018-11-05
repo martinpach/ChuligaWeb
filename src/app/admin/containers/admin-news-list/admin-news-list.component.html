@@ -1,5 +1,5 @@
 <h1>AKTUALITY</h1>
-<button mat-flat-button color="primary">PRIDAŤ</button>
+<button mat-flat-button color="primary" routerLink="/admin/news/new">PRIDAŤ</button>
 <ul>
   <app-news-item *ngFor="let newsItem of news$ | async; trackBy: trackByFn" [itemData]="newsItem" overlayText="UPRAVIŤ"></app-news-item>
 </ul>

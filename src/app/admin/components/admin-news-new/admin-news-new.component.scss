@@ -1,0 +1,25 @@
+h2 {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.new-newsitem-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  margin: 0 auto;
+
+  input[type='file'] {
+    display: none;
+  }
+
+  &__submit-button {
+    margin-top: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  &__cancel-button {
+    border: 1px solid #ddd;
+  }
+}

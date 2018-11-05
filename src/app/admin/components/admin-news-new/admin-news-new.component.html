@@ -1,3 +1,23 @@
-<p>
-  admin-news-new works!
-</p>
+<h2>NOVÁ AKTUALITA</h2>
+
+<form class="new-newsitem-form">
+  <mat-form-field>
+    <input matInput type="text" placeholder="Nadpis">
+  </mat-form-field>
+  <mat-form-field>
+    <textarea matInput placeholder="Obsah" rows="10"></textarea>
+  </mat-form-field>
+  <mat-form-field>
+    <textarea matInput placeholder="Krátky popis"></textarea>
+  </mat-form-field>
+  <input type="file" #fileInput>
+  <div>
+    Obrázok:
+    <button mat-flat-button color="accent" (click)="fileInput.click()">
+      <mat-icon>cloud_upload</mat-icon>
+      nahrať
+    </button>
+  </div>
+  <button mat-flat-button color="primary" class="new-newsitem-form__submit-button">Publikovať</button>
+  <button mat-button color="accent" type="button" class="new-newsitem-form__cancel-button">Späť</button>
+</form>
