@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
       if (isVerified) {
         this.areCredentialsValid = true;
         form.reset();
-        this.router.navigate(['admin', 'news']);
+        this.router.navigate(['admin', 'news', 'list']);
       } else {
         this.areCredentialsValid = false;
       }
