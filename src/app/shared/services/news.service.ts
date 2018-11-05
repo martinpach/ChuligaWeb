@@ -11,17 +11,7 @@ export class NewsService {
   constructor(private db: AngularFirestore) {}
 
   getNews(queryFn: QueryFn): Observable<NewsItem[]> {
-    return this.db
-      .collection('/news', queryFn)
-      .valueChanges()
-      .pipe(
-        map(news =>
-          news.map((newsItem: any) => ({
-            ...newsItem,
-            date: newsItem.date.toDate() // TODO: map here or call toDate in template
-          }))
-        )
-      );
+    return this.db.collection<NewsItem>('/news', queryFn).valueChanges();
   }
 
   getNewsCount(): Observable<number> {

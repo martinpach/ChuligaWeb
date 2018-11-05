@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class AdminHomePageComponent {
   constructor(private auth: AuthService, private router: Router) {
-    router.navigate(['admin', 'news']);
+    router.navigate(['admin', 'news', 'list']);
   }
 
   onLogout() {

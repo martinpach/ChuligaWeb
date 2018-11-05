@@ -11,7 +11,7 @@ export class AdminNavComponent {
   navItems: { label: string; path: string }[] = [
     {
       label: 'Aktuality',
-      path: '/admin/news'
+      path: '/admin/news/list'
     },
     {
       label: 'Program',
