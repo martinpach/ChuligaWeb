@@ -7,6 +7,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { NavigationBarComponent } from './navigation/navigation-bar.component';
 import { NavigationItemDirective } from './navigation/navigation-item.directive';
 import { NewsItemComponent } from './news-item/news-item.component';
+import { NgxEditorModule } from 'ngx-editor';
 
 @NgModule({
   imports: [CommonModule],
@@ -22,7 +23,8 @@ import { NewsItemComponent } from './news-item/news-item.component';
     NavigationComponent,
     NavigationBarComponent,
     NavigationItemDirective,
-    NewsItemComponent
+    NewsItemComponent,
+    NgxEditorModule
   ]
 })
 export class SharedModule {}

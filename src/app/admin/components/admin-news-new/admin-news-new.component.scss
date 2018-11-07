@@ -13,6 +13,18 @@ h2 {
     display: none;
   }
 
+  label {
+    color: #777777;
+  }
+
+  &__main-content {
+    margin-bottom: 15px;
+  }
+
+  &__upload-image-button {
+    max-width: 100px;
+  }
+
   &__submit-button {
     margin-top: 20px;
     padding-top: 15px;

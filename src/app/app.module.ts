@@ -8,6 +8,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,7 +19,8 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserAnimationsModule,
     AngularFirestoreModule,
     AngularFireAuthModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

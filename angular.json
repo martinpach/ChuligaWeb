@@ -27,7 +27,8 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               { "input": "src/styles/green-theme.scss" },
-              "src/styles/styles.scss"
+              "src/styles/styles.scss",
+              "./node_modules/font-awesome/css/font-awesome.min.css"
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles/modules"]
