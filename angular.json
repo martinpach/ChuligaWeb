@@ -26,6 +26,7 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
+              "src/styles/modules/_variables.scss",
               { "input": "src/styles/green-theme.scss" },
               "src/styles/styles.scss",
               "./node_modules/font-awesome/css/font-awesome.min.css"

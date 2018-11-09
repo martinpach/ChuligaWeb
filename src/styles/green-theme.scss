@@ -1,11 +1,7 @@
-@import '~@angular/material/theming';
+@import '_variables.scss';
 
 @include mat-core();
 
-$green-theme-primary: mat-palette($mat-green, 900);
-$green-theme-accent: mat-palette($mat-light-green, 900);
-$green-theme-warn: mat-palette($mat-red);
+$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 
-$green-theme: mat-light-theme($green-theme-primary, $green-theme-accent, $green-theme-warn);
-
-@include angular-material-theme($green-theme);
+@include angular-material-theme($app-theme);

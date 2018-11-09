@@ -1,8 +1,12 @@
-$dark-primary: #388e3c;
-$light-primary: #c8e6c9;
-$primary: #4caf50;
+@import '~@angular/material/theming';
+
+$app-primary: mat-palette($mat-green, 900);
+$app-accent: mat-palette($mat-light-green, 900);
+$app-warn: mat-palette($mat-red);
+
+$primary: mat-color($app-primary);
+$accent: mat-color($app-accent);
+$warn: mat-color($app-warn);
+$light-grey: #bdbdbd;
 $white: #ffffff;
-$accent: #8bc34a;
-$primary-text: #212121;
-$secondary-text: #757575;
-$divider: #bdbdbd;
+$dark: #212121;

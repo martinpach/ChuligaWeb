@@ -1,20 +1,36 @@
 <h2>NOVÁ AKTUALITA</h2>
 
-<form class="new-newsitem-form">
-  <mat-form-field>
-    <input matInput type="text" placeholder="Nadpis">
-  </mat-form-field>
-  <mat-form-field>
-    <textarea matInput placeholder="Krátky popis"></textarea>
-  </mat-form-field>
+<form class="new-newsitem-form" (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <mat-form-field> <input matInput name="heading" ngModel type="text" placeholder="Nadpis" /> </mat-form-field>
+  <mat-form-field> <textarea matInput name="shortDescription" ngModel placeholder="Krátky popis"></textarea> </mat-form-field>
   <label>Obsah</label>
-  <app-ngx-editor [config]="wysiwygOptions" class="new-newsitem-form__main-content"></app-ngx-editor>
+  <app-ngx-editor
+    [config]="wysiwygOptions"
+    class="new-newsitem-form__main-content"
+    [(ngModel)]="description"
+    [ngModelOptions]="{ standalone: true }"
+  ></app-ngx-editor>
   <label>Obrázok</label>
-  <input type="file" #fileInput>
-  <button mat-flat-button color="accent" (click)="fileInput.click()" class="new-newsitem-form__upload-image-button">
-    <mat-icon>cloud_upload</mat-icon>
-    nahrať
+  <div class="mb-1">
+    <app-upload *ngIf="!imageInfo || !imageInfo.url" (fileUploaded)="onImageUploaded($event)"></app-upload>
+    <div *ngIf="imageInfo && imageInfo.url" class="overlayed-element new-newsitem-form__picture-wrapper" (click)="onImageClick()">
+      <img [src]="imageInfo.url" />
+      <div class="overlayed-element__overlay overlayed-element__overlay--warn">
+        <span> <mat-icon class="delete-icon">delete</mat-icon> </span>
+      </div>
+    </div>
+  </div>
+  <mat-error *ngIf="isValid === false">Hodnoty 'nadpis' a 'obsah' nesmú byť prázdne</mat-error>
+  <mat-error *ngIf="isError === true">Nastala chyba. Skúste znova.</mat-error>
+  <button mat-flat-button color="primary" class="new-newsitem-form__submit-button" type="submit" [disabled]="isLoading">Publikovať</button>
+  <button
+    mat-button
+    color="accent"
+    type="button"
+    class="new-newsitem-form__cancel-button"
+    routerLink="/admin/news/list"
+    [disabled]="isLoading"
+  >
+    Späť
   </button>
-  <button mat-flat-button color="primary" class="new-newsitem-form__submit-button">Publikovať</button>
-  <button mat-button color="accent" type="button" class="new-newsitem-form__cancel-button">Späť</button>
 </form>

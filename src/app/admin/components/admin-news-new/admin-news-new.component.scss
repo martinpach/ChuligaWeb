@@ -9,20 +9,12 @@ h2 {
   max-width: 600px;
   margin: 0 auto;
 
-  input[type='file'] {
-    display: none;
-  }
-
   label {
     color: #777777;
   }
 
   &__main-content {
     margin-bottom: 15px;
-  }
-
-  &__upload-image-button {
-    max-width: 100px;
   }
 
   &__submit-button {
@@ -34,4 +26,17 @@ h2 {
   &__cancel-button {
     border: 1px solid #ddd;
   }
+
+  &__picture-wrapper {
+    max-width: 200px;
+    height: auto;
+    & > * {
+      max-width: inherit;
+      height: inherit;
+    }
+  }
+}
+
+.delete-icon {
+  font-size: 30px;
 }
