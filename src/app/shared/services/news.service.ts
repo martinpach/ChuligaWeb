@@ -20,4 +20,8 @@ export class NewsService {
       .valueChanges()
       .pipe(pluck('count'));
   }
+
+  addNewsItem(newsItem: NewsItem) {
+    return this.db.collection('/news').add(newsItem);
+  }
 }
