@@ -15,6 +15,6 @@ export class FileService {
 
   delete(name: string) {
     const storageRef = firebase.storage().ref();
-    storageRef.child(`${this.basePath}/${name}`).delete();
+    return storageRef.child(`${this.basePath}/${name}`).delete();
   }
 }

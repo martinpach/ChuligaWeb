@@ -1,0 +1,29 @@
+<form *ngIf="newsItem" class="newsitem-form" (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <mat-form-field> <input matInput name="heading" [ngModel]="newsItem.heading" type="text" placeholder="Nadpis" /> </mat-form-field>
+  <mat-form-field>
+    <textarea matInput name="shortDescription" [ngModel]="newsItem.shortDescription" placeholder="Krátky popis"></textarea>
+  </mat-form-field>
+  <label>Obsah</label>
+  <app-ngx-editor
+    [config]="wysiwygOptions"
+    class="newsitem-form__main-content"
+    [(ngModel)]="newsItem.description"
+    [ngModelOptions]="{ standalone: true }"
+  ></app-ngx-editor>
+  <label>Obrázok</label>
+  <div class="mb-1">
+    <app-upload *ngIf="!newsItem.picture || !newsItem.picture.url" (fileUploaded)="onImageUploaded($event)"></app-upload>
+    <div *ngIf="newsItem.picture && newsItem.picture.url" class="overlayed-element newsitem-form__picture-wrapper" (click)="onImageClick()">
+      <img [src]="newsItem.picture.url" />
+      <div class="overlayed-element__overlay overlayed-element__overlay--warn">
+        <span> <mat-icon class="delete-icon">delete</mat-icon> </span>
+      </div>
+    </div>
+  </div>
+  <mat-error *ngIf="isValid === false">Hodnoty 'nadpis' a 'obsah' nesmú byť prázdne</mat-error>
+  <mat-error *ngIf="isError === true">Nastala chyba. Skúste znova.</mat-error>
+  <button mat-flat-button color="primary" class="newsitem-form__submit-button" type="submit" [disabled]="isLoading">Publikovať</button>
+  <button mat-button color="accent" type="button" class="newsitem-form__cancel-button" routerLink="/admin/news/list" [disabled]="isLoading">
+    Späť
+  </button>
+</form>

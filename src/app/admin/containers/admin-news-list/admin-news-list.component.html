@@ -1,14 +1,21 @@
-<h1>AKTUALITY</h1>
-<button mat-flat-button color="primary" routerLink="/admin/news/new">PRIDAŤ</button>
-<ul>
-  <app-news-item *ngFor="let newsItem of (news$ | async); trackBy: trackByFn" [itemData]="newsItem" overlayText="UPRAVIŤ"></app-news-item>
-</ul>
-<button
-  mat-stroked-button
-  color="primary"
-  *ngIf="newsLength && newsLength < (newsCount$ | async)"
-  (click)="loadMore.next()"
-  [disabled]="isLoading"
->
-  načítať ďalšie
-</button>
+<div class="container">
+  <h1>AKTUALITY</h1>
+  <button mat-flat-button color="primary" routerLink="/admin/news/new">PRIDAŤ</button>
+  <ul>
+    <app-news-item
+      *ngFor="let newsItem of (news$ | async); trackBy: trackByFn"
+      [itemData]="newsItem"
+      overlayText="UPRAVIŤ"
+      [routerLink]="['/admin', 'news', newsItem.id, 'edit']"
+    ></app-news-item>
+  </ul>
+  <button
+    mat-stroked-button
+    color="primary"
+    *ngIf="newsLength && newsLength < (newsCount$ | async)"
+    (click)="loadMore.next()"
+    [disabled]="isLoading"
+  >
+    načítať ďalšie
+  </button>
+</div>

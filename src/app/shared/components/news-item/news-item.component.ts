@@ -1,5 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-import { NewsItem } from '../models';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { NewsItem } from '../../models';
 
 @Component({
   selector: 'app-news-item',
@@ -7,7 +7,7 @@ import { NewsItem } from '../models';
   styleUrls: ['./news-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewsItemComponent implements OnInit {
+export class NewsItemComponent {
   @Input()
   itemData: NewsItem;
 
@@ -15,6 +15,4 @@ export class NewsItemComponent implements OnInit {
   overlayText: string = 'ČÍTAJ VIAC';
 
   constructor() {}
-
-  ngOnInit() {}
 }

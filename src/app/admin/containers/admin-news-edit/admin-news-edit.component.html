@@ -1,0 +1,12 @@
+<div class="container">
+  <h2>ÚPRAVA AKTUALITY</h2>
+
+  <button mat-flat-button color="warn" class="delete-button" (click)="onNewsItemDelete()">Vymazať aktualitu</button>
+  <app-admin-newsitem-form
+    [isError]="isError"
+    [isLoading]="isLoading"
+    [newsItem]="newsItem$ | async"
+    (imageDeleted)="onImageDeleted($event)"
+    (submitted)="onSubmit($event)"
+  ></app-admin-newsitem-form>
+</div>

@@ -1,21 +1,19 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdminAuthService } from '../../services/admin-auth.service';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  templateUrl: './admin-login.component.html',
+  styleUrls: ['./admin-login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginComponent implements OnInit {
+export class AdminLoginComponent {
   areCredentialsValid: boolean = true;
   loginInProcess: boolean = false;
 
   constructor(private adminAuth: AdminAuthService, private router: Router, private cd: ChangeDetectorRef) {}
-
-  ngOnInit() {}
 
   onSubmit(form: NgForm) {
     this.loginInProcess = true;

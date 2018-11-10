@@ -1,0 +1,11 @@
+<div class="container">
+  <h2>NOVÁ AKTUALITA</h2>
+
+  <app-admin-newsitem-form
+    [isError]="isError"
+    [isLoading]="isLoading"
+    [newsItem]="newsItem"
+    (imageDeleted)="onImageDeleted($event)"
+    (submitted)="onSubmit($event)"
+  ></app-admin-newsitem-form>
+</div>

@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { FileService } from '../services/files.service';
-import { Upload, FileInfo } from '../models';
 import * as firebase from 'firebase';
+import { Upload, FileInfo } from '../../models';
+import { FileService } from '../../services/files.service';
 
 @Component({
   selector: 'app-upload',

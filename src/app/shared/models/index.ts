@@ -1,4 +1,5 @@
 export interface NewsItem {
+  id?: string;
   heading: string;
   shortDescription: string;
   description: string;

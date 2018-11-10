@@ -1,11 +1,12 @@
-import { LoginComponent } from './containers/login/login.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminHomePageComponent } from './containers/admin-home-page/admin-home-page.component';
 import { AdminGuard } from './guards/admin.guard';
 import { AdminLoginGuard } from './guards/admin-login.guard';
-import { AdminNewsNewComponent } from './components/admin-news-new/admin-news-new.component';
+import { AdminNewsNewComponent } from './containers/admin-news-new/admin-news-new.component';
 import { AdminNewsListComponent } from './containers/admin-news-list/admin-news-list.component';
+import { AdminNewsEditComponent } from './containers/admin-news-edit/admin-news-edit.component';
+import { AdminLoginComponent } from './containers/admin-login/admin-login.component';
 
 const adminRoutes: Routes = [
   {
@@ -21,7 +22,7 @@ const adminRoutes: Routes = [
         path: 'news/list',
         component: AdminNewsListComponent
       },
-      { path: '2', component: AdminNewsListComponent },
+      { path: 'news/:id/edit', component: AdminNewsEditComponent },
       { path: '3', component: AdminNewsListComponent },
       { path: '4', component: AdminNewsListComponent },
       { path: '5', component: AdminNewsListComponent },
@@ -30,7 +31,7 @@ const adminRoutes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent,
+    component: AdminLoginComponent,
     canActivate: [AdminLoginGuard]
   }
 ];
