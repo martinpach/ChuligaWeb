@@ -6,7 +6,7 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid $light-grey;
-  box-shadow: 0px 6px 53px -24px rgba(0, 0, 0, 0.54);
+  box-shadow: 0px 6px 53px -24px rgba($black, 0.54);
 
   &__logo {
     max-width: 150px;
@@ -63,7 +63,7 @@
       justify-content: center;
       height: calc(100% / 7);
       border-bottom: 1px solid $light-grey;
-      background-color: #eee;
+      background-color: $light;
       transition: background-color 0.5s;
 
       &:hover {
@@ -88,7 +88,7 @@
     display: inline-block;
     width: 40px;
     color: $white;
-    background-color: #d26c64;
+    background-color: $brick;
     height: 40px;
 
     mat-icon {

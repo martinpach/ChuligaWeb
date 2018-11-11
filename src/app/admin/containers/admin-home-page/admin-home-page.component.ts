@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-admin-home-page',
   templateUrl: './admin-home-page.component.html',
-  styleUrls: ['./admin-home-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdminHomePageComponent {

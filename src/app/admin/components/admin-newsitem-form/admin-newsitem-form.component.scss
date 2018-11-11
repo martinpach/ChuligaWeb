@@ -1,3 +1,5 @@
+@import '_variables.scss';
+
 h2 {
   text-align: center;
   margin-top: 30px;
@@ -8,11 +10,15 @@ h2 {
   flex-direction: column;
 
   label {
-    color: #777777;
+    color: $grey;
   }
 
   &__main-content {
     margin-bottom: 15px;
+  }
+
+  &__upload-container {
+    margin-bottom: 10px;
   }
 
   &__submit-button {
@@ -22,7 +28,7 @@ h2 {
   }
 
   &__cancel-button {
-    border: 1px solid #ddd;
+    border: 1px solid $light;
   }
 
   &__picture-wrapper {

@@ -11,7 +11,7 @@
     [ngModelOptions]="{ standalone: true }"
   ></app-ngx-editor>
   <label>Obrázok</label>
-  <div class="mb-1">
+  <div class="newsitem-form__upload-container">
     <app-upload *ngIf="!newsItem.picture || !newsItem.picture.url" (fileUploaded)="onImageUploaded($event)"></app-upload>
     <div *ngIf="newsItem.picture && newsItem.picture.url" class="overlayed-element newsitem-form__picture-wrapper" (click)="onImageClick()">
       <img [src]="newsItem.picture.url" />
