@@ -1,31 +1,29 @@
 <nav class="navigation">
-  <img class="navigation__logo" src="/src/assets/img/logo2.png" alt="Logo">
+  <img class="navigation__logo" src="/src/assets/img/logo2.png" alt="Logo" />
   <app-navigation class="navigation__menu-wrapper">
     <ul class="navigation__menu">
       <li class="navigation__item" *ngFor="let item of navItems" appNavigationItem [routerLink]="item.path" routerLinkActive="active">
-        <span>{{item.label}}</span>
+        <span>{{ item.label }}</span>
       </li>
-      <li (click)="logout.emit()" class="navigation__item" appNavigationItem>
-        <span>Odhlásiť sa</span>
-      </li>
+      <li (click)="logout.emit()" class="navigation__item" appNavigationItem><span>Odhlásiť sa</span></li>
     </ul>
     <app-navigation-bar></app-navigation-bar>
   </app-navigation>
 
-  <button mat-icon-button (click)="toggleMenu()" class="navigation__trigger">
-    <mat-icon>menu</mat-icon>
-  </button>
+  <button mat-icon-button (click)="toggleMenu()" class="navigation__trigger"><mat-icon>menu</mat-icon></button>
 </nav>
 <div class="navigation__drawer" [ngClass]="{ visible: isMenuVisible === true }">
   <ul class="navigation__list">
-    <li class="navigation__item" *ngFor="let item of navItems" [routerLink]="item.path" routerLinkActive="navigation__item--active">
-      <span>{{item.label}}</span>
+    <li
+      (click)="isMenuVisible = false"
+      class="navigation__item"
+      *ngFor="let item of navItems"
+      [routerLink]="item.path"
+      routerLinkActive="navigation__item--active"
+    >
+      <span>{{ item.label }}</span>
     </li>
-    <li (click)="logout.emit()" class="navigation__item">
-      <span>Odhlásiť sa</span>
-    </li>
+    <li (click)="logout.emit()" class="navigation__item"><span>Odhlásiť sa</span></li>
   </ul>
-  <button (click)="toggleMenu()" class="navigation__close-btn">
-    <mat-icon>close</mat-icon>
-  </button>
+  <button (click)="toggleMenu()" class="navigation__close-btn"><mat-icon>close</mat-icon></button>
 </div>
