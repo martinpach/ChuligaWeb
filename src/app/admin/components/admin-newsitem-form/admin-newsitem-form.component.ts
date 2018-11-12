@@ -9,7 +9,11 @@ import { NgForm } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdminNewsitemFormComponent {
-  isValid: boolean;
+  isValid = true;
+
+  @Input()
+  image: any;
+
   @Input()
   newsItem: NewsItem;
 
@@ -23,7 +27,7 @@ export class AdminNewsitemFormComponent {
   submitted = new EventEmitter<NewsItem>();
 
   @Output()
-  imageDeleted = new EventEmitter<ImageInfo>();
+  imageDeleted = new EventEmitter<ImageInfo | any>();
 
   wysiwygOptions = {
     editable: true,
@@ -41,15 +45,6 @@ export class AdminNewsitemFormComponent {
     ]
   };
 
-  onImageClick() {
-    this.imageDeleted.emit(this.newsItem.picture);
-    this.newsItem.picture = { name: '', url: '' };
-  }
-
-  onImageUploaded(imageInfo: ImageInfo) {
-    this.newsItem.picture = imageInfo;
-  }
-
   onSubmit(f: NgForm) {
     if (!f.value.heading || !this.newsItem.description) {
       this.isValid = false;
@@ -61,7 +56,6 @@ export class AdminNewsitemFormComponent {
       ...this.newsItem,
       heading: <string>f.value.heading,
       description: <string>this.newsItem.description,
-      picture: <ImageInfo>this.newsItem.picture || { name: '', url: '' },
       shortDescription: <string>f.value.shortDescription || '',
       date: new Date()
     };

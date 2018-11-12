@@ -1,10 +1,12 @@
-<h2>ÚPRAVA AKTUALITY</h2>
+<h2>{{ heading }}</h2>
 
-<button mat-flat-button color="warn" class="delete-button" (click)="onNewsItemDelete()">Vymazať aktualitu</button>
-<app-admin-newsitem-form
-  [isError]="isError"
-  [isLoading]="isLoading"
-  [newsItem]="newsItem$ | async"
-  (imageDeleted)="onImageDeleted($event)"
-  (submitted)="onSubmit($event)"
-></app-admin-newsitem-form>
+<button *ngIf="!!id" mat-flat-button color="warn" class="delete-button" (click)="onNewsItemDelete()">Vymazať aktualitu</button>
+<app-admin-newsitem-form [isError]="isError" [isLoading]="isLoading" [newsItem]="newsItem$ | async" (submitted)="onSubmit($event)">
+  <app-upload *ngIf="!image.fromServer && !image.currentUpload" (fileUploaded)="onImageUploaded($event)"></app-upload>
+  <div *ngIf="image.fromServer || image.currentUpload" class="overlayed-element picture-wrapper" (click)="onImageDelete()">
+    <img *ngIf="image.fromServer" [src]="image.fromServer.url" /> <img *ngIf="image.currentUpload" [src]="image.currentUpload.base64" />
+    <div class="overlayed-element__overlay overlayed-element__overlay--warn">
+      <span> <mat-icon class="delete-icon">delete</mat-icon> </span>
+    </div>
+  </div>
+</app-admin-newsitem-form>

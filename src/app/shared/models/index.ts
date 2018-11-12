@@ -1,24 +1,24 @@
 export interface NewsItem {
-  id?: string;
   heading: string;
   shortDescription: string;
   description: string;
-  picture: ImageInfo;
+  picture: ServerImageInfo;
   date: any;
 }
 
-export class Upload {
-  file: File;
-  progress: number;
-
-  constructor(file: File) {
-    this.file = file;
-  }
-}
-
-export interface FileInfo {
+export interface ServerFileInfo {
   name: string;
   url: string;
 }
 
-export interface ImageInfo extends FileInfo {}
+export interface ImageInfo {
+  fromServer?: ServerImageInfo;
+  currentUpload?: LocalImageInfo;
+}
+
+export interface ServerImageInfo extends ServerFileInfo {}
+
+export interface LocalImageInfo {
+  file: File;
+  base64: any;
+}

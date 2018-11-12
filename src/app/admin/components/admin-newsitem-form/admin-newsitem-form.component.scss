@@ -30,17 +30,4 @@ h2 {
   &__cancel-button {
     border: 1px solid $light;
   }
-
-  &__picture-wrapper {
-    max-width: 200px;
-    height: auto;
-    & > * {
-      max-width: inherit;
-      height: inherit;
-    }
-  }
-}
-
-.delete-icon {
-  font-size: 30px;
 }

@@ -11,17 +11,9 @@
     [ngModelOptions]="{ standalone: true }"
   ></app-ngx-editor>
   <label>Obrázok</label>
-  <div class="newsitem-form__upload-container">
-    <app-upload *ngIf="!newsItem.picture || !newsItem.picture.url" (fileUploaded)="onImageUploaded($event)"></app-upload>
-    <div *ngIf="newsItem.picture && newsItem.picture.url" class="overlayed-element newsitem-form__picture-wrapper" (click)="onImageClick()">
-      <img [src]="newsItem.picture.url" />
-      <div class="overlayed-element__overlay overlayed-element__overlay--warn">
-        <span> <mat-icon class="delete-icon">delete</mat-icon> </span>
-      </div>
-    </div>
-  </div>
-  <mat-error *ngIf="isValid === false">Hodnoty 'nadpis' a 'obsah' nesmú byť prázdne</mat-error>
-  <mat-error *ngIf="isError === true">Nastala chyba. Skúste znova.</mat-error>
+  <div class="newsitem-form__upload-container"><ng-content></ng-content></div>
+  <mat-error *ngIf="!isValid">Hodnoty 'nadpis' a 'obsah' nesmú byť prázdne</mat-error>
+  <mat-error *ngIf="isError">Nastala chyba. Skúste znova.</mat-error>
   <button mat-flat-button color="primary" class="newsitem-form__submit-button" type="submit" [disabled]="isLoading">Publikovať</button>
   <button mat-button color="accent" type="button" class="newsitem-form__cancel-button" routerLink="/admin/news/list" [disabled]="isLoading">
     Späť

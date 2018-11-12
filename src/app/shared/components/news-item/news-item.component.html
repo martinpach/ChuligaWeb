@@ -1,6 +1,6 @@
 <li class="overlayed-element">
   <div class="news-item">
-    <img *ngIf="itemData.picture.url" [src]="itemData.picture.url" class="news-item__picture" />
+    <img *ngIf="itemData.picture?.url" [src]="itemData.picture.url" class="news-item__picture" />
     <div class="news-item__content">
       <h3 class="news-item__heading">{{ itemData.heading }}</h3>
       <p>{{ itemData.shortDescription }}</p>

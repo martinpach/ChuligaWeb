@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
-import { Upload } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +7,9 @@ import { Upload } from '../models';
 export class FileService {
   private basePath: string = '/uploads';
 
-  upload(upload: Upload) {
+  upload(file: File) {
     const storageRef = firebase.storage().ref();
-    return storageRef.child(`${this.basePath}/${upload.file.name}`).put(upload.file);
+    return storageRef.child(`${this.basePath}/${file.name}`).put(file);
   }
 
   delete(name: string) {

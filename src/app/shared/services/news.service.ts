@@ -40,8 +40,8 @@ export class NewsService {
     return this.db.collection('/news').add(newsItem);
   }
 
-  updateNewsItem(newsItem: NewsItem) {
-    return this.db.doc(`/news/${newsItem.id}`).update(newsItem);
+  updateNewsItem(id: string, newsItem: NewsItem) {
+    return this.db.doc(`/news/${id}`).update(newsItem);
   }
 
   deleteNewsItem(id: string) {

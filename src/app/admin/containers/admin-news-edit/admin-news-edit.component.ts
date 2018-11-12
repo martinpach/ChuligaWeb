@@ -1,11 +1,11 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { NewsService } from '../../../shared/services/news.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NewsItem, ImageInfo } from '../../../shared/models';
-import { Observable } from 'rxjs';
+import { NewsItem, ImageInfo, ServerImageInfo } from '../../../shared/models';
+import { Observable, of } from 'rxjs';
 import { FileService } from '../../../shared/services/files.service';
-import { tap } from 'rxjs/operators';
 import { DialogService } from '../../../shared/services/dialog.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-news-edit',
@@ -15,11 +15,13 @@ import { DialogService } from '../../../shared/services/dialog.service';
 })
 export class AdminNewsEditComponent {
   id: string;
-  newsItem$: Observable<NewsItem>;
+  newsItem$: Observable<NewsItem | {}>;
   newsItem: NewsItem;
   isLoading = false;
+  isImageLoading = false;
   isError = false;
-  deletedImage: ImageInfo;
+  deletedImage: ServerImageInfo;
+  image: ImageInfo = {};
   deleteMessage = 'Naozaj chcete vymazať túto aktualitu?';
 
   constructor(
@@ -30,22 +32,67 @@ export class AdminNewsEditComponent {
     private dialogService: DialogService
   ) {
     this.id = route.snapshot.params['id'];
-    this.newsItem$ = newsService.getNewsItem(this.id).pipe(tap(newsItem => (this.newsItem = newsItem)));
+    this.newsItem$ = this.id
+      ? newsService
+          .getNewsItem(this.id)
+          .pipe(tap((item: NewsItem) => (this.image.fromServer = item && item.picture ? item.picture : undefined)))
+      : of({});
   }
 
-  onSubmit(newsItem: NewsItem) {
+  get heading() {
+    return !!this.id ? 'ÚPRAVA AKTUALITY' : 'NOVÁ AKTUALITA';
+  }
+
+  async onSubmit(newsItem: NewsItem) {
     this.onAsync();
+    let promises = [];
+    if (this.image.currentUpload) {
+      const uploadedImage = await this.fileService.upload(this.image.currentUpload.file);
+      newsItem = {
+        ...newsItem,
+        picture: {
+          url: await uploadedImage.ref.getDownloadURL(),
+          name: uploadedImage.metadata.name
+        }
+      };
+    }
+    if (!this.id) {
+      promises = [this.newsService.addNewsItem(newsItem)];
+    } else {
+      if (this.deletedImage) {
+        newsItem = {
+          ...newsItem,
+          picture: null
+        };
+      }
+      const deleteImagePromise = this.deletedImage ? this.fileService.delete(this.deletedImage.name) : Promise.resolve();
+      const updateNewsItemPromise = this.newsService.updateNewsItem(this.id, newsItem);
+      promises = [deleteImagePromise, updateNewsItemPromise];
+    }
 
-    const deleteImagePromise = this.deletedImage ? this.fileService.delete(this.deletedImage.name) : Promise.resolve();
-    const updateNewsItemPromise = this.newsService.updateNewsItem({ id: this.id, ...newsItem });
-
-    Promise.all([deleteImagePromise, updateNewsItemPromise])
+    Promise.all(promises)
       .then(() => this.router.navigate(['admin', 'news', 'list']))
       .catch(() => this.onError());
   }
 
-  onImageDeleted(imageInfo: ImageInfo) {
-    this.deletedImage = imageInfo;
+  onImageDelete() {
+    if (this.image.fromServer) {
+      this.deletedImage = this.image.fromServer;
+    }
+    this.image = {};
+  }
+
+  onImageUploaded(image: File) {
+    const reader = new FileReader();
+    this.isImageLoading = true;
+    reader.onloadend = () => {
+      this.isImageLoading = false;
+      this.image.currentUpload = {
+        file: image,
+        base64: reader.result
+      };
+    };
+    reader.readAsDataURL(image);
   }
 
   onNewsItemDelete() {
@@ -55,7 +102,7 @@ export class AdminNewsEditComponent {
       .subscribe((res: boolean) => {
         if (!res) return;
         this.onAsync();
-        const deleteImagePromise = this.newsItem.picture.name ? this.fileService.delete(this.newsItem.picture.name) : Promise.resolve();
+        const deleteImagePromise = this.image.fromServer ? this.fileService.delete(this.image.fromServer.name) : Promise.resolve();
         const deleteNewsItemPromise = this.newsService.deleteNewsItem(this.id);
         Promise.all([deleteImagePromise, deleteNewsItemPromise])
           .then(() => this.router.navigate(['admin', 'news', 'list']))
