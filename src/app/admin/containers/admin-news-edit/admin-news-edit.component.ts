@@ -16,9 +16,7 @@ import { tap } from 'rxjs/operators';
 export class AdminNewsEditComponent {
   id: string;
   newsItem$: Observable<NewsItem | {}>;
-  newsItem: NewsItem;
   isLoading = false;
-  isImageLoading = false;
   isError = false;
   deletedImage: ServerImageInfo;
   image: ImageInfo = {};
@@ -84,9 +82,7 @@ export class AdminNewsEditComponent {
 
   onImageUploaded(image: File) {
     const reader = new FileReader();
-    this.isImageLoading = true;
     reader.onloadend = () => {
-      this.isImageLoading = false;
       this.image.currentUpload = {
         file: image,
         base64: reader.result

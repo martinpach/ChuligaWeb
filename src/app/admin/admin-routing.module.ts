@@ -14,6 +14,10 @@ const adminRoutes: Routes = [
     canActivate: [AdminGuard],
     children: [
       {
+        path: 'news',
+        redirectTo: 'news/list'
+      },
+      {
         path: 'news/new',
         component: AdminNewsEditComponent
       },
