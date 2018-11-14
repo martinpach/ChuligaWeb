@@ -1,9 +1,23 @@
-export interface NewsItem {
+export interface User {
+  firstName: string;
+  lastName: string;
+}
+
+export interface Item {
+  id?: string;
   heading: string;
-  shortDescription: string;
   description: string;
   picture: ServerImageInfo;
   date: any;
+}
+
+export interface NewsItem extends Item {
+  shortDescription: string;
+}
+
+export interface EventItem extends Item {
+  capacity: number;
+  attendees: User[];
 }
 
 export interface ServerFileInfo {

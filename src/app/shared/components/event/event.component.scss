@@ -1,0 +1,64 @@
+@import '_variables.scss';
+
+.event {
+  &__container {
+    display: flex;
+    box-shadow: 4px 3px 18px -1px $light-grey;
+    margin-bottom: 20px;
+  }
+
+  &__left-side,
+  &__right-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 30%;
+  }
+
+  &__left-side {
+    border-right: 1px solid $light-grey;
+    color: $warn;
+  }
+
+  &__right-side {
+    border-left: 1px solid $light-grey;
+    background-color: $primary;
+    color: $white;
+
+    &--warn {
+      background-color: $warn;
+    }
+
+    &--client {
+      cursor: pointer;
+      transition: all 0.5s;
+      &:hover {
+        background-color: darken($color: $primary, $amount: 5);
+      }
+    }
+  }
+
+  &__main-content {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    width: 900px;
+    max-width: 100%;
+
+    img {
+      width: 150px;
+      height: 150px;
+      border: 5px solid $primary;
+    }
+
+    &__text {
+      margin-left: 15px;
+
+      h3 {
+        margin-bottom: 15px;
+      }
+    }
+  }
+}

@@ -6,6 +6,7 @@ import { AdminLoginGuard } from './guards/admin-login.guard';
 import { AdminNewsListComponent } from './containers/admin-news-list/admin-news-list.component';
 import { AdminNewsEditComponent } from './containers/admin-news-edit/admin-news-edit.component';
 import { AdminLoginComponent } from './containers/admin-login/admin-login.component';
+import { AdminEventsListComponent } from './containers/admin-events-list/admin-events-list.component';
 
 const adminRoutes: Routes = [
   {
@@ -26,7 +27,14 @@ const adminRoutes: Routes = [
         component: AdminNewsListComponent
       },
       { path: 'news/:id/edit', component: AdminNewsEditComponent },
-      { path: '3', component: AdminNewsListComponent },
+      {
+        path: 'events',
+        redirectTo: 'events/list'
+      },
+      {
+        path: 'events/list',
+        component: AdminEventsListComponent
+      },
       { path: '4', component: AdminNewsListComponent },
       { path: '5', component: AdminNewsListComponent },
       { path: '6', component: AdminNewsListComponent }

@@ -15,7 +15,7 @@ export class AdminNavComponent {
     },
     {
       label: 'Program',
-      path: '/admin/2'
+      path: '/admin/events'
     },
     {
       label: 'Kurzy',

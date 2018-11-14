@@ -17,6 +17,7 @@ import { NgxEditorModule } from 'ngx-editor';
 import { NewsItemComponent } from './components/news-item/news-item.component';
 import { UploadComponent } from './containers/upload/upload.component';
 import { MatConfirmDialogComponent } from './components/mat-confirm-dialog/mat-confirm-dialog.component';
+import { EventComponent } from './components/event/event.component';
 
 @NgModule({
   imports: [CommonModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, MatDialogModule],
@@ -26,7 +27,8 @@ import { MatConfirmDialogComponent } from './components/mat-confirm-dialog/mat-c
     NavigationItemDirective,
     NewsItemComponent,
     UploadComponent,
-    MatConfirmDialogComponent
+    MatConfirmDialogComponent,
+    EventComponent
   ],
   entryComponents: [MatConfirmDialogComponent],
   exports: [
@@ -44,7 +46,8 @@ import { MatConfirmDialogComponent } from './components/mat-confirm-dialog/mat-c
     NewsItemComponent,
     UploadComponent,
     NgxEditorModule,
-    MatConfirmDialogComponent
+    MatConfirmDialogComponent,
+    EventComponent
   ]
 })
 export class SharedModule {}
