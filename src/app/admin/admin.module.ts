@@ -10,6 +10,8 @@ import { AdminNewsEditComponent } from './containers/admin-news-edit/admin-news-
 import { AdminNewsitemFormComponent } from './components/admin-newsitem-form/admin-newsitem-form.component';
 import { AdminLoginComponent } from './containers/admin-login/admin-login.component';
 import { AdminEventsListComponent } from './containers/admin-events-list/admin-events-list.component';
+import { AdminEventsEditComponent } from './containers/admin-events-edit/admin-events-edit.component';
+import { AdminEventitemFormComponent } from './components/admin-eventitem-form/admin-eventitem-form.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { AdminEventsListComponent } from './containers/admin-events-list/admin-e
     AdminNewsListComponent,
     AdminNewsEditComponent,
     AdminNewsitemFormComponent,
-    AdminEventsListComponent
+    AdminEventsListComponent,
+    AdminEventsEditComponent,
+    AdminEventitemFormComponent
   ],
   imports: [AdminRoutingModule, SharedModule, LayoutModule, MatButtonModule, MatIconModule]
 })

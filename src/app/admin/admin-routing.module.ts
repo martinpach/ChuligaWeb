@@ -7,6 +7,7 @@ import { AdminNewsListComponent } from './containers/admin-news-list/admin-news-
 import { AdminNewsEditComponent } from './containers/admin-news-edit/admin-news-edit.component';
 import { AdminLoginComponent } from './containers/admin-login/admin-login.component';
 import { AdminEventsListComponent } from './containers/admin-events-list/admin-events-list.component';
+import { AdminEventsEditComponent } from './containers/admin-events-edit/admin-events-edit.component';
 
 const adminRoutes: Routes = [
   {
@@ -32,11 +33,17 @@ const adminRoutes: Routes = [
         redirectTo: 'events/list'
       },
       {
+        path: 'events/new',
+        component: AdminEventsEditComponent
+      },
+      {
         path: 'events/list',
         component: AdminEventsListComponent
       },
-      { path: '4', component: AdminNewsListComponent },
-      { path: '5', component: AdminNewsListComponent },
+      {
+        path: 'events/:id/edit',
+        component: AdminEventsEditComponent
+      },
       { path: '6', component: AdminNewsListComponent }
     ]
   },

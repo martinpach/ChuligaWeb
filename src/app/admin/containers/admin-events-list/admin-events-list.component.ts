@@ -23,7 +23,12 @@ export class AdminEventsListComponent {
       tap(() => (this.isLoading = true)),
       switchMap((_, index) =>
         eventsService
-          .getEvents(ref => ref.orderBy('date', 'desc').limit(this.limit * (index + 1)))
+          .getEvents(ref =>
+            ref
+              .orderBy('date', 'asc')
+              .limit(this.limit * (index + 1))
+              .startAt(new Date())
+          )
           .pipe(tap(events => (this.eventsLength = events.length)))
       ),
       tap(() => (this.isLoading = false))

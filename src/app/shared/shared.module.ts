@@ -7,8 +7,13 @@ import {
   MatSidenavModule,
   MatListModule,
   MatProgressSpinnerModule,
-  MatDialogModule
+  MatDialogModule,
+  MatDatepickerModule,
+  MAT_DATE_FORMATS,
+  NativeDateAdapter,
+  DateAdapter
 } from '@angular/material';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatIconModule } from '@angular/material/icon';
 import { NavigationComponent } from './navigation/navigation.component';
 import { NavigationBarComponent } from './navigation/navigation-bar.component';
@@ -19,8 +24,34 @@ import { UploadComponent } from './containers/upload/upload.component';
 import { MatConfirmDialogComponent } from './components/mat-confirm-dialog/mat-confirm-dialog.component';
 import { EventComponent } from './components/event/event.component';
 
+//TODO: here???
+export class MyDateAdapter extends NativeDateAdapter {
+  format(date: Date, displayFormat: Object): string {
+    if (displayFormat === 'input') {
+      let day = date.getDate();
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
+      return this._to2digit(day) + '.' + this._to2digit(month) + '.' + year;
+    } else {
+      return date.toDateString();
+    }
+  }
+
+  private _to2digit(n: number) {
+    return ('00' + n).slice(-2);
+  }
+}
+
 @NgModule({
-  imports: [CommonModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, MatDialogModule],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
+    MatDialogModule
+  ],
   declarations: [
     NavigationComponent,
     NavigationBarComponent,
@@ -39,6 +70,8 @@ import { EventComponent } from './components/event/event.component';
     MatSidenavModule,
     MatListModule,
     MatIconModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
     MatDialogModule,
     NavigationComponent,
     NavigationBarComponent,
@@ -48,6 +81,23 @@ import { EventComponent } from './components/event/event.component';
     NgxEditorModule,
     MatConfirmDialogComponent,
     EventComponent
+  ],
+  providers: [
+    { provide: DateAdapter, useClass: MyDateAdapter },
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: {
+        parse: {
+          dateInput: { month: 'short', year: 'numeric', day: 'numeric' }
+        },
+        display: {
+          dateInput: 'input',
+          monthYearLabel: { year: 'numeric', month: 'short' },
+          dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric' },
+          monthYearA11yLabel: { year: 'numeric', month: 'long' }
+        }
+      }
+    }
   ]
 })
 export class SharedModule {}
