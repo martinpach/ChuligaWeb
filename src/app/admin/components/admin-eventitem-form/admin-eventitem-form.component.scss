@@ -1,0 +1,41 @@
+@import '_variables.scss';
+// TODO: same as news css except 2 classes
+h2 {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.eventitem-form {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    color: $grey;
+  }
+
+  &__main-content {
+    margin-bottom: 15px;
+  }
+
+  &__upload-container {
+    margin-bottom: 10px;
+  }
+
+  &__submit-button {
+    margin-top: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  &__cancel-button {
+    border: 1px solid $light;
+  }
+}
+
+.small-input {
+  max-width: 150px;
+}
+
+.extra-small-input {
+  max-width: 68.5px;
+}
