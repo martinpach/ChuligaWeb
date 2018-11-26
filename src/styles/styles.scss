@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '_variables.scss';
+@import '~ag-grid-community/dist/styles/ag-grid.css';
+@import '~ag-grid-community/dist/styles/ag-theme-balham.css';
 
 * {
   margin: 0;
@@ -59,4 +61,19 @@
 .container {
   max-width: 900px;
   margin: auto;
+}
+
+.edit-button {
+  background-color: $primary;
+  color: $white;
+  outline: 0;
+  border: none;
+  padding: 5px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.5s;
+
+  &:hover {
+    background-color: darken($color: $primary, $amount: 5);
+  }
 }

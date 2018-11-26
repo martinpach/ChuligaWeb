@@ -1,6 +1,12 @@
-button {
+.add-button {
   display: block;
   margin: 30px auto;
+}
+
+.controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
 }
 
 ul {

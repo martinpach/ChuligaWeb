@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, QueryFn } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map, pluck, tap } from 'rxjs/operators';
+import { map, pluck } from 'rxjs/operators';
 import { NewsItem } from '../models';
+import { formatDate } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class NewsService {
           actions.map(a => {
             const data = a.payload.doc.data() as NewsItem;
             const id = a.payload.doc.id;
-            return { id, ...data };
+            return { ...data, id, date: formatDate(data.date.toDate(), 'dd.MM.yyyy', 'en') };
           })
         )
       );
@@ -46,5 +47,11 @@ export class NewsService {
 
   deleteNewsItem(id: string) {
     return this.db.doc(`/news/${id}`).delete();
+  }
+
+  deleteNews(ids: string[]) {
+    const batch = this.db.firestore.batch();
+    ids.forEach(id => batch.delete(this.db.firestore.doc(`/news/${id}`)));
+    return batch.commit();
   }
 }

@@ -1,19 +1,13 @@
 <h1>AKTUALITY</h1>
-<button mat-flat-button color="primary" routerLink="/admin/news/new">PRIDAŤ</button>
-<ul>
-  <app-news-item
-    *ngFor="let newsItem of (news$ | async); trackBy: trackByFn"
-    [itemData]="newsItem"
-    overlayText="UPRAVIŤ"
-    [routerLink]="['/admin', 'news', newsItem.id, 'edit']"
-  ></app-news-item>
-</ul>
-<button
-  mat-stroked-button
-  color="primary"
-  *ngIf="newsLength && newsLength < (newsCount$ | async)"
-  (click)="loadMore.next()"
-  [disabled]="isLoading"
+<button mat-flat-button color="primary" routerLink="/admin/news/new" class="add-button">PRIDAŤ</button>
+<div class="controls">
+  <button mat-mini-fab color="warn" [disabled]="!selectedRows.length" (click)="deleteClicked()"><mat-icon>delete</mat-icon></button>
+</div>
+<ag-grid-angular
+  style="width: 100%;"
+  class="ag-theme-balham"
+  [rowData]="news$ | async"
+  [columnDefs]="columnDefs"
+  [gridOptions]="gridOptions"
 >
-  načítať ďalšie
-</button>
+</ag-grid-angular>

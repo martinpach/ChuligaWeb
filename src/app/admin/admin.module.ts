@@ -12,6 +12,7 @@ import { AdminLoginComponent } from './containers/admin-login/admin-login.compon
 import { AdminEventsListComponent } from './containers/admin-events-list/admin-events-list.component';
 import { AdminEventsEditComponent } from './containers/admin-events-edit/admin-events-edit.component';
 import { AdminEventitemFormComponent } from './components/admin-eventitem-form/admin-eventitem-form.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,6 @@ import { AdminEventitemFormComponent } from './components/admin-eventitem-form/a
     AdminEventsEditComponent,
     AdminEventitemFormComponent
   ],
-  imports: [AdminRoutingModule, SharedModule, LayoutModule, MatButtonModule, MatIconModule]
+  imports: [AdminRoutingModule, SharedModule, LayoutModule, MatButtonModule, MatIconModule, AgGridModule.withComponents([])]
 })
 export class AdminModule {}
