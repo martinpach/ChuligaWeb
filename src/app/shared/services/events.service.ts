@@ -3,6 +3,7 @@ import { AngularFirestore, QueryFn } from '@angular/fire/firestore';
 import { EventItem } from '../models';
 import { Observable } from 'rxjs';
 import { pluck, map } from 'rxjs/operators';
+import { formatDate } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,10 @@ export class EventsService {
         map(actions =>
           actions.map(a => {
             const data = a.payload.doc.data() as EventItem;
+            if (!data) return data;
             const id = a.payload.doc.id;
-            return { id, ...data };
+            const date = data.date ? formatDate(data.date.toDate(), 'dd.MM.yyyy HH:mm', 'en') : data.date;
+            return { ...data, id, date };
           })
         )
       );
@@ -30,7 +33,13 @@ export class EventsService {
     return this.db
       .doc<EventItem>(`/events/${id}`)
       .valueChanges()
-      .pipe(map(item => ({ ...item, date: item.date.toDate() })));
+      .pipe(
+        map(item => {
+          if (!item) return item;
+          const date = item.date ? item.date.toDate() : item.date;
+          return { ...item, date };
+        })
+      );
   }
 
   getEventsCount(): Observable<number> {
@@ -50,5 +59,11 @@ export class EventsService {
 
   deleteEventItem(id: string) {
     return this.db.doc(`/events/${id}`).delete();
+  }
+
+  deleteEvents(ids: string[]) {
+    const batch = this.db.firestore.batch();
+    ids.forEach(id => batch.delete(this.db.firestore.doc(`/events/${id}`)));
+    return batch.commit();
   }
 }

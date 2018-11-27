@@ -77,3 +77,8 @@
     background-color: darken($color: $primary, $amount: 5);
   }
 }
+
+.warn-text {
+  color: $warn;
+  font-weight: bold;
+}

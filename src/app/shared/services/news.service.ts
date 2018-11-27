@@ -19,8 +19,10 @@ export class NewsService {
         map(actions =>
           actions.map(a => {
             const data = a.payload.doc.data() as NewsItem;
+            if (!data) return data;
             const id = a.payload.doc.id;
-            return { ...data, id, date: formatDate(data.date.toDate(), 'dd.MM.yyyy', 'en') };
+            const date = data.date ? formatDate(data.date.toDate(), 'dd.MM.yyyy', 'en') : data.date;
+            return { ...data, id, date };
           })
         )
       );

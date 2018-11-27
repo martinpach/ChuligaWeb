@@ -1,26 +1,13 @@
 <h1>PROGRAM</h1>
-<button mat-flat-button color="primary" routerLink="/admin/events/new">PRIDAŤ</button>
-<ul>
-  <app-event
-    *ngFor="let event of (events$ | async); trackBy: trackByFn"
-    [event]="event"
-    [isWarn]="event.attendees && event.attendees.length >= event.capacity"
-    [isClient]="true"
-    [routerLink]="['/admin', 'events', event.id, 'edit']"
-    overlayText="UPRAVIŤ"
-  >
-    <b>NAHLÁSENÝCH</b>
-    <div>
-      {{ event.attendees ? event.attendees.length : 0 }} <span *ngIf="event.capacity"> / {{ event.capacity }} </span>
-    </div>
-  </app-event>
-</ul>
-<button
-  mat-stroked-button
-  color="primary"
-  *ngIf="eventsLength && eventsLength < (eventsCount$ | async)"
-  (click)="loadMore.next()"
-  [disabled]="isLoading"
+<button mat-flat-button color="primary" routerLink="/admin/events/new" class="add-button">PRIDAŤ</button>
+<div class="controls">
+  <button mat-mini-fab color="warn" [disabled]="!selectedRows.length" (click)="deleteClicked()"><mat-icon>delete</mat-icon></button>
+</div>
+<ag-grid-angular
+  style="width: 100%;"
+  class="ag-theme-balham"
+  [rowData]="events$ | async"
+  [columnDefs]="columnDefs"
+  [gridOptions]="gridOptions"
 >
-  načítať ďalšie
-</button>
+</ag-grid-angular>
