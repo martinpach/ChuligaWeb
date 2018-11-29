@@ -10,7 +10,6 @@ import {
   MatDialogModule,
   MatDatepickerModule,
   MAT_DATE_FORMATS,
-  NativeDateAdapter,
   DateAdapter
 } from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
@@ -20,27 +19,10 @@ import { NavigationBarComponent } from './navigation/navigation-bar.component';
 import { NavigationItemDirective } from './navigation/navigation-item.directive';
 import { NgxEditorModule } from 'ngx-editor';
 import { NewsItemComponent } from './components/news-item/news-item.component';
-import { UploadComponent } from './containers/upload/upload.component';
+import { UploadComponent } from './components/upload/upload.component';
 import { MatConfirmDialogComponent } from './components/mat-confirm-dialog/mat-confirm-dialog.component';
 import { EventComponent } from './components/event/event.component';
-
-//TODO: here???
-export class MyDateAdapter extends NativeDateAdapter {
-  format(date: Date, displayFormat: Object): string {
-    if (displayFormat === 'input') {
-      let day = date.getDate();
-      let month = date.getMonth() + 1;
-      let year = date.getFullYear();
-      return this._to2digit(day) + '.' + this._to2digit(month) + '.' + year;
-    } else {
-      return date.toDateString();
-    }
-  }
-
-  private _to2digit(n: number) {
-    return ('00' + n).slice(-2);
-  }
-}
+import { MyDateAdapter } from './utils/my-date-adapter';
 
 @NgModule({
   imports: [

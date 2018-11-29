@@ -3,7 +3,7 @@ import { AngularFirestore, QueryFn } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
 import { NewsItem } from '../models';
-import { formatDate } from '@angular/common';
+import { mapToRenderObject } from '../utils/items-util';
 
 @Injectable({
   providedIn: 'root'
@@ -15,17 +15,7 @@ export class NewsService {
     return this.db
       .collection<NewsItem>('/news', queryFn)
       .snapshotChanges()
-      .pipe(
-        map(actions =>
-          actions.map(a => {
-            const data = a.payload.doc.data() as NewsItem;
-            if (!data) return data;
-            const id = a.payload.doc.id;
-            const date = data.date ? formatDate(data.date.toDate(), 'dd.MM.yyyy', 'en') : data.date;
-            return { ...data, id, date };
-          })
-        )
-      );
+      .pipe(map(data => mapToRenderObject(data)));
   }
 
   getNewsItem(id: string): Observable<NewsItem> {

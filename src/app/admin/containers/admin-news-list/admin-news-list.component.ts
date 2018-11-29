@@ -6,6 +6,7 @@ import { ColDef, GridOptions, CellClickedEvent } from 'ag-grid-community';
 import { Router } from '@angular/router';
 import { FileService } from '../../../shared/services/files.service';
 import { DialogService } from '../../../shared/services/dialog.service';
+import { dateComparator, dateRenderer } from '../../../shared/utils/items-util';
 
 @Component({
   selector: 'app-admin-news-list',
@@ -18,7 +19,15 @@ export class AdminNewsListComponent {
   selectedRows: any[] = [];
   columnDefs: ColDef[] = [
     { headerName: 'Nadpis', field: 'heading', checkboxSelection: true, minWidth: 250, headerCheckboxSelection: true },
-    { headerName: 'Dátum', field: 'date', suppressAutoSize: true, suppressSizeToFit: true, width: 100 },
+    {
+      headerName: 'Dátum',
+      field: 'date',
+      suppressAutoSize: true,
+      suppressSizeToFit: true,
+      width: 100,
+      comparator: dateComparator,
+      cellRenderer: dateRenderer('dd.MM.yyyy')
+    },
     {
       headerName: 'Akcia',
       field: 'action',

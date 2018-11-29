@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { DialogService } from '../../../shared/services/dialog.service';
 import { FileService } from '../../../shared/services/files.service';
 import { ColDef, GridOptions, CellClickedEvent } from 'ag-grid-community';
+import { dateComparator, dateRenderer } from '../../../shared/utils/items-util';
 
 @Component({
   selector: 'app-admin-events-list',
@@ -19,7 +20,15 @@ export class AdminEventsListComponent {
   selectedRows: any[] = [];
   columnDefs: ColDef[] = [
     { headerName: 'Nadpis', field: 'heading', checkboxSelection: true, minWidth: 250, headerCheckboxSelection: true },
-    { headerName: 'Dátum', field: 'date', suppressAutoSize: true, suppressSizeToFit: true, width: 150 },
+    {
+      headerName: 'Dátum',
+      field: 'date',
+      comparator: dateComparator,
+      cellRenderer: dateRenderer('dd.MM.yyyy HH:mm'),
+      suppressAutoSize: true,
+      suppressSizeToFit: true,
+      width: 150
+    },
     { headerName: 'Kapacita', field: 'capacity', suppressAutoSize: true, suppressSizeToFit: true, width: 100 },
     {
       headerName: 'Nahlásení',
@@ -60,7 +69,7 @@ export class AdminEventsListComponent {
     private fileService: FileService,
     private cd: ChangeDetectorRef
   ) {
-    this.events$ = eventsService.getEvents(ref => ref.orderBy('date', 'asc'));
+    this.events$ = eventsService.getEvents(ref => ref.orderBy('date', 'asc').startAt(new Date()));
   }
 
   editClicked({ event, data }: CellClickedEvent) {

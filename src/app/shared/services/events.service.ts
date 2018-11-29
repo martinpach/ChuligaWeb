@@ -3,7 +3,7 @@ import { AngularFirestore, QueryFn } from '@angular/fire/firestore';
 import { EventItem } from '../models';
 import { Observable } from 'rxjs';
 import { pluck, map } from 'rxjs/operators';
-import { formatDate } from '@angular/common';
+import { mapToRenderObject } from '../utils/items-util';
 
 @Injectable({
   providedIn: 'root'
@@ -16,17 +16,7 @@ export class EventsService {
     return this.db
       .collection<EventItem>('/events', queryFn)
       .snapshotChanges()
-      .pipe(
-        map(actions =>
-          actions.map(a => {
-            const data = a.payload.doc.data() as EventItem;
-            if (!data) return data;
-            const id = a.payload.doc.id;
-            const date = data.date ? formatDate(data.date.toDate(), 'dd.MM.yyyy HH:mm', 'en') : data.date;
-            return { ...data, id, date };
-          })
-        )
-      );
+      .pipe(map(data => mapToRenderObject(data)));
   }
 
   getEventItem(id: string): Observable<EventItem> {
