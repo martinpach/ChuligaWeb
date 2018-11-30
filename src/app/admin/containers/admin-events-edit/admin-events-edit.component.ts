@@ -13,7 +13,6 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./admin-events-edit.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-//TODO: very similar to news
 export class AdminEventsEditComponent {
   id: string;
   eventItem$: Observable<EventItem | {}>;

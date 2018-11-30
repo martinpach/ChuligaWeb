@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { FileService } from '../../../shared/services/files.service';
 import { DialogService } from '../../../shared/services/dialog.service';
 import { dateComparator, dateRenderer } from '../../../shared/utils/items-util';
+import { GridWrapper } from '../../../shared/utils/grid-wrapper';
 
 @Component({
   selector: 'app-admin-news-list',
@@ -14,7 +15,7 @@ import { dateComparator, dateRenderer } from '../../../shared/utils/items-util';
   styleUrls: ['./admin-news-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AdminNewsListComponent {
+export class AdminNewsListComponent extends GridWrapper {
   news$: Observable<NewsItem[]>;
   selectedRows: any[] = [];
   columnDefs: ColDef[] = [
@@ -41,24 +42,14 @@ export class AdminNewsListComponent {
     }
   ];
 
-  gridOptions: GridOptions = {
-    onGridSizeChanged: event => event.api.sizeColumnsToFit(),
-    enableSorting: true,
-    enableFilter: true,
-    domLayout: 'autoHeight',
-    suppressCellSelection: true,
-    rowSelection: 'multiple',
-    onSelectionChanged: this.onSelection.bind(this),
-    enableColResize: true
-  };
-
   constructor(
     private newsService: NewsService,
-    private cd: ChangeDetectorRef,
+    cd: ChangeDetectorRef,
     private router: Router,
     private fileService: FileService,
     private dialogService: DialogService
   ) {
+    super(cd);
     this.news$ = this.newsService.getNews(ref => ref.orderBy('date', 'desc'));
   }
 
@@ -67,11 +58,6 @@ export class AdminNewsListComponent {
     if (element.tagName === 'BUTTON') {
       this.router.navigate(['/admin', 'news', data.id, 'edit']);
     }
-  }
-
-  onSelection() {
-    this.selectedRows = this.gridOptions.api.getSelectedRows();
-    this.cd.markForCheck();
   }
 
   deleteClicked() {

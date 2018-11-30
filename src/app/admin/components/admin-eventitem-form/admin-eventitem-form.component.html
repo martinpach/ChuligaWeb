@@ -1,9 +1,9 @@
-<form *ngIf="eventItem" class="eventitem-form" (ngSubmit)="onSubmit(f)" #f="ngForm">
+<form *ngIf="eventItem" class="item-form" (ngSubmit)="onSubmit(f)" #f="ngForm">
   <mat-form-field> <input matInput name="heading" [ngModel]="eventItem.heading" type="text" placeholder="Nadpis" /> </mat-form-field>
   <label>Obsah</label>
   <app-ngx-editor
     [config]="wysiwygOptions"
-    class="eventitem-form__main-content"
+    class="item-form__main-content"
     [(ngModel)]="eventItem.description"
     [ngModelOptions]="{ standalone: true }"
   ></app-ngx-editor>
@@ -33,18 +33,11 @@
     <input matInput name="capacity" [ngModel]="eventItem.capacity" type="number" placeholder="Kapacita" />
   </mat-form-field>
   <label>Obrázok</label>
-  <div class="eventitem-form__upload-container"><ng-content></ng-content></div>
+  <div class="item-form__upload-container"><ng-content></ng-content></div>
   <mat-error *ngIf="!isValid">Hodnoty 'nadpis', 'dátum', 'hodina', 'minúta' a 'obsah' nesmú byť prázdne</mat-error>
   <mat-error *ngIf="isError">Nastala chyba. Skúste znova.</mat-error>
-  <button mat-flat-button color="primary" class="eventitem-form__submit-button" type="submit" [disabled]="isLoading">Publikovať</button>
-  <button
-    mat-button
-    color="accent"
-    type="button"
-    class="eventitem-form__cancel-button"
-    routerLink="/admin/events/list"
-    [disabled]="isLoading"
-  >
+  <button mat-flat-button color="primary" class="item-form__submit-button" type="submit" [disabled]="isLoading">Publikovať</button>
+  <button mat-button color="accent" type="button" class="item-form__cancel-button" routerLink="/admin/events/list" [disabled]="isLoading">
     Späť
   </button>
 </form>

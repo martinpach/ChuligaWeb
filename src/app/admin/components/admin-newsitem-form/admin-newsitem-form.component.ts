@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { ImageInfo, NewsItem } from '../../../shared/models';
 import { NgForm } from '@angular/forms';
+import { wysiwygOptions } from '../../../shared/utils/wysiwyg-util';
 
 @Component({
   selector: 'app-admin-newsitem-form',
@@ -29,21 +30,7 @@ export class AdminNewsitemFormComponent {
   @Output()
   imageDeleted = new EventEmitter<ImageInfo | any>();
 
-  wysiwygOptions = {
-    editable: true,
-    height: 'auto',
-    minHeight: '150px',
-    width: 'auto',
-    minWidth: '150px',
-    enableToolbar: true,
-    showToolbar: true,
-    toolbar: [
-      ['bold', 'italic', 'underline', 'strikeThrough'],
-      ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull', 'indent', 'outdent'],
-      ['horizontalLine', 'orderedList', 'unorderedList'],
-      ['link', 'video']
-    ]
-  };
+  wysiwygOptions = wysiwygOptions;
 
   onSubmit(f: NgForm) {
     if (!f.value.heading || !this.newsItem.description) {

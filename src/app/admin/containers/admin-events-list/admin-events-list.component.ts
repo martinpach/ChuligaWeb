@@ -5,8 +5,9 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { DialogService } from '../../../shared/services/dialog.service';
 import { FileService } from '../../../shared/services/files.service';
-import { ColDef, GridOptions, CellClickedEvent } from 'ag-grid-community';
+import { ColDef, CellClickedEvent } from 'ag-grid-community';
 import { dateComparator, dateRenderer } from '../../../shared/utils/items-util';
+import { GridWrapper } from '../../../shared/utils/grid-wrapper';
 
 @Component({
   selector: 'app-admin-events-list',
@@ -14,10 +15,8 @@ import { dateComparator, dateRenderer } from '../../../shared/utils/items-util';
   styleUrls: ['./admin-events-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-// TODO: similar to news
-export class AdminEventsListComponent {
+export class AdminEventsListComponent extends GridWrapper {
   events$: Observable<EventItem[]>;
-  selectedRows: any[] = [];
   columnDefs: ColDef[] = [
     { headerName: 'Nadpis', field: 'heading', checkboxSelection: true, minWidth: 250, headerCheckboxSelection: true },
     {
@@ -34,9 +33,10 @@ export class AdminEventsListComponent {
       headerName: 'Nahlásení',
       field: 'attendees.length',
       suppressAutoSize: true,
+      cellRenderer: ({ data }) => (data.attendees && data.attendees.length ? data.attendees.length : '0'),
       suppressSizeToFit: true,
       width: 100,
-      cellClass: ({ data }) => (data.capacity - data.attendees.length <= 5 ? 'warn-text' : '')
+      cellClass: ({ data }) => (data.capacity && data.attendees && data.capacity - data.attendees.length <= 5 ? 'warn-text' : '')
     },
     {
       headerName: 'Akcia',
@@ -51,24 +51,14 @@ export class AdminEventsListComponent {
     }
   ];
 
-  gridOptions: GridOptions = {
-    onGridSizeChanged: event => event.api.sizeColumnsToFit(),
-    enableSorting: true,
-    enableFilter: true,
-    domLayout: 'autoHeight',
-    suppressCellSelection: true,
-    rowSelection: 'multiple',
-    onSelectionChanged: this.onSelection.bind(this),
-    enableColResize: true
-  };
-
   constructor(
     private eventsService: EventsService,
     private router: Router,
     private dialogService: DialogService,
     private fileService: FileService,
-    private cd: ChangeDetectorRef
+    cd: ChangeDetectorRef
   ) {
+    super(cd);
     this.events$ = eventsService.getEvents(ref => ref.orderBy('date', 'asc').startAt(new Date()));
   }
 
@@ -77,11 +67,6 @@ export class AdminEventsListComponent {
     if (element.tagName === 'BUTTON') {
       this.router.navigate(['/admin', 'events', data.id, 'edit']);
     }
-  }
-
-  onSelection() {
-    this.selectedRows = this.gridOptions.api.getSelectedRows();
-    this.cd.markForCheck();
   }
 
   deleteClicked() {

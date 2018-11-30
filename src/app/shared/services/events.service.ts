@@ -8,7 +8,6 @@ import { mapToRenderObject } from '../utils/items-util';
 @Injectable({
   providedIn: 'root'
 })
-//TODO: same as NewsService
 export class EventsService {
   constructor(private db: AngularFirestore) {}
 

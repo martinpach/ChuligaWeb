@@ -1,0 +1,26 @@
+.item-form {
+  display: flex !important;
+  flex-direction: column !important;
+
+  label {
+    color: $grey !important;
+  }
+
+  &__main-content {
+    margin-bottom: 15px !important;
+  }
+
+  &__upload-container {
+    margin-bottom: 10px !important;
+  }
+
+  &__submit-button {
+    margin-top: 20px !important;
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+  }
+
+  &__cancel-button {
+    border: 1px solid $light !important;
+  }
+}
