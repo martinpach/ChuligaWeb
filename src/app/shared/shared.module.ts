@@ -10,7 +10,8 @@ import {
   MatDialogModule,
   MatDatepickerModule,
   MAT_DATE_FORMATS,
-  DateAdapter
+  DateAdapter,
+  MatSelectModule
 } from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatIconModule } from '@angular/material/icon';
@@ -54,6 +55,7 @@ import { MyDateAdapter } from './utils/my-date-adapter';
     MatIconModule,
     MatDatepickerModule,
     MatMomentDateModule,
+    MatSelectModule,
     MatDialogModule,
     NavigationComponent,
     NavigationBarComponent,

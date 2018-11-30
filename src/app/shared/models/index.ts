@@ -17,7 +17,15 @@ export interface NewsItem extends Item {
 
 export interface EventItem extends Item {
   capacity: number;
+  category: EventCategory;
   attendees: User[];
+}
+
+export enum EventCategory {
+  DK,
+  MONTESSORI,
+  RC,
+  GENERAL
 }
 
 export interface ServerFileInfo {

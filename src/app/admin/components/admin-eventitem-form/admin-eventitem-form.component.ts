@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
-import { EventItem, ImageInfo } from '../../../shared/models';
+import { EventItem, ImageInfo, EventCategory } from '../../../shared/models';
 import { NgForm } from '@angular/forms';
 import { wysiwygOptions } from '../../../shared/utils/wysiwyg-util';
 
@@ -12,6 +12,24 @@ import { wysiwygOptions } from '../../../shared/utils/wysiwyg-util';
 export class AdminEventitemFormComponent {
   isValid = true;
   wysiwygOptions = wysiwygOptions;
+  categories = [
+    {
+      label: 'Dom kreativity',
+      value: EventCategory.DK
+    },
+    {
+      label: 'Montessori',
+      value: EventCategory.MONTESSORI
+    },
+    {
+      label: 'Rodinné centrum',
+      value: EventCategory.RC
+    },
+    {
+      label: 'Všeobecné',
+      value: EventCategory.GENERAL
+    }
+  ];
 
   @Input()
   image: any;
@@ -53,7 +71,8 @@ export class AdminEventitemFormComponent {
       heading: <string>f.value.heading,
       description: <string>this.eventItem.description,
       date: this.eventItem.date,
-      capacity: Math.abs(f.value.capacity) || null
+      capacity: Math.abs(f.value.capacity) || null,
+      category: f.value.category || EventCategory.GENERAL
     };
 
     this.submitted.emit(this.eventItem);

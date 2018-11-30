@@ -32,6 +32,11 @@
   <mat-form-field class="small-input">
     <input matInput name="capacity" [ngModel]="eventItem.capacity" type="number" placeholder="Kapacita" />
   </mat-form-field>
+  <mat-form-field class="small-input">
+    <mat-select placeholder="Kategória" name="category" [ngModel]="eventItem.category">
+      <mat-option *ngFor="let category of categories" [value]="category.value">{{ category.label }}</mat-option>
+    </mat-select>
+  </mat-form-field>
   <label>Obrázok</label>
   <div class="item-form__upload-container"><ng-content></ng-content></div>
   <mat-error *ngIf="!isValid">Hodnoty 'nadpis', 'dátum', 'hodina', 'minúta' a 'obsah' nesmú byť prázdne</mat-error>
