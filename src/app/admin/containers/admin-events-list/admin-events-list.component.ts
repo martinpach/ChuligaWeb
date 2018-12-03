@@ -8,7 +8,6 @@ import { FileService } from '../../../shared/services/files.service';
 import { ColDef, CellClickedEvent } from 'ag-grid-community';
 import { dateComparator, dateRenderer } from '../../../shared/utils/items-util';
 import { GridWrapper } from '../../../shared/utils/grid-wrapper';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-events-list',

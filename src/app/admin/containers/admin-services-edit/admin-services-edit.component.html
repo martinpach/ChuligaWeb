@@ -1,0 +1,12 @@
+<h2>{{ heading }}</h2>
+
+<button *ngIf="!!id" mat-flat-button color="warn" class="delete-button" (click)="onServiceItemDelete()">Vymazať udalosť</button>
+<app-admin-serviceitem-form [isError]="isError" [isLoading]="isLoading" [serviceItem]="serviceItem$ | async" (submitted)="onSubmit($event)">
+  <app-upload *ngIf="!image.fromServer && !image.currentUpload" (fileUploaded)="onImageUploaded($event)"></app-upload>
+  <div *ngIf="image.fromServer || image.currentUpload" class="overlayed-element picture-wrapper" (click)="onImageDelete()">
+    <img *ngIf="image.fromServer" [src]="image.fromServer.url" /> <img *ngIf="image.currentUpload" [src]="image.currentUpload.base64" />
+    <div class="overlayed-element__overlay overlayed-element__overlay--warn">
+      <span> <mat-icon class="delete-icon">delete</mat-icon> </span>
+    </div>
+  </div>
+</app-admin-serviceitem-form>

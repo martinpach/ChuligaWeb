@@ -28,6 +28,20 @@ export enum EventCategory {
   GENERAL = 'V'
 }
 
+export interface ServiceItem {
+  id?: string;
+  name: string;
+  description: string;
+  picture: ServerImageInfo;
+  category: ServiceCategory;
+}
+
+export enum ServiceCategory {
+  S = 'školy',
+  P = 'verejnosť',
+  C = 'firmy'
+}
+
 export interface ServerFileInfo {
   name: string;
   url: string;

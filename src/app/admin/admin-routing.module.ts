@@ -8,6 +8,8 @@ import { AdminNewsEditComponent } from './containers/admin-news-edit/admin-news-
 import { AdminLoginComponent } from './containers/admin-login/admin-login.component';
 import { AdminEventsListComponent } from './containers/admin-events-list/admin-events-list.component';
 import { AdminEventsEditComponent } from './containers/admin-events-edit/admin-events-edit.component';
+import { AdminServicesListComponent } from './containers/admin-services/admin-services.component';
+import { AdminServicesEditComponent } from './containers/admin-services-edit/admin-services-edit.component';
 
 const adminRoutes: Routes = [
   {
@@ -44,7 +46,22 @@ const adminRoutes: Routes = [
         path: 'events/:id/edit',
         component: AdminEventsEditComponent
       },
-      { path: '6', component: AdminNewsListComponent }
+      {
+        path: 'services',
+        redirectTo: 'services/list'
+      },
+      {
+        path: 'services/list',
+        component: AdminServicesListComponent
+      },
+      {
+        path: 'services/new',
+        component: AdminServicesEditComponent
+      },
+      {
+        path: 'services/:id/edit',
+        component: AdminServicesEditComponent
+      }
     ]
   },
   {
