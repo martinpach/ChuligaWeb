@@ -8,6 +8,7 @@ import { FileService } from '../../../shared/services/files.service';
 import { ColDef, CellClickedEvent } from 'ag-grid-community';
 import { dateComparator, dateRenderer } from '../../../shared/utils/items-util';
 import { GridWrapper } from '../../../shared/utils/grid-wrapper';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-events-list',
@@ -19,6 +20,7 @@ export class AdminEventsListComponent extends GridWrapper {
   events$: Observable<EventItem[]>;
   columnDefs: ColDef[] = [
     { headerName: 'Nadpis', field: 'heading', checkboxSelection: true, minWidth: 250, headerCheckboxSelection: true },
+    { headerName: 'Kategória', field: 'category', suppressAutoSize: true, suppressSizeToFit: true, width: 100 },
     {
       headerName: 'Dátum',
       field: 'date',

@@ -22,10 +22,10 @@ export interface EventItem extends Item {
 }
 
 export enum EventCategory {
-  DK,
-  MONTESSORI,
-  RC,
-  GENERAL
+  DK = 'DK',
+  MONTESSORI = 'M',
+  RC = 'RC',
+  GENERAL = 'V'
 }
 
 export interface ServerFileInfo {
