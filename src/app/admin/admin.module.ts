@@ -16,6 +16,9 @@ import { AgGridModule } from 'ag-grid-angular';
 import { AdminServicesListComponent } from './containers/admin-services/admin-services.component';
 import { AdminServicesEditComponent } from './containers/admin-services-edit/admin-services-edit.component';
 import { AdminServiceitemFormComponent } from './components/admin-serviceitem-form/admin-serviceitem-form.component';
+import { AdminContactsListComponent } from './containers/admin-contacts-list/admin-contacts-list.component';
+import { AdminContactsEditComponent } from './containers/admin-contacts-edit/admin-contacts-edit.component';
+import { AdminContactFormComponent } from './components/admin-contact-form/admin-contact-form.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,10 @@ import { AdminServiceitemFormComponent } from './components/admin-serviceitem-fo
     AdminEventitemFormComponent,
     AdminServicesListComponent,
     AdminServicesEditComponent,
-    AdminServiceitemFormComponent
+    AdminServiceitemFormComponent,
+    AdminContactsListComponent,
+    AdminContactsEditComponent,
+    AdminContactFormComponent
   ],
   imports: [AdminRoutingModule, SharedModule, LayoutModule, MatButtonModule, MatIconModule, AgGridModule.withComponents([])]
 })

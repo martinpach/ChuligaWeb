@@ -42,6 +42,16 @@ export enum ServiceCategory {
   C = 'firmy'
 }
 
+export interface Contact {
+  id?: string;
+  firstName: string;
+  lastName: string;
+  description: string;
+  phone: string;
+  email: string;
+  picture: ServerImageInfo;
+}
+
 export interface ServerFileInfo {
   name: string;
   url: string;

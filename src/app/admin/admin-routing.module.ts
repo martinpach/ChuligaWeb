@@ -10,6 +10,8 @@ import { AdminEventsListComponent } from './containers/admin-events-list/admin-e
 import { AdminEventsEditComponent } from './containers/admin-events-edit/admin-events-edit.component';
 import { AdminServicesListComponent } from './containers/admin-services/admin-services.component';
 import { AdminServicesEditComponent } from './containers/admin-services-edit/admin-services-edit.component';
+import { AdminContactsListComponent } from './containers/admin-contacts-list/admin-contacts-list.component';
+import { AdminContactsEditComponent } from './containers/admin-contacts-edit/admin-contacts-edit.component';
 
 const adminRoutes: Routes = [
   {
@@ -61,6 +63,22 @@ const adminRoutes: Routes = [
       {
         path: 'services/:id/edit',
         component: AdminServicesEditComponent
+      },
+      {
+        path: 'contacts',
+        redirectTo: 'contacts/list'
+      },
+      {
+        path: 'contacts/list',
+        component: AdminContactsListComponent
+      },
+      {
+        path: 'contacts/new',
+        component: AdminContactsEditComponent
+      },
+      {
+        path: 'contacts/:id/edit',
+        component: AdminContactsEditComponent
       }
     ]
   },

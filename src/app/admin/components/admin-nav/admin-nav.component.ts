@@ -31,7 +31,7 @@ export class AdminNavComponent {
     },
     {
       label: 'Kontakt',
-      path: '/admin/6'
+      path: '/admin/contacts'
     }
   ];
 

@@ -1,53 +1,53 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { ServiceItem, ServerImageInfo, ImageInfo } from '../../../shared/models';
 import { Observable, of } from 'rxjs';
-import { ServicesService } from '../../../shared/services/services.service';
+import { Contact, ServerImageInfo, ImageInfo } from '../../../shared/models';
+import { ContactsService } from '../../../shared/services/contacts.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileService } from '../../../shared/services/files.service';
 import { DialogService } from '../../../shared/services/dialog.service';
 import { tap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-admin-services-edit',
-  templateUrl: './admin-services-edit.component.html',
-  styleUrls: ['./admin-services-edit.component.scss'],
+  selector: 'app-admin-contacts-edit',
+  templateUrl: './admin-contacts-edit.component.html',
+  styleUrls: ['./admin-contacts-edit.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AdminServicesEditComponent {
+export class AdminContactsEditComponent {
   id: string;
-  serviceItem$: Observable<ServiceItem | {}>;
+  contact$: Observable<Contact | {}>;
   isLoading = false;
   isError = false;
   deletedImage: ServerImageInfo;
   image: ImageInfo = {};
-  deleteMessage = 'Naozaj chcete vymazať túto službu?';
+  deleteMessage = 'Naozaj chcete vymazať tento kontakt?';
 
   constructor(
-    private servicesService: ServicesService,
+    private contactsService: ContactsService,
     private route: ActivatedRoute,
     private router: Router,
     private fileService: FileService,
     private dialogService: DialogService
   ) {
     this.id = route.snapshot.params['id'];
-    this.serviceItem$ = this.id
-      ? servicesService
-          .getServiceItem(this.id)
-          .pipe(tap((item: ServiceItem) => (this.image.fromServer = item && item.picture ? item.picture : undefined)))
+    this.contact$ = this.id
+      ? contactsService
+          .getContact(this.id)
+          .pipe(tap((item: Contact) => (this.image.fromServer = item && item.picture ? item.picture : undefined)))
       : of({});
   }
 
   get heading() {
-    return !!this.id ? 'ÚPRAVA SLUŽY' : 'NOVÁ SLUŽBA';
+    return !!this.id ? 'ÚPRAVA KONTAKTU' : 'NOVÝ KONTAKT';
   }
 
-  async onSubmit(serviceItem: ServiceItem) {
+  async onSubmit(contact: Contact) {
     this.onAsync();
     let promises = [];
     if (this.image.currentUpload) {
       const uploadedImage = await this.fileService.upload(this.image.currentUpload.file);
-      serviceItem = {
-        ...serviceItem,
+      contact = {
+        ...contact,
         picture: {
           url: await uploadedImage.ref.getDownloadURL(),
           name: uploadedImage.metadata.name
@@ -55,21 +55,21 @@ export class AdminServicesEditComponent {
       };
     }
     if (!this.id) {
-      promises = [this.servicesService.addServiceItem(serviceItem)];
+      promises = [this.contactsService.addContact(contact)];
     } else {
       if (this.deletedImage) {
-        serviceItem = {
-          ...serviceItem,
+        contact = {
+          ...contact,
           picture: null
         };
       }
       const deleteImagePromise = this.deletedImage ? this.fileService.delete(this.deletedImage.name) : Promise.resolve();
-      const updateServiceItemPromise = this.servicesService.updateServiceItem(this.id, serviceItem);
+      const updateServiceItemPromise = this.contactsService.updateContact(this.id, contact);
       promises = [deleteImagePromise, updateServiceItemPromise];
     }
 
     Promise.all(promises)
-      .then(() => this.router.navigate(['admin', 'services', 'list']))
+      .then(() => this.router.navigate(['admin', 'contacts', 'list']))
       .catch(() => this.onError());
   }
 
@@ -91,7 +91,7 @@ export class AdminServicesEditComponent {
     reader.readAsDataURL(image);
   }
 
-  onServiceItemDelete() {
+  onContactDelete() {
     this.dialogService
       .openConfirmDialog(this.deleteMessage)
       .afterClosed()
@@ -99,9 +99,9 @@ export class AdminServicesEditComponent {
         if (!res) return;
         this.onAsync();
         const deleteImagePromise = this.image.fromServer ? this.fileService.delete(this.image.fromServer.name) : Promise.resolve();
-        const deleteServiceItemPromise = this.servicesService.deleteServiceItem(this.id);
-        Promise.all([deleteImagePromise, deleteServiceItemPromise])
-          .then(() => this.router.navigate(['admin', 'services', 'list']))
+        const deleteContactPromise = this.contactsService.deleteContact(this.id);
+        Promise.all([deleteImagePromise, deleteContactPromise])
+          .then(() => this.router.navigate(['admin', 'contacts', 'list']))
           .catch(() => this.onError());
       });
   }
