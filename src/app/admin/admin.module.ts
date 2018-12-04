@@ -19,6 +19,7 @@ import { AdminServiceitemFormComponent } from './components/admin-serviceitem-fo
 import { AdminContactsListComponent } from './containers/admin-contacts-list/admin-contacts-list.component';
 import { AdminContactsEditComponent } from './containers/admin-contacts-edit/admin-contacts-edit.component';
 import { AdminContactFormComponent } from './components/admin-contact-form/admin-contact-form.component';
+import { AdminMainDescriptionComponent } from './containers/admin-main-description/admin-main-description.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AdminContactFormComponent } from './components/admin-contact-form/admin
     AdminServiceitemFormComponent,
     AdminContactsListComponent,
     AdminContactsEditComponent,
-    AdminContactFormComponent
+    AdminContactFormComponent,
+    AdminMainDescriptionComponent
   ],
   imports: [AdminRoutingModule, SharedModule, LayoutModule, MatButtonModule, MatIconModule, AgGridModule.withComponents([])]
 })

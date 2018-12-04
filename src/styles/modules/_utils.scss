@@ -1,0 +1,31 @@
+@mixin attr-x($attr, $attr-count: 10, $attr-steps: 10, $unit: '%') {
+  $attr-list: null;
+  @for $i from 1 through $attr-count {
+    $attr-value: $attr-steps * $i;
+
+    .#{$attr}#{$attr-value} {
+      #{$attr}: #{$attr-value}#{$unit};
+    }
+
+    $attr-list: append($attr-list, unquote('.#{$attr}-#{$attr-value}'), comma);
+  }
+
+  #{$attr-list} {
+    //append style to all classes
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.pull-right {
+  display: flex;
+  justify-self: flex-end;
+}
+
+@include attr-x('margin-top', 12, 1, 'em');

@@ -11,7 +11,8 @@ import {
   MatDatepickerModule,
   MAT_DATE_FORMATS,
   DateAdapter,
-  MatSelectModule
+  MatSelectModule,
+  MatSnackBarModule
 } from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatIconModule } from '@angular/material/icon';
@@ -64,6 +65,7 @@ import { MyDateAdapter } from './utils/my-date-adapter';
     UploadComponent,
     NgxEditorModule,
     MatConfirmDialogComponent,
+    MatSnackBarModule,
     EventComponent
   ],
   providers: [

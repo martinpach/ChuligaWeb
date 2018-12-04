@@ -3,6 +3,7 @@
 @import '~ag-grid-community/dist/styles/ag-grid.css';
 @import '~ag-grid-community/dist/styles/ag-theme-balham.css';
 @import '_item-form.scss';
+@import '_utils.scss';
 
 * {
   margin: 0;
@@ -62,6 +63,9 @@
 .container {
   max-width: 900px;
   margin: auto;
+  @media screen and (max-width: 899px) {
+    margin: 0 1em;
+  }
 }
 
 .edit-button {
