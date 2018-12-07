@@ -13,6 +13,7 @@ import { AdminServicesEditComponent } from './containers/admin-services-edit/adm
 import { AdminContactsListComponent } from './containers/admin-contacts-list/admin-contacts-list.component';
 import { AdminContactsEditComponent } from './containers/admin-contacts-edit/admin-contacts-edit.component';
 import { AdminMainDescriptionComponent } from './containers/admin-main-description/admin-main-description.component';
+import { AdminOthersNavComponent } from './components/admin-others-nav/admin-others-nav.component';
 
 const adminRoutes: Routes = [
   {
@@ -82,7 +83,11 @@ const adminRoutes: Routes = [
         component: AdminContactsEditComponent
       },
       {
-        path: 'mainDescription',
+        path: 'others',
+        component: AdminOthersNavComponent
+      },
+      {
+        path: 'others/mainDescription',
         component: AdminMainDescriptionComponent
       }
     ]

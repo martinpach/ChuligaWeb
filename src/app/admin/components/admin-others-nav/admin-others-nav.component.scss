@@ -1,0 +1,14 @@
+.sections {
+  display: flex;
+  justify-content: space-between;
+  button {
+    padding: 1em;
+  }
+
+  @media screen and (max-width: 560px) {
+    flex-direction: column;
+    button {
+      margin-bottom: 0.5em;
+    }
+  }
+}
