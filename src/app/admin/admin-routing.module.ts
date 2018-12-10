@@ -12,8 +12,8 @@ import { AdminServicesListComponent } from './containers/admin-services/admin-se
 import { AdminServicesEditComponent } from './containers/admin-services-edit/admin-services-edit.component';
 import { AdminContactsListComponent } from './containers/admin-contacts-list/admin-contacts-list.component';
 import { AdminContactsEditComponent } from './containers/admin-contacts-edit/admin-contacts-edit.component';
-import { AdminMainDescriptionComponent } from './containers/admin-main-description/admin-main-description.component';
 import { AdminOthersNavComponent } from './components/admin-others-nav/admin-others-nav.component';
+import { AdminOthersItemComponent } from './containers/admin-others-item/admin-others-item.component';
 
 const adminRoutes: Routes = [
   {
@@ -87,8 +87,8 @@ const adminRoutes: Routes = [
         component: AdminOthersNavComponent
       },
       {
-        path: 'others/mainDescription',
-        component: AdminMainDescriptionComponent
+        path: 'others/:id',
+        component: AdminOthersItemComponent
       }
     ]
   },

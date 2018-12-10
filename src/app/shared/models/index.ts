@@ -52,8 +52,9 @@ export interface Contact {
   picture: ServerImageInfo;
 }
 
-export interface MainDescription {
-  content: string;
+export interface OthersItem {
+  shortDescription?: string;
+  description: string;
 }
 
 export interface ServerFileInfo {

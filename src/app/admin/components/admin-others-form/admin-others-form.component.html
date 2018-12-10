@@ -1,0 +1,13 @@
+<form class="item-form" *ngIf="othersItem" (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <mat-form-field *ngIf="othersItem.shortDescription">
+    <textarea matInput name="shortDescription" [ngModel]="othersItem.shortDescription" placeholder="Krátky popis"></textarea>
+  </mat-form-field>
+  <label>Popis</label>
+  <app-ngx-editor
+    [config]="wysiwygOptions"
+    class="item-form__main-content"
+    [(ngModel)]="othersItem.description"
+    [ngModelOptions]="{ standalone: true }"
+  ></app-ngx-editor>
+  <button mat-flat-button color="primary" class="item-form__submit-button" type="submit" [disabled]="isLoading">Uložiť</button>
+</form>
