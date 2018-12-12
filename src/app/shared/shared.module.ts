@@ -12,7 +12,9 @@ import {
   MAT_DATE_FORMATS,
   DateAdapter,
   MatSelectModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatMenuModule,
+  MatCheckboxModule
 } from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatIconModule } from '@angular/material/icon';
@@ -58,6 +60,8 @@ import { MyDateAdapter } from './utils/my-date-adapter';
     MatMomentDateModule,
     MatSelectModule,
     MatDialogModule,
+    MatMenuModule,
+    MatCheckboxModule,
     NavigationComponent,
     NavigationBarComponent,
     NavigationItemDirective,

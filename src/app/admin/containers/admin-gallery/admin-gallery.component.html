@@ -1,0 +1,33 @@
+<div *ngIf="(album$ | async) as album">
+  <div class="gallery-header margin-top1">
+    <div class="gallery-header__left">
+      <button mat-icon-button *ngIf="album?.parentId" (click)="navigateToParent(album.parentId)"><mat-icon>arrow_back</mat-icon></button>
+      <h2 class="margin-left1 margin-right1">{{ album.name }}</h2>
+    </div>
+    <div>
+      <button mat-mini-fab color="primary" [matMenuTriggerFor]="menu"><mat-icon>add</mat-icon></button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>photo_library</mat-icon>
+          <span>galéria</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>photo</mat-icon>
+          <span>obrázky</span>
+        </button>
+      </mat-menu>
+      <button mat-mini-fab color="warn" disabled class="margin-left1"><mat-icon>delete</mat-icon></button>
+    </div>
+  </div>
+  <div class="folders-wrapper">
+    <button *ngFor="let subAlbum of album.childrens" mat-stroked-button [routerLink]="['/admin', 'gallery', subAlbum.id]">
+      {{ subAlbum.name }}
+    </button>
+  </div>
+  <div class="gallery-wrapper" gallerize selector=".gallery-img">
+    <div *ngFor="let picture of album.pictures" class="selectable">
+      <mat-checkbox></mat-checkbox>
+      <img class="gallery-img" [src]="picture" [attr.imageSrc]="picture" [attr.thumbSrc]="picture" />
+    </div>
+  </div>
+</div>

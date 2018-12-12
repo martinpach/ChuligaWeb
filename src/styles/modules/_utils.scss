@@ -4,7 +4,7 @@
     $attr-value: $attr-steps * $i;
 
     .#{$attr}#{$attr-value} {
-      #{$attr}: #{$attr-value}#{$unit};
+      #{$attr}: #{$attr-value}#{$unit} !important;
     }
 
     $attr-list: append($attr-list, unquote('.#{$attr}-#{$attr-value}'), comma);
@@ -29,3 +29,6 @@
 }
 
 @include attr-x('margin-top', 12, 1, 'em');
+@include attr-x('margin-bottom', 12, 1, 'em');
+@include attr-x('margin-left', 12, 1, 'em');
+@include attr-x('margin-right', 12, 1, 'em');

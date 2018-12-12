@@ -87,3 +87,12 @@
   color: $warn;
   font-weight: bold;
 }
+
+.selectable {
+  position: relative;
+  mat-checkbox {
+    position: absolute;
+    z-index: 200;
+    background-color: $white;
+  }
+}

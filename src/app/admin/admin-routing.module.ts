@@ -14,6 +14,7 @@ import { AdminContactsListComponent } from './containers/admin-contacts-list/adm
 import { AdminContactsEditComponent } from './containers/admin-contacts-edit/admin-contacts-edit.component';
 import { AdminOthersNavComponent } from './components/admin-others-nav/admin-others-nav.component';
 import { AdminOthersItemComponent } from './containers/admin-others-item/admin-others-item.component';
+import { AdminGalleryComponent } from './containers/admin-gallery/admin-gallery.component';
 
 const adminRoutes: Routes = [
   {
@@ -89,6 +90,14 @@ const adminRoutes: Routes = [
       {
         path: 'others/:id',
         component: AdminOthersItemComponent
+      },
+      {
+        path: 'gallery',
+        component: AdminGalleryComponent
+      },
+      {
+        path: 'gallery/:id',
+        component: AdminGalleryComponent
       }
     ]
   },

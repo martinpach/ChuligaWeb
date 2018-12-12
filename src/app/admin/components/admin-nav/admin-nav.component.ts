@@ -23,7 +23,7 @@ export class AdminNavComponent {
     },
     {
       label: 'Galéria',
-      path: '/admin/5'
+      path: '/admin/gallery'
     },
     {
       label: 'Kontakt',

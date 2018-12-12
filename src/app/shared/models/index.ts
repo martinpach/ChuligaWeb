@@ -73,3 +73,11 @@ export interface LocalImageInfo {
   file: File;
   base64: any;
 }
+
+export interface GalleryAlbum {
+  id: string;
+  parentId?: string;
+  name?: string;
+  childrens?: { id: string; name: string }[];
+  pictures?: string[];
+}

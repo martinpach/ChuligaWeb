@@ -22,6 +22,7 @@ import { AdminContactFormComponent } from './components/admin-contact-form/admin
 import { AdminOthersNavComponent } from './components/admin-others-nav/admin-others-nav.component';
 import { AdminOthersItemComponent } from './containers/admin-others-item/admin-others-item.component';
 import { AdminOthersFormComponent } from './components/admin-others-form/admin-others-form.component';
+import { AdminGalleryComponent } from './containers/admin-gallery/admin-gallery.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { AdminOthersFormComponent } from './components/admin-others-form/admin-o
     AdminContactFormComponent,
     AdminOthersNavComponent,
     AdminOthersItemComponent,
-    AdminOthersFormComponent
+    AdminOthersFormComponent,
+    AdminGalleryComponent
   ],
   imports: [AdminRoutingModule, SharedModule, LayoutModule, MatButtonModule, MatIconModule, AgGridModule.withComponents([])]
 })
