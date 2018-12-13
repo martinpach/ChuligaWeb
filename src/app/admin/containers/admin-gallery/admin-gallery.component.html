@@ -16,7 +16,15 @@
           <span>obrázky</span>
         </button>
       </mat-menu>
-      <button mat-mini-fab color="warn" disabled class="margin-left1"><mat-icon>delete</mat-icon></button>
+      <button
+        mat-mini-fab
+        color="warn"
+        [disabled]="isEmpty(picturesForDeletion)"
+        class="margin-left1"
+        (click)="deleteImages(album.pictures)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
     </div>
   </div>
   <div class="folders-wrapper">
@@ -26,8 +34,8 @@
   </div>
   <div class="gallery-wrapper" gallerize selector=".gallery-img">
     <div *ngFor="let picture of album.pictures" class="selectable">
-      <mat-checkbox></mat-checkbox>
-      <img class="gallery-img" [src]="picture" [attr.imageSrc]="picture" [attr.thumbSrc]="picture" />
+      <mat-checkbox (change)="pictureChecked($event, picture)"></mat-checkbox>
+      <img class="gallery-img" [src]="picture.url" [attr.imageSrc]="picture.url" [attr.thumbSrc]="picture.url" />
     </div>
   </div>
 </div>

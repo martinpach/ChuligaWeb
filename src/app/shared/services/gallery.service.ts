@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { GalleryAlbum } from '../models';
+import { GalleryAlbum, ServerImageInfo } from '../models';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,5 +12,9 @@ export class GalleryService {
   getAlbum(id: string): Observable<GalleryAlbum> {
     //TODO: change it to gallery later
     return this.db.doc<GalleryAlbum>(`/galery/${id}`).valueChanges();
+  }
+
+  updateImages(id: string, pictures: ServerImageInfo[]): Promise<any> {
+    return this.db.doc(`/galery/${id}`).update({ pictures });
   }
 }
