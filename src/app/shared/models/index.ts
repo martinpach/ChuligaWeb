@@ -75,9 +75,9 @@ export interface LocalImageInfo {
 }
 
 export interface GalleryAlbum {
-  id: string;
+  id?: string;
   parentId?: string;
-  name?: string;
-  childrens?: { id: string; name: string }[];
-  pictures?: ServerImageInfo[];
+  name: string;
+  childrens: { id: string; name: string }[];
+  pictures: ServerImageInfo[];
 }

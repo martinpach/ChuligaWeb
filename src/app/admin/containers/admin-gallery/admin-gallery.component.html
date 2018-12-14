@@ -7,9 +7,9 @@
     <div>
       <button mat-mini-fab color="primary" [matMenuTriggerFor]="menu"><mat-icon>add</mat-icon></button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>
+        <button mat-menu-item (click)="addAlbum()">
           <mat-icon>photo_library</mat-icon>
-          <span>galéria</span>
+          <span>album</span>
         </button>
         <button mat-menu-item>
           <mat-icon>photo</mat-icon>

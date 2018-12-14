@@ -27,15 +27,18 @@ import { UploadComponent } from './components/upload/upload.component';
 import { MatConfirmDialogComponent } from './components/mat-confirm-dialog/mat-confirm-dialog.component';
 import { EventComponent } from './components/event/event.component';
 import { MyDateAdapter } from './utils/my-date-adapter';
+import { MatNewAlbumDialogComponent } from './components/mat-new-album-dialog/mat-new-album-dialog.component';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
     MatDatepickerModule,
     MatMomentDateModule,
+    MatInputModule,
     MatDialogModule
   ],
   declarations: [
@@ -45,9 +48,10 @@ import { MyDateAdapter } from './utils/my-date-adapter';
     NewsItemComponent,
     UploadComponent,
     MatConfirmDialogComponent,
-    EventComponent
+    EventComponent,
+    MatNewAlbumDialogComponent
   ],
-  entryComponents: [MatConfirmDialogComponent],
+  entryComponents: [MatConfirmDialogComponent, MatNewAlbumDialogComponent],
   exports: [
     CommonModule,
     FormsModule,

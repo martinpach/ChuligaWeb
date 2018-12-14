@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GalleryService } from '../../../shared/services/gallery.service';
 import { GalleryAlbum, ServerImageInfo } from '../../../shared/models';
 import { Observable, Subscription } from 'rxjs';
-import { MatCheckboxChange } from '@angular/material';
+import { MatCheckboxChange, MatSnackBar } from '@angular/material';
 import { FileService } from '../../../shared/services/files.service';
 import { DialogService } from '../../../shared/services/dialog.service';
 
@@ -26,7 +26,8 @@ export class AdminGalleryComponent implements OnDestroy {
     private router: Router,
     private fileService: FileService,
     private cd: ChangeDetectorRef,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private snackBar: MatSnackBar
   ) {
     this.idSubscription = route.params.subscribe(({ id }) => {
       this.id = id || 'root';
@@ -69,6 +70,27 @@ export class AdminGalleryComponent implements OnDestroy {
         await Object.keys(this.picturesForDeletion).forEach(key => this.fileService.delete(key));
         this.picturesForDeletion = {};
         this.cd.markForCheck();
+      });
+  }
+
+  addAlbum() {
+    this.dialogService
+      .openNewAlbumDialog()
+      .afterClosed()
+      .subscribe(async (albumName: string) => {
+        if (!albumName) return;
+        const newAlbum: GalleryAlbum = {
+          name: albumName,
+          parentId: this.id,
+          childrens: [],
+          pictures: []
+        };
+        try {
+          await this.galleryService.createAlbum(newAlbum);
+          this.snackBar.open('Album bol vytvorený!', null, { duration: 2000 });
+        } catch (e) {
+          this.snackBar.open('Niečo sa pokazilo. Skúste znova.', null, { duration: 3000 });
+        }
       });
   }
 
