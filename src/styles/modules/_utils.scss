@@ -28,6 +28,14 @@
   justify-self: flex-end;
 }
 
+.hidden {
+  display: none !important;
+}
+
+.visible {
+  display: block !important;
+}
+
 @include attr-x('margin-top', 12, 1, 'em');
 @include attr-x('margin-bottom', 12, 1, 'em');
 @include attr-x('margin-left', 12, 1, 'em');

@@ -9,18 +9,19 @@ import { mapToRenderObject } from '../utils/items-util';
   providedIn: 'root'
 })
 export class EventsService {
+  basePath = '/events';
   constructor(private db: AngularFirestore) {}
 
   getEvents(queryFn: QueryFn): Observable<EventItem[]> {
     return this.db
-      .collection<EventItem>('/events', queryFn)
+      .collection<EventItem>(this.basePath, queryFn)
       .snapshotChanges()
       .pipe(map(data => mapToRenderObject(data)));
   }
 
   getEventItem(id: string): Observable<EventItem> {
     return this.db
-      .doc<EventItem>(`/events/${id}`)
+      .doc<EventItem>(`${this.basePath}/${id}`)
       .valueChanges()
       .pipe(
         map(item => {
@@ -33,26 +34,26 @@ export class EventsService {
 
   getEventsCount(): Observable<number> {
     return this.db
-      .doc('/counts/events')
+      .doc(`/counts${this.basePath}`)
       .valueChanges()
       .pipe(pluck('count'));
   }
 
   addEventItem(eventItem: EventItem) {
-    return this.db.collection('/events').add(eventItem);
+    return this.db.collection(this.basePath).add(eventItem);
   }
 
   updateEventItem(id: string, eventItem: EventItem) {
-    return this.db.doc(`/events/${id}`).update(eventItem);
+    return this.db.doc(`${this.basePath}/${id}`).update(eventItem);
   }
 
   deleteEventItem(id: string) {
-    return this.db.doc(`/events/${id}`).delete();
+    return this.db.doc(`${this.basePath}/${id}`).delete();
   }
 
   deleteEvents(ids: string[]) {
     const batch = this.db.firestore.batch();
-    ids.forEach(id => batch.delete(this.db.firestore.doc(`/events/${id}`)));
+    ids.forEach(id => batch.delete(this.db.firestore.doc(`${this.basePath}/${id}`)));
     return batch.commit();
   }
 }

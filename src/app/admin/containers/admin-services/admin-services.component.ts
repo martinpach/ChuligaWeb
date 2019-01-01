@@ -60,7 +60,7 @@ export class AdminServicesListComponent extends GridWrapper {
         await this.servicesService.deleteServices(this.selectedRows.map(row => row.id));
         this.selectedRows.forEach((row: ServiceItem) => {
           if (!row.picture || !row.picture.name) return;
-          this.fileService.delete(row.picture.name);
+          this.fileService.delete(row.picture.name, 'services/');
         });
         this.gridOptions.api.deselectAll();
       });

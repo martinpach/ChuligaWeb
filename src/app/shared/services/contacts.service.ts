@@ -9,34 +9,35 @@ import { mapToRenderObject } from '../utils/items-util';
   providedIn: 'root'
 })
 export class ContactsService {
+  basePath = '/contacts';
   constructor(private db: AngularFirestore) {}
 
   getContacts(): Observable<Contact[]> {
     return this.db
-      .collection<Contact>('/contacts')
+      .collection<Contact>(this.basePath)
       .snapshotChanges()
       .pipe(map(data => mapToRenderObject(data)));
   }
 
   getContact(id: string): Observable<Contact> {
-    return this.db.doc<Contact>(`/contacts/${id}`).valueChanges();
+    return this.db.doc<Contact>(`${this.basePath}/${id}`).valueChanges();
   }
 
   addContact(contact: Contact) {
-    return this.db.collection('/contacts').add(contact);
+    return this.db.collection(this.basePath).add(contact);
   }
 
   updateContact(id: string, contact: Contact) {
-    return this.db.doc(`/contacts/${id}`).update(contact);
+    return this.db.doc(`${this.basePath}/${id}`).update(contact);
   }
 
   deleteContact(id: string) {
-    return this.db.doc(`/contacts/${id}`).delete();
+    return this.db.doc(`${this.basePath}/${id}`).delete();
   }
 
   deleteContacts(ids: string[]) {
     const batch = this.db.firestore.batch();
-    ids.forEach(id => batch.delete(this.db.firestore.doc(`/contacts/${id}`)));
+    ids.forEach(id => batch.delete(this.db.firestore.doc(`${this.basePath}/${id}`)));
     return batch.commit();
   }
 }

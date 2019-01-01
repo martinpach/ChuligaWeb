@@ -1,6 +1,7 @@
 .gallery-wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(80px, 150px));
+  grid-template-columns: repeat(auto-fit, 200px);
+  align-items: center;
   grid-gap: 1em;
   justify-content: center;
 }
@@ -30,4 +31,8 @@
 img {
   display: block;
   width: 100%;
+}
+
+input[type='file'] {
+  display: none;
 }

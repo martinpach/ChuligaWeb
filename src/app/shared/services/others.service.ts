@@ -7,13 +7,14 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class OthersService {
+  basePath: '/others';
   constructor(private db: AngularFirestore) {}
 
   save(id: string, othersItem: OthersItem) {
-    return this.db.doc(`/others/${id}`).update(othersItem);
+    return this.db.doc(`${this.basePath}/${id}`).update(othersItem);
   }
 
   getOthersItem(id: string): Observable<OthersItem> {
-    return this.db.doc<OthersItem>(`/others/${id}`).valueChanges();
+    return this.db.doc<OthersItem>(`${this.basePath}/${id}`).valueChanges();
   }
 }

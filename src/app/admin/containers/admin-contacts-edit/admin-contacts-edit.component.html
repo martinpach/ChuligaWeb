@@ -1,4 +1,4 @@
-<h2>{{ heading }}</h2>
+<h2 class="margin-top1 text-center">{{ heading }}</h2>
 
 <button *ngIf="!!id" mat-flat-button color="warn" class="delete-button" (click)="onContactDelete()">Vymazať kontakt</button>
 <app-admin-contact-form [isError]="isError" [isLoading]="isLoading" [contact]="contact$ | async" (submitted)="onSubmit($event)">

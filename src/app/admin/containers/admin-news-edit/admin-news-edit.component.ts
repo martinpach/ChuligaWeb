@@ -21,6 +21,7 @@ export class AdminNewsEditComponent {
   deletedImage: ServerImageInfo;
   image: ImageInfo = {};
   deleteMessage = 'Naozaj chcete vymazať túto aktualitu?';
+  imgFolder = 'news/';
 
   constructor(
     private newsService: NewsService,
@@ -45,7 +46,7 @@ export class AdminNewsEditComponent {
     this.onAsync();
     let promises = [];
     if (this.image.currentUpload) {
-      const uploadedImage = await this.fileService.upload(this.image.currentUpload.file);
+      const uploadedImage = await this.fileService.upload(this.image.currentUpload.file, this.imgFolder);
       newsItem = {
         ...newsItem,
         picture: {
@@ -63,7 +64,7 @@ export class AdminNewsEditComponent {
           picture: null
         };
       }
-      const deleteImagePromise = this.deletedImage ? this.fileService.delete(this.deletedImage.name) : Promise.resolve();
+      const deleteImagePromise = this.deletedImage ? this.fileService.delete(this.deletedImage.name, this.imgFolder) : Promise.resolve();
       const updateNewsItemPromise = this.newsService.updateNewsItem(this.id, newsItem);
       promises = [deleteImagePromise, updateNewsItemPromise];
     }
@@ -98,7 +99,9 @@ export class AdminNewsEditComponent {
       .subscribe((res: boolean) => {
         if (!res) return;
         this.onAsync();
-        const deleteImagePromise = this.image.fromServer ? this.fileService.delete(this.image.fromServer.name) : Promise.resolve();
+        const deleteImagePromise = this.image.fromServer
+          ? this.fileService.delete(this.image.fromServer.name, this.imgFolder)
+          : Promise.resolve();
         const deleteNewsItemPromise = this.newsService.deleteNewsItem(this.id);
         Promise.all([deleteImagePromise, deleteNewsItemPromise])
           .then(() => this.router.navigate(['admin', 'news', 'list']))

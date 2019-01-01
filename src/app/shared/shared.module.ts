@@ -14,7 +14,8 @@ import {
   MatSelectModule,
   MatSnackBarModule,
   MatMenuModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatProgressBarModule
 } from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatIconModule } from '@angular/material/icon';
@@ -28,6 +29,7 @@ import { MatConfirmDialogComponent } from './components/mat-confirm-dialog/mat-c
 import { EventComponent } from './components/event/event.component';
 import { MyDateAdapter } from './utils/my-date-adapter';
 import { MatNewAlbumDialogComponent } from './components/mat-new-album-dialog/mat-new-album-dialog.component';
+import { SplitPipe } from './pipes/split.pipe';
 
 @NgModule({
   imports: [
@@ -49,7 +51,8 @@ import { MatNewAlbumDialogComponent } from './components/mat-new-album-dialog/ma
     UploadComponent,
     MatConfirmDialogComponent,
     EventComponent,
-    MatNewAlbumDialogComponent
+    MatNewAlbumDialogComponent,
+    SplitPipe
   ],
   entryComponents: [MatConfirmDialogComponent, MatNewAlbumDialogComponent],
   exports: [
@@ -74,7 +77,9 @@ import { MatNewAlbumDialogComponent } from './components/mat-new-album-dialog/ma
     NgxEditorModule,
     MatConfirmDialogComponent,
     MatSnackBarModule,
-    EventComponent
+    MatProgressBarModule,
+    EventComponent,
+    SplitPipe
   ],
   providers: [
     { provide: DateAdapter, useClass: MyDateAdapter },

@@ -9,41 +9,42 @@ import { mapToRenderObject } from '../utils/items-util';
   providedIn: 'root'
 })
 export class NewsService {
+  basePath = '/news';
   constructor(private db: AngularFirestore) {}
 
   getNews(queryFn: QueryFn): Observable<NewsItem[]> {
     return this.db
-      .collection<NewsItem>('/news', queryFn)
+      .collection<NewsItem>(this.basePath, queryFn)
       .snapshotChanges()
       .pipe(map(data => mapToRenderObject(data)));
   }
 
   getNewsItem(id: string): Observable<NewsItem> {
-    return this.db.doc<NewsItem>(`/news/${id}`).valueChanges();
+    return this.db.doc<NewsItem>(`${this.basePath}/${id}`).valueChanges();
   }
 
   getNewsCount(): Observable<number> {
     return this.db
-      .doc('/counts/news')
+      .doc(`/counts${this.basePath}`)
       .valueChanges()
       .pipe(pluck('count'));
   }
 
   addNewsItem(newsItem: NewsItem) {
-    return this.db.collection('/news').add(newsItem);
+    return this.db.collection(this.basePath).add(newsItem);
   }
 
   updateNewsItem(id: string, newsItem: NewsItem) {
-    return this.db.doc(`/news/${id}`).update(newsItem);
+    return this.db.doc(`${this.basePath}/${id}`).update(newsItem);
   }
 
   deleteNewsItem(id: string) {
-    return this.db.doc(`/news/${id}`).delete();
+    return this.db.doc(`${this.basePath}/${id}`).delete();
   }
 
   deleteNews(ids: string[]) {
     const batch = this.db.firestore.batch();
-    ids.forEach(id => batch.delete(this.db.firestore.doc(`/news/${id}`)));
+    ids.forEach(id => batch.delete(this.db.firestore.doc(`${this.basePath}/${id}`)));
     return batch.commit();
   }
 }

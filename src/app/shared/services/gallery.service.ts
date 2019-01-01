@@ -1,25 +1,49 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { GalleryAlbum, ServerImageInfo } from '../models';
+import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
+import { GalleryAlbum } from '../models';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import * as firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GalleryService {
+  path = '/gallery';
   constructor(private db: AngularFirestore) {}
 
   getAlbum(id: string): Observable<GalleryAlbum> {
-    //TODO: change it to gallery later
-    return this.db.doc<GalleryAlbum>(`/galery/${id}`).valueChanges();
+    return this.db.doc<GalleryAlbum>(`${this.path}/${id}`).valueChanges();
   }
 
-  createAlbum(album: GalleryAlbum): Promise<any> {
-    return this.db.collection('/galery').add(album);
+  createAlbum(album: GalleryAlbum): Promise<DocumentReference> {
+    return this.db.collection(this.path).add(album);
   }
 
-  updateImages(id: string, pictures: ServerImageInfo[]): Promise<any> {
-    return this.db.doc(`/galery/${id}`).update({ pictures });
+  deleteAlbum(id: string) {
+    return this.db.doc(`${this.path}/${id}`).delete();
+  }
+
+  addImages(id: string, pictures: string[]): Promise<any> {
+    return this.db.doc(`${this.path}/${id}`).update({
+      pictures: firebase.firestore.FieldValue.arrayUnion(...pictures)
+    });
+  }
+
+  deleteImages(id: string, pictures: string[]) {
+    return this.db.doc(`${this.path}/${id}`).update({
+      pictures: firebase.firestore.FieldValue.arrayRemove(...pictures)
+    });
+  }
+
+  addChild(id: string, child: string) {
+    return this.db.doc(`${this.path}/${id}`).update({
+      childrens: firebase.firestore.FieldValue.arrayUnion(child)
+    });
+  }
+
+  deleteChild(id: string, child: string) {
+    return this.db.doc(`${this.path}/${id}`).update({
+      childrens: firebase.firestore.FieldValue.arrayRemove(child)
+    });
   }
 }

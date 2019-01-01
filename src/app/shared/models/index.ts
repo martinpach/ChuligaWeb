@@ -78,6 +78,6 @@ export interface GalleryAlbum {
   id?: string;
   parentId?: string;
   name: string;
-  childrens: { id: string; name: string }[];
-  pictures: ServerImageInfo[];
+  childrens: string[];
+  pictures: string[];
 }

@@ -21,6 +21,7 @@ export class AdminServicesEditComponent {
   deletedImage: ServerImageInfo;
   image: ImageInfo = {};
   deleteMessage = 'Naozaj chcete vymazať túto službu?';
+  imgFolder = 'services/';
 
   constructor(
     private servicesService: ServicesService,
@@ -45,7 +46,7 @@ export class AdminServicesEditComponent {
     this.onAsync();
     let promises = [];
     if (this.image.currentUpload) {
-      const uploadedImage = await this.fileService.upload(this.image.currentUpload.file);
+      const uploadedImage = await this.fileService.upload(this.image.currentUpload.file, this.imgFolder);
       serviceItem = {
         ...serviceItem,
         picture: {
@@ -63,7 +64,7 @@ export class AdminServicesEditComponent {
           picture: null
         };
       }
-      const deleteImagePromise = this.deletedImage ? this.fileService.delete(this.deletedImage.name) : Promise.resolve();
+      const deleteImagePromise = this.deletedImage ? this.fileService.delete(this.deletedImage.name, this.imgFolder) : Promise.resolve();
       const updateServiceItemPromise = this.servicesService.updateServiceItem(this.id, serviceItem);
       promises = [deleteImagePromise, updateServiceItemPromise];
     }
@@ -98,7 +99,9 @@ export class AdminServicesEditComponent {
       .subscribe((res: boolean) => {
         if (!res) return;
         this.onAsync();
-        const deleteImagePromise = this.image.fromServer ? this.fileService.delete(this.image.fromServer.name) : Promise.resolve();
+        const deleteImagePromise = this.image.fromServer
+          ? this.fileService.delete(this.image.fromServer.name, this.imgFolder)
+          : Promise.resolve();
         const deleteServiceItemPromise = this.servicesService.deleteServiceItem(this.id);
         Promise.all([deleteImagePromise, deleteServiceItemPromise])
           .then(() => this.router.navigate(['admin', 'services', 'list']))

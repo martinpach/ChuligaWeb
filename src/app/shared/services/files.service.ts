@@ -7,13 +7,20 @@ import * as firebase from 'firebase';
 export class FileService {
   private basePath: string = '/uploads';
 
-  upload(file: File) {
+  upload(file: File, folder = '') {
     const storageRef = firebase.storage().ref();
-    return storageRef.child(`${this.basePath}/${file.name}`).put(file);
+    return storageRef.child(`${this.basePath}/${folder}${new Date().getTime()}_${file.name}`).put(file);
   }
 
-  delete(name: string) {
+  delete(name: string, folder = '') {
     const storageRef = firebase.storage().ref();
-    return storageRef.child(`${this.basePath}/${name}`).delete();
+    return storageRef.child(`${this.basePath}/${folder}${name}`).delete();
+  }
+
+  deleteByUrl(url: string) {
+    return firebase
+      .storage()
+      .refFromURL(url)
+      .delete();
   }
 }

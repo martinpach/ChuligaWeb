@@ -21,6 +21,7 @@ export class AdminContactsEditComponent {
   deletedImage: ServerImageInfo;
   image: ImageInfo = {};
   deleteMessage = 'Naozaj chcete vymazať tento kontakt?';
+  imgFolder = 'contacts/';
 
   constructor(
     private contactsService: ContactsService,
@@ -45,7 +46,7 @@ export class AdminContactsEditComponent {
     this.onAsync();
     let promises = [];
     if (this.image.currentUpload) {
-      const uploadedImage = await this.fileService.upload(this.image.currentUpload.file);
+      const uploadedImage = await this.fileService.upload(this.image.currentUpload.file, this.imgFolder);
       contact = {
         ...contact,
         picture: {
@@ -63,7 +64,7 @@ export class AdminContactsEditComponent {
           picture: null
         };
       }
-      const deleteImagePromise = this.deletedImage ? this.fileService.delete(this.deletedImage.name) : Promise.resolve();
+      const deleteImagePromise = this.deletedImage ? this.fileService.delete(this.deletedImage.name, this.imgFolder) : Promise.resolve();
       const updateServiceItemPromise = this.contactsService.updateContact(this.id, contact);
       promises = [deleteImagePromise, updateServiceItemPromise];
     }
@@ -98,7 +99,9 @@ export class AdminContactsEditComponent {
       .subscribe((res: boolean) => {
         if (!res) return;
         this.onAsync();
-        const deleteImagePromise = this.image.fromServer ? this.fileService.delete(this.image.fromServer.name) : Promise.resolve();
+        const deleteImagePromise = this.image.fromServer
+          ? this.fileService.delete(this.image.fromServer.name, this.imgFolder)
+          : Promise.resolve();
         const deleteContactPromise = this.contactsService.deleteContact(this.id);
         Promise.all([deleteImagePromise, deleteContactPromise])
           .then(() => this.router.navigate(['admin', 'contacts', 'list']))

@@ -17,8 +17,10 @@ export class AdminGalleryComponent implements OnDestroy {
   id: string;
   idSubscription: Subscription;
   album$: Observable<GalleryAlbum>;
-  picturesForDeletion: { [key: string]: ServerImageInfo } = { a: { name: 'sdas', url: 'fsafa' } };
-  deleteMessage = 'Naozaj chcete vymazať zvolené položky?';
+  picturesForDeletion: string[];
+  deleteImagesMessage = 'Naozaj chcete vymazať zvolené položky?';
+  picturesFolder: string;
+  loading = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,7 +34,8 @@ export class AdminGalleryComponent implements OnDestroy {
     this.idSubscription = route.params.subscribe(({ id }) => {
       this.id = id || 'root';
       this.album$ = this.galleryService.getAlbum(this.id);
-      this.picturesForDeletion = {};
+      this.picturesForDeletion = [];
+      this.picturesFolder = `gallery/${this.id}/`;
     });
   }
 
@@ -44,32 +47,38 @@ export class AdminGalleryComponent implements OnDestroy {
     }
   }
 
-  isEmpty(obj: Object) {
-    return !Object.keys(obj).length;
-  }
-
-  pictureChecked(event: MatCheckboxChange, picture: ServerImageInfo) {
+  pictureChecked(event: MatCheckboxChange, picture: string) {
     if (event.checked) {
-      this.picturesForDeletion = {
-        ...this.picturesForDeletion,
-        [picture.name]: picture
-      };
+      this.picturesForDeletion = [...this.picturesForDeletion, picture];
     } else {
-      delete this.picturesForDeletion[picture.name];
+      this.picturesForDeletion.splice(this.picturesForDeletion.indexOf(picture), 1);
     }
   }
 
   deleteImages(originalPictures: ServerImageInfo[]) {
     this.dialogService
-      .openConfirmDialog(this.deleteMessage)
+      .openConfirmDialog(this.deleteImagesMessage)
       .afterClosed()
       .subscribe(async (res: boolean) => {
         if (!res) return;
-        const filteredPictures = originalPictures.filter(picture => !this.picturesForDeletion[picture.name]);
-        await this.galleryService.updateImages(this.id, filteredPictures);
-        await Object.keys(this.picturesForDeletion).forEach(key => this.fileService.delete(key));
-        this.picturesForDeletion = {};
+        await this.galleryService.deleteImages(this.id, this.picturesForDeletion);
+        this.picturesForDeletion.forEach(picture => this.fileService.deleteByUrl(picture));
+        this.picturesForDeletion = [];
         this.cd.markForCheck();
+      });
+  }
+
+  deleteAlbum(album: GalleryAlbum) {
+    if (this.id === 'root') return;
+    this.dialogService
+      .openConfirmDialog(`Naozaj chcete vymazat album "${album.name}"?`)
+      .afterClosed()
+      .subscribe(async (res: boolean) => {
+        if (!res) return;
+        await this.galleryService.deleteAlbum(this.id);
+        await this.galleryService.deleteChild(album.parentId, `${album.name}:${this.id}`);
+        album.pictures.forEach(this.fileService.deleteByUrl);
+        this.navigateToParent();
       });
   }
 
@@ -86,12 +95,33 @@ export class AdminGalleryComponent implements OnDestroy {
           pictures: []
         };
         try {
-          await this.galleryService.createAlbum(newAlbum);
+          const addedAlbum = await this.galleryService.createAlbum(newAlbum);
+          await this.galleryService.addChild(this.id, `${newAlbum.name}:${addedAlbum.id}`);
           this.snackBar.open('Album bol vytvorený!', null, { duration: 2000 });
         } catch (e) {
           this.snackBar.open('Niečo sa pokazilo. Skúste znova.', null, { duration: 3000 });
         }
       });
+  }
+
+  async onFileSelected(event: any) {
+    this.loading = true;
+    const fileList: FileList = event.target.files;
+    let uploads: PromiseLike<any>[] = [];
+    for (let i = 0; i < fileList.length; i++) {
+      uploads = [...uploads, this.fileService.upload(fileList.item(i), this.picturesFolder)];
+    }
+    try {
+      const uploadedImages = await Promise.all(uploads);
+      const mappedImages: string[] = await Promise.all(
+        uploadedImages.map(async (file: firebase.storage.UploadTaskSnapshot) => await file.ref.getDownloadURL())
+      );
+      this.galleryService.addImages(this.id, mappedImages);
+    } catch (e) {
+      this.snackBar.open('Niečo sa pokazilo. Skúste znova.', null, { duration: 3000 });
+    } finally {
+      this.loading = false;
+    }
   }
 
   ngOnDestroy() {
