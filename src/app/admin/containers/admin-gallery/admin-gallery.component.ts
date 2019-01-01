@@ -1,11 +1,11 @@
-import { Component, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GalleryService } from '../../../shared/services/gallery.service';
-import { GalleryAlbum, ServerImageInfo } from '../../../shared/models';
+import { GalleryAlbum } from '../../../shared/models';
 import { Observable, Subscription } from 'rxjs';
-import { MatCheckboxChange, MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { FileService } from '../../../shared/services/files.service';
-import { DialogService } from '../../../shared/services/dialog.service';
+import { DialogService } from '../../../material/services/dialog.service';
 
 @Component({
   selector: 'app-admin-gallery',
@@ -27,7 +27,6 @@ export class AdminGalleryComponent implements OnDestroy {
     private galleryService: GalleryService,
     private router: Router,
     private fileService: FileService,
-    private cd: ChangeDetectorRef,
     private dialogService: DialogService,
     private snackBar: MatSnackBar
   ) {
@@ -47,7 +46,11 @@ export class AdminGalleryComponent implements OnDestroy {
     }
   }
 
-  pictureChecked(event: MatCheckboxChange, picture: string) {
+  navigateToChild(id: string) {
+    this.router.navigate(['/admin', 'gallery', id]);
+  }
+
+  pictureChecked({ event, picture }: any) {
     if (event.checked) {
       this.picturesForDeletion = [...this.picturesForDeletion, picture];
     } else {
@@ -55,7 +58,7 @@ export class AdminGalleryComponent implements OnDestroy {
     }
   }
 
-  deleteImages(originalPictures: ServerImageInfo[]) {
+  deleteImages() {
     this.dialogService
       .openConfirmDialog(this.deleteImagesMessage)
       .afterClosed()
@@ -64,12 +67,15 @@ export class AdminGalleryComponent implements OnDestroy {
         await this.galleryService.deleteImages(this.id, this.picturesForDeletion);
         this.picturesForDeletion.forEach(picture => this.fileService.deleteByUrl(picture));
         this.picturesForDeletion = [];
-        this.cd.markForCheck();
       });
   }
 
   deleteAlbum(album: GalleryAlbum) {
     if (this.id === 'root') return;
+    if (album.childrens.length > 0) {
+      this.snackBar.open('Album nie je možné vymazať! (Uistite sa že neobsahuje žiadne podalbumy)', null, { duration: 5000 });
+      return;
+    }
     this.dialogService
       .openConfirmDialog(`Naozaj chcete vymazat album "${album.name}"?`)
       .afterClosed()
@@ -104,7 +110,7 @@ export class AdminGalleryComponent implements OnDestroy {
       });
   }
 
-  async onFileSelected(event: any) {
+  async uploadFiles(event: any) {
     this.loading = true;
     const fileList: FileList = event.target.files;
     let uploads: PromiseLike<any>[] = [];

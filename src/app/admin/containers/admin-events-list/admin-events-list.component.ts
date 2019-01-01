@@ -3,7 +3,7 @@ import { EventsService } from '../../../shared/services/events.service';
 import { EventItem } from '../../../shared/models';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { DialogService } from '../../../shared/services/dialog.service';
+import { DialogService } from '../../../material/services/dialog.service';
 import { FileService } from '../../../shared/services/files.service';
 import { ColDef, CellClickedEvent } from 'ag-grid-community';
 import { dateComparator, dateRenderer } from '../../../shared/utils/items-util';

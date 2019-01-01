@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { ServicesService } from '../../../shared/services/services.service';
 import { ColDef, CellClickedEvent } from 'ag-grid-community';
 import { Router } from '@angular/router';
-import { DialogService } from '../../../shared/services/dialog.service';
+import { DialogService } from '../../../material/services/dialog.service';
 import { FileService } from '../../../shared/services/files.service';
 
 @Component({

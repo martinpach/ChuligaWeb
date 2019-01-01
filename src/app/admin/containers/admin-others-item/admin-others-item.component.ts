@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { OthersService } from '../../../shared/services/others.service';
 import { MatSnackBar } from '@angular/material';
-import { DialogService } from '../../../shared/services/dialog.service';
+import { DialogService } from '../../../material/services/dialog.service';
 
 @Component({
   selector: 'app-admin-others-item',

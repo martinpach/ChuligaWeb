@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/
 import { Observable } from 'rxjs';
 import { ColDef, CellClickedEvent } from 'ag-grid-community';
 import { Router } from '@angular/router';
-import { DialogService } from '../../../shared/services/dialog.service';
+import { DialogService } from '../../../material/services/dialog.service';
 import { FileService } from '../../../shared/services/files.service';
 import { GridWrapper } from '../../../shared/utils/grid-wrapper';
 import { Contact } from '../../../shared/models';

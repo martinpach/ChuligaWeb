@@ -1,0 +1,45 @@
+<div class="gallery-header margin-top1">
+  <div class="gallery-header__left">
+    <button mat-icon-button *ngIf="album?.parentId" (click)="onNavigateToParent.emit(album.parentId)">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h2 class="margin-left1 margin-right1">{{ album.name }}</h2>
+  </div>
+  <div *ngIf="isAdmin">
+    <button mat-mini-fab color="primary" [matMenuTriggerFor]="addMenu"><mat-icon>add</mat-icon></button>
+    <mat-menu #addMenu="matMenu">
+      <button mat-menu-item (click)="onAddAlbum.emit()">
+        <mat-icon>photo_library</mat-icon>
+        <span>album</span>
+      </button>
+      <input type="file" (change)="onFilesSelected.emit($event)" #fileInput multiple />
+      <button mat-menu-item (click)="fileInput.click()">
+        <mat-icon>photo</mat-icon>
+        <span>obrázky</span>
+      </button>
+    </mat-menu>
+    <button mat-mini-fab color="warn" [matMenuTriggerFor]="deleteMenu" class="margin-left1"><mat-icon>delete</mat-icon></button>
+    <mat-menu #deleteMenu="matMenu">
+      <button mat-menu-item (click)="onDeleteAlbum.emit(album)" [disabled]="id === 'root'">
+        <mat-icon>photo_library</mat-icon>
+        <span>album</span>
+      </button>
+      <button mat-menu-item (click)="onDeleteImages.emit(album.pictures)" [disabled]="!picturesForDeletion.length">
+        <mat-icon>photo</mat-icon>
+        <span>zvolené obrázky</span>
+      </button>
+    </mat-menu>
+  </div>
+</div>
+<mat-progress-bar mode="indeterminate" class="margin-top1 hidden" [ngClass]="{ visible: loading }"></mat-progress-bar>
+<div class="folders-wrapper">
+  <button *ngFor="let subAlbum of album.childrens" mat-stroked-button (click)="onNavigateToChild.emit(subAlbum.split(':')[1])">
+    {{ (subAlbum | split: ':')[0] }}
+  </button>
+</div>
+<div class="gallery-wrapper" gallerize selector=".gallery-img">
+  <div *ngFor="let picture of album.pictures" class="selectable">
+    <mat-checkbox *ngIf="isAdmin" (change)="onPictureChecked.emit({ event: $event, picture: picture })"></mat-checkbox>
+    <img class="gallery-img" [src]="picture" [attr.imageSrc]="picture" [attr.thumbSrc]="picture" />
+  </div>
+</div>

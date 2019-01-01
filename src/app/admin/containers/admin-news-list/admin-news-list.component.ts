@@ -5,7 +5,7 @@ import { NewsService } from '../../../shared/services/news.service';
 import { ColDef, CellClickedEvent } from 'ag-grid-community';
 import { Router } from '@angular/router';
 import { FileService } from '../../../shared/services/files.service';
-import { DialogService } from '../../../shared/services/dialog.service';
+import { DialogService } from '../../../material/services/dialog.service';
 import { dateComparator, dateRenderer } from '../../../shared/utils/items-util';
 import { GridWrapper } from '../../../shared/utils/grid-wrapper';
 

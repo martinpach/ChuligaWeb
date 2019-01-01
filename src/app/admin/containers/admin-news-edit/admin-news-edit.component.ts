@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NewsItem, ImageInfo, ServerImageInfo } from '../../../shared/models';
 import { Observable, of } from 'rxjs';
 import { FileService } from '../../../shared/services/files.service';
-import { DialogService } from '../../../shared/services/dialog.service';
+import { DialogService } from '../../../material/services/dialog.service';
 import { tap } from 'rxjs/operators';
 
 @Component({
