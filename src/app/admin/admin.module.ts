@@ -23,6 +23,9 @@ import { AdminOthersNavComponent } from './components/admin-others-nav/admin-oth
 import { AdminOthersItemComponent } from './containers/admin-others-item/admin-others-item.component';
 import { AdminOthersFormComponent } from './components/admin-others-form/admin-others-form.component';
 import { AdminGalleryComponent } from './containers/admin-gallery/admin-gallery.component';
+import { GalleryModule } from '@ngx-gallery/core';
+import { LightboxModule } from '@ngx-gallery/lightbox';
+import { GallerizeModule } from '@ngx-gallery/gallerize';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,18 @@ import { AdminGalleryComponent } from './containers/admin-gallery/admin-gallery.
     AdminOthersFormComponent,
     AdminGalleryComponent
   ],
-  imports: [AdminRoutingModule, SharedModule, LayoutModule, MatButtonModule, MatIconModule, AgGridModule.withComponents([])]
+  imports: [
+    AdminRoutingModule,
+    SharedModule,
+    LayoutModule,
+    MatButtonModule,
+    MatIconModule,
+    AgGridModule.withComponents([]),
+    GalleryModule.withConfig({
+      gestures: false
+    }),
+    LightboxModule,
+    GallerizeModule
+  ]
 })
 export class AdminModule {}
