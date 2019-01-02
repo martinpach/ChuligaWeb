@@ -21,7 +21,9 @@ export class AdminOthersFormComponent {
   @Output()
   submitted = new EventEmitter<OthersItem>();
 
-  constructor() {}
+  constructor() {
+    this.othersItem = { description: 'serus', shortDescription: 'nazdar' };
+  }
 
   onSubmit(f: NgForm) {
     this.othersItem = {

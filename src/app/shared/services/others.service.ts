@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class OthersService {
-  basePath: '/others';
+  basePath = '/others';
   constructor(private db: AngularFirestore) {}
 
   save(id: string, othersItem: OthersItem) {
