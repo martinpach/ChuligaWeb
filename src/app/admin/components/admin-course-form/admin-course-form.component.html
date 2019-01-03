@@ -1,0 +1,34 @@
+<form *ngIf="course" class="item-form" (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <mat-form-field> <input matInput name="heading" [ngModel]="course.heading" type="text" placeholder="Nadpis" /> </mat-form-field>
+  <label>Popis</label>
+  <app-ngx-editor
+    [config]="wysiwygOptions"
+    class="item-form__main-content"
+    [(ngModel)]="course.description"
+    [ngModelOptions]="{ standalone: true }"
+  ></app-ngx-editor>
+  <mat-form-field class="small-input">
+    <input
+      matInput
+      [matDatepicker]="picker"
+      placeholder="Dátum prihlasovania"
+      [ngModelOptions]="{ standalone: true }"
+      [(ngModel)]="course.deadlineDate"
+      [value]="course.deadlineDate"
+      disabled
+    />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker touchUi disabled="false"></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field class="small-input">
+    <input matInput name="capacity" [ngModel]="course.capacity" type="number" placeholder="Kapacita" />
+  </mat-form-field>
+  <label>Obrázok</label>
+  <div class="item-form__upload-container"><ng-content></ng-content></div>
+  <mat-error *ngIf="!isValid">Hodnoty 'nadpis', 'popis' a 'dátum prihlasovania' nesmú byť prázdne</mat-error>
+  <mat-error *ngIf="isError">Nastala chyba. Skúste znova.</mat-error>
+  <button mat-flat-button color="primary" class="item-form__submit-button" type="submit" [disabled]="isLoading">Publikovať</button>
+  <button mat-button color="accent" type="button" class="item-form__cancel-button" routerLink="/admin/courses/list" [disabled]="isLoading">
+    Späť
+  </button>
+</form>

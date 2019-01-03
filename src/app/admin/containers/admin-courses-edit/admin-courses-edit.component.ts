@@ -1,54 +1,54 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { EventItem, ServerImageInfo, ImageInfo } from '../../../shared/models';
 import { Observable, of } from 'rxjs';
-import { EventsService } from '../../../shared/services/events.service';
+import { Course, ServerImageInfo, ImageInfo } from '../../../shared/models';
+import { CoursesService } from '../../../shared/services/courses.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileService } from '../../../shared/services/files.service';
 import { DialogService } from '../../../material/services/dialog.service';
 import { tap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-admin-events-edit',
-  templateUrl: './admin-events-edit.component.html',
-  styleUrls: ['./admin-events-edit.component.scss'],
+  selector: 'app-admin-courses-edit',
+  templateUrl: './admin-courses-edit.component.html',
+  styleUrls: ['./admin-courses-edit.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AdminEventsEditComponent {
+export class AdminCoursesEditComponent {
   id: string;
-  eventItem$: Observable<EventItem | {}>;
+  course$: Observable<Course | {}>;
   isLoading = false;
   isError = false;
   deletedImage: ServerImageInfo;
   image: ImageInfo = {};
-  deleteMessage = 'Naozaj chcete vymazať túto udalosť?';
-  imgFolder = 'events/';
+  deleteMessage = 'Naozaj chcete vymazať tento kurz?';
+  imgFolder = 'courses/';
 
   constructor(
-    private eventsService: EventsService,
+    private coursesService: CoursesService,
     private route: ActivatedRoute,
     private router: Router,
     private fileService: FileService,
     private dialogService: DialogService
   ) {
     this.id = route.snapshot.params['id'];
-    this.eventItem$ = this.id
-      ? eventsService
-          .getEventItem(this.id)
-          .pipe(tap((item: EventItem) => (this.image.fromServer = item && item.picture ? item.picture : undefined)))
+    this.course$ = this.id
+      ? coursesService
+          .getCourse(this.id)
+          .pipe(tap((item: Course) => (this.image.fromServer = item && item.picture ? item.picture : undefined)))
       : of({});
   }
 
   get heading() {
-    return !!this.id ? 'ÚPRAVA UDALOSTI' : 'NOVÁ UDALOSŤ';
+    return !!this.id ? 'ÚPRAVA KURZU' : 'NOVÝ KURZ';
   }
 
-  async onSubmit(eventItem: EventItem) {
+  async onSubmit(course: Course) {
     this.onAsync();
     let promises = [];
     if (this.image.currentUpload) {
       const uploadedImage = await this.fileService.upload(this.image.currentUpload.file, this.imgFolder);
-      eventItem = {
-        ...eventItem,
+      course = {
+        ...course,
         picture: {
           url: await uploadedImage.ref.getDownloadURL(),
           name: uploadedImage.metadata.name
@@ -56,21 +56,21 @@ export class AdminEventsEditComponent {
       };
     }
     if (!this.id) {
-      promises = [this.eventsService.addEventItem(eventItem)];
+      promises = [this.coursesService.addCourse(course)];
     } else {
       if (this.deletedImage) {
-        eventItem = {
-          ...eventItem,
+        course = {
+          ...course,
           picture: null
         };
       }
       const deleteImagePromise = this.deletedImage ? this.fileService.delete(this.deletedImage.name, this.imgFolder) : Promise.resolve();
-      const updateEventItemPromise = this.eventsService.updateEventItem(this.id, eventItem);
-      promises = [deleteImagePromise, updateEventItemPromise];
+      const updateCoursePromise = this.coursesService.updateCourse(this.id, course);
+      promises = [deleteImagePromise, updateCoursePromise];
     }
 
     Promise.all(promises)
-      .then(() => this.router.navigate(['admin', 'events', 'list']))
+      .then(() => this.router.navigate(['admin', 'courses', 'list']))
       .catch(() => this.onError());
   }
 
@@ -92,7 +92,7 @@ export class AdminEventsEditComponent {
     reader.readAsDataURL(image);
   }
 
-  onEventItemDelete() {
+  onCourseDelete() {
     this.dialogService
       .openConfirmDialog(this.deleteMessage)
       .afterClosed()
@@ -102,9 +102,9 @@ export class AdminEventsEditComponent {
         const deleteImagePromise = this.image.fromServer
           ? this.fileService.delete(this.image.fromServer.name, this.imgFolder)
           : Promise.resolve();
-        const deleteEventItemPromise = this.eventsService.deleteEventItem(this.id);
-        Promise.all([deleteImagePromise, deleteEventItemPromise])
-          .then(() => this.router.navigate(['admin', 'events', 'list']))
+        const deleteCoursePromise = this.coursesService.deleteCourse(this.id);
+        Promise.all([deleteImagePromise, deleteCoursePromise])
+          .then(() => this.router.navigate(['admin', 'courses', 'list']))
           .catch(() => this.onError());
       });
   }

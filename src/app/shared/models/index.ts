@@ -8,14 +8,15 @@ export interface Item {
   heading: string;
   description: string;
   picture: ServerImageInfo;
-  date: any;
 }
 
 export interface NewsItem extends Item {
+  date: any;
   shortDescription: string;
 }
 
 export interface EventItem extends Item {
+  date: any;
   capacity: number;
   category: EventCategory;
   attendees: User[];
@@ -26,6 +27,12 @@ export enum EventCategory {
   MONTESSORI = 'M',
   RC = 'RC',
   GENERAL = 'V'
+}
+
+export interface Course extends Item {
+  capacity: number;
+  attendees: User[];
+  deadlineDate: any;
 }
 
 export interface ServiceItem {

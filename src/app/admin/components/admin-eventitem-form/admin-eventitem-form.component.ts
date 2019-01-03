@@ -62,7 +62,6 @@ export class AdminEventitemFormComponent {
     }
     this.isValid = true;
 
-    this.eventItem;
     this.eventItem.date.setHours(f.value.hour);
     this.eventItem.date.setMinutes(parseInt(f.value.minute));
 

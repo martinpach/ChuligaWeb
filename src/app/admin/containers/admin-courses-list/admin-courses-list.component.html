@@ -1,0 +1,13 @@
+<h1 class="margin-top1 text-center">KURZY</h1>
+<button mat-flat-button color="primary" routerLink="/admin/courses/new" class="add-button">PRIDAŤ</button>
+<div class="controls">
+  <button mat-mini-fab color="warn" [disabled]="!selectedRows.length" (click)="deleteClicked()"><mat-icon>delete</mat-icon></button>
+</div>
+<ag-grid-angular
+  style="width: 100%;"
+  class="ag-theme-balham"
+  [rowData]="courses$ | async"
+  [columnDefs]="columnDefs"
+  [gridOptions]="gridOptions"
+>
+</ag-grid-angular>

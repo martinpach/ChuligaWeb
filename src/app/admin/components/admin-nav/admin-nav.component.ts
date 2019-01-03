@@ -18,6 +18,10 @@ export class AdminNavComponent {
       path: '/admin/events'
     },
     {
+      label: 'Kurzy',
+      path: '/admin/courses'
+    },
+    {
       label: 'Služby',
       path: '/admin/services'
     },
