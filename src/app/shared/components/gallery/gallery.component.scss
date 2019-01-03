@@ -1,9 +1,16 @@
 .gallery-wrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 200px);
-  align-items: center;
-  grid-gap: 1em;
+  display: flex;
   justify-content: center;
+  flex-wrap: wrap;
+}
+
+.gallery-img {
+  height: 10rem;
+  width: auto;
+}
+
+.selectable {
+  margin: 0.5rem;
 }
 
 .gallery-header {
