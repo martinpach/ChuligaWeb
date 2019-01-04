@@ -1,11 +1,10 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { AppComponent } from './app.component';
 
 const appRoutes: Routes = [
   { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
-  { path: '', component: AppComponent, pathMatch: 'full' },
-  { path: '**', component: AppComponent }
+  { path: '', loadChildren: './client/client.module#ClientModule', pathMatch: 'full' },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

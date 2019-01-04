@@ -1,0 +1,14 @@
+<video *ngIf="!isMobile" class="fullscreen-background" autoplay muted loop>
+  <source src="/assets/video/bg-video.mp4" type="video/mp4" />
+  <img src="/assets/img/bg-image.jpg" />
+</video>
+<img *ngIf="isMobile" class="fullscreen-background" src="/assets/img/bg-image.jpg" />
+<div class="overlay"></div>
+<div class="main-navigation">
+  <app-client-navigation [scrollBreakpoint]="headerEl.nativeElement.scrollHeight - 150"></app-client-navigation>
+</div>
+<header class="text-center" #header>
+  <h1>HALIGANDA</h1>
+  <button class="move-down-button" mat-icon-button (click)="scrollDown()"><mat-icon>expand_more</mat-icon></button>
+</header>
+<app-page-description [description]="mainDescription$ | async"></app-page-description>

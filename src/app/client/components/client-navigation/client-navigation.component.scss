@@ -1,0 +1,113 @@
+@import '_variables';
+
+@mixin selectedStyle() {
+}
+
+.transparent-theme,
+.solid-theme {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.5s;
+
+  @media screen and (max-width: 310px) {
+    justify-content: center;
+  }
+
+  ul {
+    font-size: 0.8rem;
+    display: flex;
+    list-style-type: none;
+
+    @media screen and (max-width: 899px) {
+      display: none;
+    }
+
+    & > li {
+      color: $light-grey;
+      padding: 1rem 0 0.5rem;
+      margin: 0 1rem 0.5rem;
+      cursor: pointer;
+      transition: all 0.1s;
+    }
+  }
+}
+
+.transparent-theme {
+  background: none;
+  padding: 1rem;
+  h2 {
+    color: $white;
+  }
+
+  ul > li:hover,
+  ul > li.selected {
+    color: $white;
+    border-bottom: 0.18rem solid $white;
+  }
+
+  .mobile-top-menu {
+    color: $white;
+  }
+}
+
+.solid-theme {
+  background-color: $white;
+  box-shadow: 0 6px 7px 0 rgba($black, 0.16);
+
+  h2 {
+    color: $primary;
+  }
+  ul > li:hover,
+  ul > li.selected {
+    color: $black;
+    border-bottom: 0.08rem solid $black;
+  }
+}
+
+.mobile-top-menu {
+  @media screen and (min-width: 900px) {
+    display: none;
+  }
+}
+
+.mobile-navigation {
+  transform: translateX(100%);
+  top: 0;
+  left: 0;
+  z-index: 999;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-color: $white;
+  transition: all 0.5s;
+
+  &.active {
+    transform: translateX(0);
+  }
+
+  ul {
+    display: flex;
+    list-style-type: none;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+    align-items: center;
+    position: relative;
+
+    li {
+      width: 100%;
+      text-align: center;
+      padding: 1rem 0;
+      cursor: pointer;
+    }
+  }
+
+  &__close-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+}

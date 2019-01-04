@@ -1,0 +1,15 @@
+@import '_variables';
+
+.page-description {
+  background-color: $white;
+  text-align: center;
+  padding: 6rem 0;
+
+  h2 {
+    font-size: 2.5rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+  }
+}

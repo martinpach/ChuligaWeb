@@ -1,0 +1,17 @@
+<nav [ngClass]="{ 'transparent-theme': transparentNavigation, 'solid-theme': !transparentNavigation }">
+  <h2>Haliganda</h2>
+  <ul>
+    <li *ngFor="let item of navItems" [routerLink]="item.path">{{ item.label }}</li>
+    <li>PRIHLÁSIŤ SA</li>
+  </ul>
+  <div class="mobile-top-menu">
+    <button mat-button>PRIHLÁSIŤ SA</button> <button mat-icon-button (click)="openNavigation()"><mat-icon>menu</mat-icon></button>
+  </div>
+</nav>
+
+<div class="mobile-navigation" [ngClass]="{ active: navigationExpanded === true }">
+  <ul>
+    <button class="mobile-navigation__close-button" mat-icon-button (click)="closeNavigation()"><mat-icon>close</mat-icon></button>
+    <li *ngFor="let item of navItems" [routerLink]="item.path">{{ item.label }}</li>
+  </ul>
+</div>
