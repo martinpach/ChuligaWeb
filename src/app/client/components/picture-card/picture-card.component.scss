@@ -1,0 +1,17 @@
+@import '_variables';
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  max-width: 25rem;
+  padding: 3rem;
+  color: $white;
+  background-image: linear-gradient(rgba($black, 0.4), rgba($black, 0.4)), url('https://picsum.photos/400/320/?random');
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}

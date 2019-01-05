@@ -60,6 +60,7 @@ export interface Contact {
 }
 
 export interface OthersItem {
+  id?: string;
   shortDescription?: string;
   description: string;
 }

@@ -2,7 +2,6 @@ import { Component, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angu
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ViewportScroller } from '@angular/common';
 import { OthersService } from '../../../shared/services/others.service';
-import { map } from 'rxjs/operators';
 import { OthersItem } from '../../../shared/models';
 import { Observable } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -16,7 +15,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 export class HomePageComponent {
   @ViewChild('header') headerEl: ElementRef;
   @ViewChild('pageDescription', { read: ElementRef }) pageDescriptionEl: ElementRef;
-  mainDescription$: Observable<SafeHtml>;
+  serverData$: Observable<{ [key: string]: OthersItem }[]>;
   isMobile: boolean;
 
   constructor(
@@ -26,9 +25,7 @@ export class HomePageComponent {
     domSanitazer: DomSanitizer
   ) {
     breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small]).subscribe(({ matches }) => (this.isMobile = matches));
-    this.mainDescription$ = othersService
-      .getOthersItem('mainDescription')
-      .pipe(map(({ description }: OthersItem) => domSanitazer.bypassSecurityTrustHtml(description)));
+    this.serverData$ = othersService.getOthersItems();
   }
 
   scrollDown() {

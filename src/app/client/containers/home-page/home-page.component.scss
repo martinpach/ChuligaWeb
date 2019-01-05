@@ -67,6 +67,17 @@ header {
   width: 100%;
 }
 
+.main-cards {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  background-color: $white;
+
+  & > * {
+    margin-top: 2rem;
+  }
+}
+
 @keyframes bounceDown {
   0%,
   20%,

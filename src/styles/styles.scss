@@ -4,12 +4,13 @@
 @import '~ag-grid-community/dist/styles/ag-theme-balham.css';
 @import '_item-form.scss';
 @import '_utils.scss';
+@import url('https://fonts.googleapis.com/css?family=Thasadith');
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Thasadith', sans-serif;
 }
 
 *:focus {
