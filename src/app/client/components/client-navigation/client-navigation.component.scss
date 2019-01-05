@@ -89,25 +89,24 @@
   }
 
   ul {
-    display: flex;
     list-style-type: none;
-    flex-direction: column;
-    justify-content: space-evenly;
     height: 100%;
-    align-items: center;
     position: relative;
 
     li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       width: 100%;
       text-align: center;
-      padding: 1rem 0;
+      height: calc(100% / 7);
       cursor: pointer;
     }
   }
 
   &__close-button {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 0.75rem;
+    right: 0.75rem;
   }
 }

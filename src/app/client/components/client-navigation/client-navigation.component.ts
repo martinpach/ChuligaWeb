@@ -15,7 +15,7 @@ export class ClientNavigationComponent {
   navItems: { label: string; path: string }[] = [
     {
       label: 'DOMOV',
-      path: ''
+      path: '/'
     },
     {
       label: 'AKTUALITY',

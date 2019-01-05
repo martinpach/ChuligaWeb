@@ -11,4 +11,4 @@
   <h1>HALIGANDA</h1>
   <button class="move-down-button" mat-icon-button (click)="scrollDown()"><mat-icon>expand_more</mat-icon></button>
 </header>
-<app-page-description [description]="mainDescription$ | async"></app-page-description>
+<app-page-description [description]="mainDescription$ | async" #pageDescription></app-page-description>

@@ -15,6 +15,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 })
 export class HomePageComponent {
   @ViewChild('header') headerEl: ElementRef;
+  @ViewChild('pageDescription', { read: ElementRef }) pageDescriptionEl: ElementRef;
   mainDescription$: Observable<SafeHtml>;
   isMobile: boolean;
 
@@ -31,6 +32,6 @@ export class HomePageComponent {
   }
 
   scrollDown() {
-    this.scroller.scrollToPosition([0, this.headerEl.nativeElement.scrollHeight]);
+    this.pageDescriptionEl.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }
