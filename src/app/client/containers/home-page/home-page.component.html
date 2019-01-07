@@ -11,29 +11,27 @@
   <h1>HALIGANDA</h1>
   <button class="move-down-button" mat-icon-button (click)="scrollDown()"><mat-icon>expand_more</mat-icon></button>
 </header>
-<app-page-description
-  *ngIf="(serverData$ | async) as serverData"
-  [description]="serverData.mainDescription.description"
-  #pageDescription
-></app-page-description>
-<section class="main-cards" *ngIf="(serverData$ | async) as serverData">
-  <app-picture-card
-    heading="DOM KREATIVITY"
-    [description]="serverData.houseOfCreativity.shortDescription"
-    imagePath="https://picsum.photos/200/300/?random
+<div *ngIf="(serverData$ | async) as serverData">
+  <app-page-description [description]="serverData.mainDescription.description" #pageDescription></app-page-description>
+  <section class="main-cards">
+    <app-picture-card
+      heading="DOM KREATIVITY"
+      [description]="serverData.houseOfCreativity.shortDescription"
+      imagePath="https://picsum.photos/200/300/?random
   "
-  ></app-picture-card>
-  <app-picture-card
-    heading="MONTESSORI"
-    [description]="serverData.montessori.shortDescription"
-    imagePath="https://picsum.photos/200/300/?random
+    ></app-picture-card>
+    <app-picture-card
+      heading="MONTESSORI"
+      [description]="serverData.montessori.shortDescription"
+      imagePath="https://picsum.photos/200/300/?random
   "
-  ></app-picture-card>
-  <app-picture-card
-    heading="RODINNÉ CENTRUM"
-    [description]="serverData.familyCenter.shortDescription"
-    imagePath="https://picsum.photos/200/300/?random
+    ></app-picture-card>
+    <app-picture-card
+      heading="RODINNÉ CENTRUM"
+      [description]="serverData.familyCenter.shortDescription"
+      imagePath="https://picsum.photos/200/300/?random
   "
-  ></app-picture-card>
-</section>
-<app-page-footer></app-page-footer>
+    ></app-picture-card>
+  </section>
+  <app-page-footer></app-page-footer>
+</div>
