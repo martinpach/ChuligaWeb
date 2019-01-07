@@ -9,5 +9,6 @@ import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from 
 export class PictureCardComponent {
   @Input() heading: string;
   @Input() description: string;
+  @Input() imagePath: string;
   @Output() moreClicked = new EventEmitter();
 }

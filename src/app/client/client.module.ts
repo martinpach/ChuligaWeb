@@ -5,6 +5,7 @@ import { ClientNavigationComponent } from './components/client-navigation/client
 import { SharedModule } from '../shared/shared.module';
 import { PageDescriptionComponent } from './components/page-description/page-description.component';
 import { PictureCardComponent } from './components/picture-card/picture-card.component';
+import { PageFooterComponent } from './components/page-footer/page-footer.component';
 
-@NgModule({ declarations: [HomePageComponent, ClientNavigationComponent, PageDescriptionComponent, PictureCardComponent], imports: [ClientRoutingModule, SharedModule] })
+@NgModule({ declarations: [HomePageComponent, ClientNavigationComponent, PageDescriptionComponent, PictureCardComponent, PageFooterComponent], imports: [ClientRoutingModule, SharedModule] })
 export class ClientModule {}

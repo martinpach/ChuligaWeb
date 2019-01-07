@@ -16,8 +16,24 @@
   [description]="serverData.mainDescription.description"
   #pageDescription
 ></app-page-description>
-<section class="main-cards" style="padding-bottom: 2rem;" *ngIf="(serverData$ | async) as serverData">
-  <app-picture-card heading="DOM KREATIVITY" [description]="serverData.houseOfCreativity.shortDescription"></app-picture-card>
-  <app-picture-card heading="MONTESSORI" [description]="serverData.montessori.shortDescription"></app-picture-card>
-  <app-picture-card heading="RODINNÉ CENTRUM" [description]="serverData.familyCenter.shortDescription"></app-picture-card>
+<section class="main-cards" *ngIf="(serverData$ | async) as serverData">
+  <app-picture-card
+    heading="DOM KREATIVITY"
+    [description]="serverData.houseOfCreativity.shortDescription"
+    imagePath="https://picsum.photos/200/300/?random
+  "
+  ></app-picture-card>
+  <app-picture-card
+    heading="MONTESSORI"
+    [description]="serverData.montessori.shortDescription"
+    imagePath="https://picsum.photos/200/300/?random
+  "
+  ></app-picture-card>
+  <app-picture-card
+    heading="RODINNÉ CENTRUM"
+    [description]="serverData.familyCenter.shortDescription"
+    imagePath="https://picsum.photos/200/300/?random
+  "
+  ></app-picture-card>
 </section>
+<app-page-footer></app-page-footer>

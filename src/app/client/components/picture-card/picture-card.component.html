@@ -1,4 +1,7 @@
-<div class="card text-center">
+<div
+  class="card text-center"
+  [ngStyle]="{ 'background-image': 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(' + imagePath + ')' }"
+>
   <h2>{{ heading }}</h2>
   <p class="margin-top1">{{ description }}</p>
   <button mat-flat-button color="primary" (click)="moreClicked.emit()" class="margin-top1">viac</button>
