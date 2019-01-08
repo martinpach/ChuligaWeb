@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 const appRoutes: Routes = [
   { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
-  { path: '', loadChildren: './client/client.module#ClientModule', pathMatch: 'full' },
+  { path: '', loadChildren: './client/client.module#ClientModule' },
   { path: '**', redirectTo: '' }
 ];
 

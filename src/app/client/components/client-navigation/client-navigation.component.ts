@@ -1,5 +1,7 @@
-import { Component, ChangeDetectionStrategy, HostListener, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, HostListener, OnDestroy } from '@angular/core';
 import { ViewportScroller } from '@angular/common';
+import { NavigationService } from '../../services/navigation.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-client-navigation',
@@ -7,11 +9,11 @@ import { ViewportScroller } from '@angular/common';
   styleUrls: ['./client-navigation.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ClientNavigationComponent {
-  @Input() scrollBreakpoint: number;
-
+export class ClientNavigationComponent implements OnDestroy {
+  transparentNavigation: boolean;
+  scrollBreakpoint: number;
   navigationExpanded = false;
-  transparentNavigation = true;
+  scrollBreakpointSubscription: Subscription;
   navItems: { label: string; path: string }[] = [
     {
       label: 'DOMOV',
@@ -43,7 +45,16 @@ export class ClientNavigationComponent {
     }
   ];
 
-  constructor(private scroller: ViewportScroller) {}
+  constructor(private scroller: ViewportScroller, navigationService: NavigationService) {
+    this.scrollBreakpointSubscription = navigationService.scrollBreakpoint.subscribe(scrollBreakpoint => {
+      this.scrollBreakpoint = scrollBreakpoint;
+      this.transparentNavigation = scrollBreakpoint > this.scroller.getScrollPosition()[1];
+    });
+  }
+
+  ngOnDestroy() {
+    this.scrollBreakpointSubscription.unsubscribe();
+  }
 
   openNavigation() {
     this.navigationExpanded = true;
@@ -55,6 +66,6 @@ export class ClientNavigationComponent {
 
   @HostListener('window:scroll', ['$event'])
   onScroll() {
-    this.transparentNavigation = this.scrollBreakpoint >= this.scroller.getScrollPosition()[1];
+    this.transparentNavigation = this.scrollBreakpoint > this.scroller.getScrollPosition()[1];
   }
 }

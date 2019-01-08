@@ -4,9 +4,6 @@
 </video>
 <img *ngIf="isMobile" class="fullscreen-background" src="/assets/img/bg-image.jpg" />
 <div class="overlay"></div>
-<div class="main-navigation">
-  <app-client-navigation [scrollBreakpoint]="headerEl.nativeElement.scrollHeight - 150"></app-client-navigation>
-</div>
 <header class="text-center" #header>
   <h1>HALIGANDA</h1>
   <button class="move-down-button" mat-icon-button (click)="scrollDown()"><mat-icon>expand_more</mat-icon></button>
@@ -17,21 +14,20 @@
     <app-picture-card
       heading="DOM KREATIVITY"
       [description]="serverData.houseOfCreativity.shortDescription"
-      imagePath="https://picsum.photos/200/300/?random
-  "
+      imagePath="https://picsum.photos/200/300/?random"
+      (moreClicked)="navigateTo('/rooms/houseOfCreativity')"
     ></app-picture-card>
     <app-picture-card
       heading="MONTESSORI"
       [description]="serverData.montessori.shortDescription"
-      imagePath="https://picsum.photos/200/300/?random
-  "
+      imagePath="https://picsum.photos/200/300/?random"
+      (moreClicked)="navigateTo('/rooms/montessori')"
     ></app-picture-card>
     <app-picture-card
       heading="RODINNÉ CENTRUM"
       [description]="serverData.familyCenter.shortDescription"
-      imagePath="https://picsum.photos/200/300/?random
-  "
+      imagePath="https://picsum.photos/200/300/?random"
+      (moreClicked)="navigateTo('/rooms/familyCenter')"
     ></app-picture-card>
   </section>
-  <app-page-footer></app-page-footer>
 </div>
