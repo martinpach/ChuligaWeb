@@ -20,6 +20,6 @@
 <div class="mobile-navigation" [ngClass]="{ active: navigationExpanded === true }">
   <ul>
     <button class="mobile-navigation__close-button" mat-icon-button (click)="closeNavigation()"><mat-icon>close</mat-icon></button>
-    <li *ngFor="let item of navItems" [routerLink]="item.path">{{ item.label }}</li>
+    <li *ngFor="let item of navItems" [routerLink]="item.path" (click)="closeNavigation()">{{ item.label }}</li>
   </ul>
 </div>
