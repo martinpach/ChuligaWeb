@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { MatConfirmDialogComponent } from '../components/mat-confirm-dialog/mat-confirm-dialog.component';
 import { MatNewAlbumDialogComponent } from '../components/mat-new-album-dialog/mat-new-album-dialog.component';
+import { MatNewsitemDetailsDialogComponent } from '../components/mat-newsitem-details-dialog/mat-newsitem-details-dialog.component';
+import { NewsItem } from '../../shared/models';
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +24,15 @@ export class DialogService {
 
   openNewAlbumDialog() {
     return this.dialog.open(MatNewAlbumDialogComponent);
+  }
+
+  openNewsItemDetailsDialog(newsItem: NewsItem) {
+    return this.dialog.open(MatNewsitemDetailsDialogComponent, {
+      width: '980px',
+      maxWidth: '980px',
+      data: {
+        newsItem
+      }
+    });
   }
 }

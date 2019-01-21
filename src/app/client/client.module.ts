@@ -8,6 +8,8 @@ import { PictureCardComponent } from './components/picture-card/picture-card.com
 import { PageFooterComponent } from './components/page-footer/page-footer.component';
 import { RoomComponent } from './containers/room/room.component';
 import { ClientComponent } from './client.component';
+import { NewsItemComponent } from './components/news-item/news-item.component';
+import { NewsComponent } from './containers/news/news.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { ClientComponent } from './client.component';
     PictureCardComponent,
     PageFooterComponent,
     RoomComponent,
-    ClientComponent
+    ClientComponent,
+    NewsItemComponent,
+    NewsComponent
   ],
   imports: [ClientRoutingModule, SharedModule]
 })

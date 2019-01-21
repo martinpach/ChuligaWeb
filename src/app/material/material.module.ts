@@ -21,11 +21,22 @@ import { MyDateAdapter } from './utils/my-date-adapter';
 import { MatNewAlbumDialogComponent } from './components/mat-new-album-dialog/mat-new-album-dialog.component';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatNewsitemDetailsDialogComponent } from './components/mat-newsitem-details-dialog/mat-newsitem-details-dialog.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
-  imports: [FormsModule, MatButtonModule, MatIconModule, MatDatepickerModule, MatMomentDateModule, MatInputModule, MatDialogModule],
-  declarations: [MatConfirmDialogComponent, MatNewAlbumDialogComponent],
-  entryComponents: [MatConfirmDialogComponent, MatNewAlbumDialogComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
+    MatInputModule,
+    MatDialogModule
+  ],
+  declarations: [MatConfirmDialogComponent, MatNewAlbumDialogComponent, MatNewsitemDetailsDialogComponent],
+  entryComponents: [MatConfirmDialogComponent, MatNewAlbumDialogComponent, MatNewsitemDetailsDialogComponent],
   exports: [
     MatInputModule,
     MatButtonModule,

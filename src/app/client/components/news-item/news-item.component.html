@@ -1,4 +1,4 @@
-<li class="overlayed-element">
+<li class="overlayed-element" (click)="clicked.emit()">
   <div class="news-item">
     <img *ngIf="itemData.picture?.url" [src]="itemData.picture.url" class="news-item__picture" />
     <div class="news-item__content">

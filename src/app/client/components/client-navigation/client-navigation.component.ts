@@ -14,10 +14,11 @@ export class ClientNavigationComponent implements OnDestroy {
   scrollBreakpoint: number;
   navigationExpanded = false;
   scrollBreakpointSubscription: Subscription;
-  navItems: { label: string; path: string }[] = [
+  navItems: { label: string; path: string; exact?: boolean }[] = [
     {
       label: 'DOMOV',
-      path: '/'
+      path: '/',
+      exact: true
     },
     {
       label: 'AKTUALITY',

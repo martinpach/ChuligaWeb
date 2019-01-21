@@ -6,7 +6,6 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { NavigationBarComponent } from './navigation/navigation-bar.component';
 import { NavigationItemDirective } from './navigation/navigation-item.directive';
 import { NgxEditorModule } from 'ngx-editor';
-import { NewsItemComponent } from './components/news-item/news-item.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { EventComponent } from './components/event/event.component';
 import { SplitPipe } from './pipes/split.pipe';
@@ -31,7 +30,6 @@ import { GallerizeModule } from '@ngx-gallery/gallerize';
     NavigationComponent,
     NavigationBarComponent,
     NavigationItemDirective,
-    NewsItemComponent,
     UploadComponent,
     EventComponent,
     SplitPipe,
@@ -44,7 +42,6 @@ import { GallerizeModule } from '@ngx-gallery/gallerize';
     NavigationComponent,
     NavigationBarComponent,
     NavigationItemDirective,
-    NewsItemComponent,
     UploadComponent,
     NgxEditorModule,
     EventComponent,
