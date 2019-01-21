@@ -1,0 +1,52 @@
+@import '_variables';
+
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://picsum.photos/2000/1000/?random');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.auth-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30rem;
+  max-width: 30rem;
+  background-color: $white;
+}
+
+.login-tab {
+  padding: 2rem 3rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    & > * {
+      width: 75%;
+      @media screen and (max-width: 480px) {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.google-button {
+  font-weight: bold;
+}
+
+.or {
+  font-weight: bold;
+}
+
+.tab-group {
+  width: 100%;
+}

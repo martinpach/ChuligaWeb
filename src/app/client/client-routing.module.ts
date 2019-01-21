@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { RoomComponent } from './containers/room/room.component';
 import { ClientComponent } from './client.component';
 import { NewsComponent } from './containers/news/news.component';
+import { AuthComponent } from './containers/auth/auth.component';
 
 const clientRoutes: Routes = [
   {
@@ -24,6 +25,10 @@ const clientRoutes: Routes = [
         component: NewsComponent
       }
     ]
+  },
+  {
+    path: 'auth',
+    component: AuthComponent
   }
 ];
 

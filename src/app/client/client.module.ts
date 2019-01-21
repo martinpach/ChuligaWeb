@@ -10,6 +10,7 @@ import { RoomComponent } from './containers/room/room.component';
 import { ClientComponent } from './client.component';
 import { NewsItemComponent } from './components/news-item/news-item.component';
 import { NewsComponent } from './containers/news/news.component';
+import { AuthComponent } from './containers/auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { NewsComponent } from './containers/news/news.component';
     RoomComponent,
     ClientComponent,
     NewsItemComponent,
-    NewsComponent
+    NewsComponent,
+    AuthComponent
   ],
   imports: [ClientRoutingModule, SharedModule]
 })

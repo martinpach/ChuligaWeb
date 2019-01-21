@@ -9,10 +9,11 @@
     >
       {{ item.label }}
     </li>
-    <li>PRIHLÁSIŤ SA</li>
+    <li routerLink="/auth">PRIHLÁSIŤ SA</li>
   </ul>
   <div class="mobile-top-menu">
-    <button mat-button>PRIHLÁSIŤ SA</button> <button mat-icon-button (click)="openNavigation()"><mat-icon>menu</mat-icon></button>
+    <button routerLink="/auth" mat-button>PRIHLÁSIŤ SA</button>
+    <button mat-icon-button (click)="openNavigation()"><mat-icon>menu</mat-icon></button>
   </div>
 </nav>
 
