@@ -24,5 +24,6 @@ export class RoomComponent {
     navigationService.scrollBreakpoint.next(0);
     this.id = route.snapshot.params['id'];
     this.serverData$ = othersService.getOthersItem(this.id);
+    window.scrollTo(0, 0);
   }
 }
