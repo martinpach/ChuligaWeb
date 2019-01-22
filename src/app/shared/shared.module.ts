@@ -14,6 +14,7 @@ import { MaterialModule } from '../material/material.module';
 import { GalleryModule } from '@ngx-gallery/core';
 import { LightboxModule } from '@ngx-gallery/lightbox';
 import { GallerizeModule } from '@ngx-gallery/gallerize';
+import { PasswordMatchDirective } from './directives/password-match.directive';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { GallerizeModule } from '@ngx-gallery/gallerize';
     UploadComponent,
     EventComponent,
     SplitPipe,
-    GalleryComponent
+    GalleryComponent,
+    PasswordMatchDirective
   ],
   exports: [
     CommonModule,
@@ -46,7 +48,8 @@ import { GallerizeModule } from '@ngx-gallery/gallerize';
     NgxEditorModule,
     EventComponent,
     SplitPipe,
-    GalleryComponent
+    GalleryComponent,
+    PasswordMatchDirective
   ]
 })
 export class SharedModule {}
