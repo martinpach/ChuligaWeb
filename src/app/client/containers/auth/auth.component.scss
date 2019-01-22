@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://picsum.photos/2000/1000/?random');
   background-size: cover;
@@ -39,14 +39,7 @@
   }
 }
 
-.google-button {
-  font-weight: bold;
-}
-
-.or {
-  font-weight: bold;
-}
-
-.tab-group {
-  width: 100%;
+.fb-button {
+  background-color: $facebook-blue;
+  color: $white;
 }

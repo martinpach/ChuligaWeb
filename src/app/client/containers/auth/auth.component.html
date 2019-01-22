@@ -1,6 +1,6 @@
 <div class="auth-wrapper">
   <div class="auth-box">
-    <mat-tab-group class="tab-group" mat-stretch-tabs>
+    <mat-tab-group class="full-width" mat-stretch-tabs>
       <mat-tab label="Prihlásenie">
         <div class="login-tab">
           <form (ngSubmit)="onSubmit(f)" #f="ngForm">
@@ -10,8 +10,9 @@
             <mat-error *ngIf="areCredentialsValid" class="login__invalid-message">Nesprávne prihlasovacie údaje</mat-error>
             <button mat-flat-button [disabled]="loginInProcess" color="accent">PRIHLÁSIŤ SA</button>
           </form>
-          <div class="or margin-top1 margin-bottom1">alebo</div>
-          <button mat-flat-button color="warn" class="google-button">Prihlásenie cez Google+</button>
+          <div class="bold margin-top1 margin-bottom1">alebo</div>
+          <button mat-flat-button color="warn" class="bold">Prihlásenie cez Google+</button>
+          <button mat-flat-button class="fb-button bold margin-top1">Prihlásenie cez Facebook</button>
         </div>
       </mat-tab>
       <mat-tab label="Registrácia"> Content 2 </mat-tab>

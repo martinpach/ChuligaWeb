@@ -36,6 +36,10 @@
   display: block !important;
 }
 
+.bold {
+  font-weight: bold;
+}
+
 @include attr-x('margin-top', 12, 1, 'em');
 @include attr-x('margin-bottom', 12, 1, 'em');
 @include attr-x('margin-left', 12, 1, 'em');
