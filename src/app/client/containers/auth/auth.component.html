@@ -4,15 +4,15 @@
       <mat-tab label="Prihlásenie">
         <div class="login-tab">
           <form (ngSubmit)="onLoginSubmit(loginForm)" #loginForm="ngForm">
-            <mat-form-field> <input matInput type="email" name="email" placeholder="Email" ngModel /> </mat-form-field>
-            <mat-form-field> <input matInput type="password" name="password" placeholder="Heslo" ngModel /> </mat-form-field>
+            <mat-form-field> <input matInput type="email" name="email" placeholder="Email" ngModel required /> </mat-form-field>
+            <mat-form-field> <input matInput type="password" name="password" placeholder="Heslo" ngModel required /> </mat-form-field>
 
             <mat-error *ngIf="areCredentialsValid" class="login__invalid-message">Nesprávne prihlasovacie údaje</mat-error>
             <button mat-flat-button [disabled]="loginInProcess" color="accent">PRIHLÁSIŤ SA</button>
           </form>
+          <a class="reset-password" (click)="resetPassword()">Obnoviť heslo</a>
           <div class="bold margin-top1 margin-bottom1">alebo</div>
-          <button mat-flat-button color="warn" class="bold">Prihlásenie cez Google+</button>
-          <button mat-flat-button class="fb-button bold margin-top1">Prihlásenie cez Facebook</button>
+          <button mat-flat-button color="warn" class="bold" (click)="onGoogleLogin()">Prihlásenie cez Google+</button>
         </div>
       </mat-tab>
       <mat-tab label="Registrácia">
@@ -21,9 +21,20 @@
             <mat-form-field> <input matInput name="firstName" placeholder="Meno" ngModel required /> </mat-form-field>
             <mat-form-field> <input matInput name="lastName" placeholder="Priezvisko" ngModel required /> </mat-form-field>
             <mat-form-field> <input matInput type="email" name="email" placeholder="Email" ngModel email required /> </mat-form-field>
-            <mat-form-field> <input matInput type="password" name="password" placeholder="Heslo" ngModel required /> </mat-form-field>
             <mat-form-field>
-              <input matInput type="password" name="passwordConfirm" placeholder="Heslo znovu" ngModel appPasswordMatch required />
+              <input matInput type="password" name="password" placeholder="Heslo" ngModel minlength="6" required />
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                type="password"
+                name="passwordConfirm"
+                placeholder="Heslo znovu"
+                ngModel
+                minlength="6"
+                appPasswordMatch
+                required
+              />
             </mat-form-field>
             <p class="registration-policy">Registrovaním súhlasíte so spracovaním osobných údajov.</p>
             <button mat-flat-button [disabled]="registrationInProcess" color="accent">REGISTROVAŤ SA</button>

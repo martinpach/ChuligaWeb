@@ -5,6 +5,7 @@ import { RoomComponent } from './containers/room/room.component';
 import { ClientComponent } from './client.component';
 import { NewsComponent } from './containers/news/news.component';
 import { AuthComponent } from './containers/auth/auth.component';
+import { ClientLoginGuard } from './guards/client-login.guard';
 
 const clientRoutes: Routes = [
   {
@@ -28,7 +29,8 @@ const clientRoutes: Routes = [
   },
   {
     path: 'auth',
-    component: AuthComponent
+    component: AuthComponent,
+    canActivate: [ClientLoginGuard]
   }
 ];
 

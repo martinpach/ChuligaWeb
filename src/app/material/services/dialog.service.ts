@@ -4,6 +4,7 @@ import { MatConfirmDialogComponent } from '../components/mat-confirm-dialog/mat-
 import { MatNewAlbumDialogComponent } from '../components/mat-new-album-dialog/mat-new-album-dialog.component';
 import { MatNewsitemDetailsDialogComponent } from '../components/mat-newsitem-details-dialog/mat-newsitem-details-dialog.component';
 import { NewsItem } from '../../shared/models';
+import { MatPasswordResetDialogComponent } from '../components/mat-password-reset-dialog/mat-password-reset-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,9 @@ export class DialogService {
         newsItem
       }
     });
+  }
+
+  openPasswordResetDialog() {
+    return this.dialog.open(MatPasswordResetDialogComponent);
   }
 }

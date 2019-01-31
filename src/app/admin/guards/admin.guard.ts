@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { tap, take } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { AdminAuthService } from '../services/admin-auth.service';
 
 @Injectable({

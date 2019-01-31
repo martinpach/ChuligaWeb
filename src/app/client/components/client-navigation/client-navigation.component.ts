@@ -1,7 +1,8 @@
-import { Component, ChangeDetectionStrategy, HostListener, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, HostListener, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
 import { ViewportScroller } from '@angular/common';
 import { NavigationService } from '../../services/navigation.service';
 import { Subscription } from 'rxjs';
+import { User } from 'firebase';
 
 @Component({
   selector: 'app-client-navigation',
@@ -10,6 +11,8 @@ import { Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClientNavigationComponent implements OnDestroy {
+  @Input() loggedUser: User;
+  @Output() logout = new EventEmitter();
   transparentNavigation: boolean;
   scrollBreakpoint: number;
   navigationExpanded = false;

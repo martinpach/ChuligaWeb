@@ -2,17 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable, of, from } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import {
-  switchMap,
-  pluck,
-  take,
-  catchError,
-  shareReplay,
-  tap,
-  distinctUntilChanged,
-  map
-} from 'rxjs/operators';
-import { User } from 'firebase';
+import { switchMap, take, catchError, shareReplay, tap, distinctUntilChanged, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -29,9 +19,7 @@ export class AdminAuthService {
   }
 
   login(email: string, password: string): Observable<any> {
-    return from(
-      this.afAuth.auth.signInWithEmailAndPassword(email, password)
-    ).pipe(
+    return from(this.afAuth.auth.signInWithEmailAndPassword(email, password)).pipe(
       switchMap(user => this.getUserVerified(user.user.uid)),
       tap(verified => this.isAdminSubject.next(verified)),
       take(1),
@@ -39,6 +27,10 @@ export class AdminAuthService {
         return of(false);
       })
     );
+  }
+
+  logout(): Promise<void> {
+    return this.afAuth.auth.signOut();
   }
 
   isUserAdmin(): Observable<boolean> {
@@ -52,6 +44,6 @@ export class AdminAuthService {
     return this.db
       .doc(`/admins/${uid}`)
       .valueChanges()
-      .pipe(map(({ verified }) => verified));
+      .pipe(map((admin: { verified: boolean }) => admin && admin.verified));
   }
 }

@@ -1,6 +1,10 @@
-export interface User {
-  firstName: string;
-  lastName: string;
+export interface ClientUser {
+  id?: string;
+  email: string;
+  displayName: string;
+  picture?: string;
+  courses?: Course[];
+  events?: EventItem[];
 }
 
 export interface Item {
@@ -19,7 +23,7 @@ export interface EventItem extends Item {
   date: any;
   capacity: number;
   category: EventCategory;
-  attendees: User[];
+  attendees: ClientUser[];
 }
 
 export enum EventCategory {
@@ -31,7 +35,7 @@ export enum EventCategory {
 
 export interface Course extends Item {
   capacity: number;
-  attendees: User[];
+  attendees: ClientUser[];
   deadlineDate: any;
 }
 

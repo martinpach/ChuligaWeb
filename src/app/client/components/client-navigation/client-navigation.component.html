@@ -9,7 +9,8 @@
     >
       {{ item.label }}
     </li>
-    <li routerLink="/auth">PRIHLÁSIŤ SA</li>
+    <li routerLink="/auth" *ngIf="!loggedUser || !loggedUser.emailVerified">PRIHLÁSIŤ SA</li>
+    <li *ngIf="loggedUser?.emailVerified" (click)="logout.emit()">ODHLÁSIŤ SA</li>
   </ul>
   <div class="mobile-top-menu">
     <button routerLink="/auth" mat-button>PRIHLÁSIŤ SA</button>

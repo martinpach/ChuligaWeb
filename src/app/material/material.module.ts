@@ -24,6 +24,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatNewsitemDetailsDialogComponent } from './components/mat-newsitem-details-dialog/mat-newsitem-details-dialog.component';
 import { CommonModule } from '@angular/common';
+import { MatPasswordResetDialogComponent } from './components/mat-password-reset-dialog/mat-password-reset-dialog.component';
 
 @NgModule({
   imports: [
@@ -36,8 +37,13 @@ import { CommonModule } from '@angular/common';
     MatInputModule,
     MatDialogModule
   ],
-  declarations: [MatConfirmDialogComponent, MatNewAlbumDialogComponent, MatNewsitemDetailsDialogComponent],
-  entryComponents: [MatConfirmDialogComponent, MatNewAlbumDialogComponent, MatNewsitemDetailsDialogComponent],
+  declarations: [MatConfirmDialogComponent, MatNewAlbumDialogComponent, MatNewsitemDetailsDialogComponent, MatPasswordResetDialogComponent],
+  entryComponents: [
+    MatConfirmDialogComponent,
+    MatNewAlbumDialogComponent,
+    MatNewsitemDetailsDialogComponent,
+    MatPasswordResetDialogComponent
+  ],
   exports: [
     MatInputModule,
     MatButtonModule,
