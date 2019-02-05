@@ -10,9 +10,5 @@ import { NewsItem } from '../../../shared/models';
 export class NewsItemComponent {
   @Input() itemData: NewsItem;
 
-  @Input() overlayText: string = 'ČÍTAJ VIAC';
-
   @Output() clicked = new EventEmitter();
-
-  constructor() {}
 }
