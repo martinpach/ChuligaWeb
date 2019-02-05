@@ -7,7 +7,6 @@ import { NavigationBarComponent } from './navigation/navigation-bar.component';
 import { NavigationItemDirective } from './navigation/navigation-item.directive';
 import { NgxEditorModule } from 'ngx-editor';
 import { UploadComponent } from './components/upload/upload.component';
-import { EventComponent } from './components/event/event.component';
 import { SplitPipe } from './pipes/split.pipe';
 import { GalleryComponent } from './components/gallery/gallery.component';
 import { MaterialModule } from '../material/material.module';
@@ -32,7 +31,6 @@ import { PasswordMatchDirective } from './directives/password-match.directive';
     NavigationBarComponent,
     NavigationItemDirective,
     UploadComponent,
-    EventComponent,
     SplitPipe,
     GalleryComponent,
     PasswordMatchDirective
@@ -46,7 +44,6 @@ import { PasswordMatchDirective } from './directives/password-match.directive';
     NavigationItemDirective,
     UploadComponent,
     NgxEditorModule,
-    EventComponent,
     SplitPipe,
     GalleryComponent,
     PasswordMatchDirective
