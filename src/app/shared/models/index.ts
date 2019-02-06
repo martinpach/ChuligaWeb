@@ -11,12 +11,12 @@ export interface Item {
   id?: string;
   heading: string;
   description: string;
+  shortDescription: string;
   picture: ServerImageInfo;
 }
 
 export interface NewsItem extends Item {
   date: any;
-  shortDescription: string;
 }
 
 export interface EventItem extends Item {
