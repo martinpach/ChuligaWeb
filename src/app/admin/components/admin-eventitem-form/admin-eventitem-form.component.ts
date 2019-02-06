@@ -68,6 +68,7 @@ export class AdminEventitemFormComponent {
     this.eventItem = {
       ...this.eventItem,
       heading: <string>f.value.heading,
+      shortDescription: <string>f.value.shortDescription || '',
       description: <string>this.eventItem.description,
       date: this.eventItem.date,
       capacity: Math.abs(f.value.capacity) || null,

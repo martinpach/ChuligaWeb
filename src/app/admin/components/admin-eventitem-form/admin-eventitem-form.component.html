@@ -1,5 +1,8 @@
 <form *ngIf="eventItem" class="item-form" (ngSubmit)="onSubmit(f)" #f="ngForm">
   <mat-form-field> <input matInput name="heading" [ngModel]="eventItem.heading" type="text" placeholder="Nadpis" /> </mat-form-field>
+  <mat-form-field>
+    <textarea matInput name="shortDescription" [ngModel]="eventItem.shortDescription" placeholder="Krátky popis"></textarea>
+  </mat-form-field>
   <label>Obsah</label>
   <app-ngx-editor
     [config]="wysiwygOptions"
