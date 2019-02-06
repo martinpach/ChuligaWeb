@@ -1,0 +1,17 @@
+<li class="event">
+  <div class="event__left-side">
+    {{ itemData.date.toDate() | date: 'd.MMM' }} <br />
+    {{ itemData.date.toDate() | date: 'HH:mm' }}
+  </div>
+  <div class="event__middle">
+    <img *ngIf="itemData.picture?.url" [src]="itemData.picture.url" />
+    <div class="event__middle__text">
+      <h3>{{ itemData.heading }}</h3>
+      <p>{{ itemData.shortDescription }}</p>
+      <a mat-button>čítať viac..</a>
+    </div>
+  </div>
+  <div class="event__right-side" (click)="bookClicked.emit()">
+    Rezervovať miesto
+  </div>
+</li>

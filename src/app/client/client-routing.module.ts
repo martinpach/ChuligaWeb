@@ -6,6 +6,7 @@ import { ClientComponent } from './client.component';
 import { NewsComponent } from './containers/news/news.component';
 import { AuthComponent } from './containers/auth/auth.component';
 import { ClientLoginGuard } from './guards/client-login.guard';
+import { EventsComponent } from './containers/events/events.component';
 
 const clientRoutes: Routes = [
   {
@@ -24,6 +25,10 @@ const clientRoutes: Routes = [
       {
         path: 'news',
         component: NewsComponent
+      },
+      {
+        path: 'events',
+        component: EventsComponent
       }
     ]
   },

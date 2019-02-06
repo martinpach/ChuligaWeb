@@ -1,0 +1,20 @@
+<h1 class="text-center margin-top4">PROGRAM</h1>
+<div class="container margin-top2 margin-bottom4">
+  <ul>
+    <app-event
+      *ngFor="let event of (events$ | async); trackBy: trackByFn"
+      [itemData]="event"
+      [loggedIn]="!!(loggedInUser$ | async)"
+      (bookClicked)="handleBookForEvent(event)"
+    ></app-event>
+  </ul>
+  <button
+    mat-stroked-button
+    color="primary"
+    *ngIf="eventsLength && eventsLenght < (eventsCount$ | async)"
+    (click)="loadMore.next()"
+    [disabled]="isLoading"
+  >
+    načítať ďalšie
+  </button>
+</div>

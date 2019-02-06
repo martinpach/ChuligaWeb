@@ -4,7 +4,7 @@ export interface ClientUser {
   displayName: string;
   picture?: string;
   courses?: Course[];
-  events?: EventItem[];
+  events?: string[];
 }
 
 export interface Item {
@@ -23,7 +23,7 @@ export interface EventItem extends Item {
   date: any;
   capacity: number;
   category: EventCategory;
-  attendees: ClientUser[];
+  attendees: string[];
 }
 
 export enum EventCategory {
