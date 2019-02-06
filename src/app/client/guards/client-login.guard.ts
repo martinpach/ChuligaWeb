@@ -12,8 +12,8 @@ export class ClientLoginGuard implements CanActivate {
   canActivate() {
     return this.authService.loggedInUser.pipe(
       map(user => {
-        user && user.emailVerified && this.router.navigateByUrl('');
-        return !user || !user.emailVerified;
+        user && this.router.navigateByUrl('');
+        return !user;
       })
     );
   }

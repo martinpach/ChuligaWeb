@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, HostListener, OnDestroy, Input, Eve
 import { ViewportScroller } from '@angular/common';
 import { NavigationService } from '../../services/navigation.service';
 import { Subscription } from 'rxjs';
-import { User } from 'firebase';
+import { ClientUser } from '../../../shared/models';
 
 @Component({
   selector: 'app-client-navigation',
@@ -11,7 +11,7 @@ import { User } from 'firebase';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClientNavigationComponent implements OnDestroy {
-  @Input() loggedUser: User;
+  @Input() loggedUser: ClientUser;
   @Output() logout = new EventEmitter();
   transparentNavigation: boolean;
   scrollBreakpoint: number;

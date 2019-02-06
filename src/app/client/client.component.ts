@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from './services/auth.service';
-import { User } from 'firebase';
 import { Observable } from 'rxjs';
+import { ClientUser } from '../shared/models';
 
 @Component({
   selector: 'app-client',
@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClientComponent {
-  loggedInUser$: Observable<User>;
+  loggedInUser$: Observable<ClientUser>;
   constructor(private authService: AuthService) {
     this.loggedInUser$ = authService.loggedInUser;
   }

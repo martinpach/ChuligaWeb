@@ -1,20 +1,28 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { User } from 'firebase';
 import { ClientUser } from '../../shared/models';
 import { SignupResponse, LoginResponse } from '../models';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { UsersService } from '../../shared/services/users.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  loggedInUser: Observable<User>;
+  loggedInUser: Observable<ClientUser>;
   usersPath = '/users';
 
-  constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) {
-    this.loggedInUser = afAuth.authState;
+  constructor(private afAuth: AngularFireAuth, private db: AngularFirestore, usersService: UsersService) {
+    this.loggedInUser = this.afAuth.authState.pipe(
+      switchMap(user => {
+        if (user && user.emailVerified) {
+          return usersService.getUser(user.uid);
+        }
+        return of(null);
+      })
+    );
   }
 
   async emailSignUp(user: ClientUser, password: string): Promise<SignupResponse> {
