@@ -30,6 +30,13 @@
     &:hover {
       background-color: darken($color: $primary, $amount: 5);
     }
+
+    &--reserved {
+      background-color: $warn;
+      &:hover {
+        background-color: darken($color: $warn, $amount: 5);
+      }
+    }
   }
 
   &__middle {

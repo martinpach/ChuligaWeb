@@ -13,6 +13,7 @@ import { NewsComponent } from './containers/news/news.component';
 import { AuthComponent } from './containers/auth/auth.component';
 import { EventsComponent } from './containers/events/events.component';
 import { EventComponent } from './components/event/event.component';
+import { EventDetailsComponent } from './containers/event-details/event-details.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { EventComponent } from './components/event/event.component';
     NewsComponent,
     AuthComponent,
     EventsComponent,
-    EventComponent
+    EventComponent,
+    EventDetailsComponent
   ],
   imports: [ClientRoutingModule, SharedModule]
 })

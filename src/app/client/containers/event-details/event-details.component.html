@@ -1,0 +1,9 @@
+<div *ngIf="(eventItem$ | async) as eventItem" class="margin-top7 container">
+  <header class="margin-bottom2">
+    <a mat-button><mat-icon>arrow_back</mat-icon></a>
+    <h2>{{ eventItem.heading }}</h2>
+    <button mat-flat-button color="primary">rezervovať miesto</button>
+  </header>
+  <p [innerHTML]="eventItem.description"></p>
+  <img class="margin-top2" *ngIf="eventItem.picture" [src]="eventItem.picture.url" alt="eventItem.picture.name" />
+</div>

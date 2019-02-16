@@ -13,7 +13,8 @@
     <li *ngIf="loggedUser" (click)="logout.emit()">ODHLÁSIŤ SA</li>
   </ul>
   <div class="mobile-top-menu">
-    <button routerLink="/auth" mat-button>PRIHLÁSIŤ SA</button>
+    <button *ngIf="!loggedUser" routerLink="/auth" mat-button>PRIHLÁSIŤ SA</button>
+    <button *ngIf="loggedUser" (click)="logout.emit()" mat-button>ODHLÁSIŤ SA</button>
     <button mat-icon-button (click)="openNavigation()"><mat-icon>menu</mat-icon></button>
   </div>
 </nav>

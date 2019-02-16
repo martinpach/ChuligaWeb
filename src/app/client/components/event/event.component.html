@@ -8,10 +8,17 @@
     <div class="event__middle__text">
       <h3>{{ itemData.heading }}</h3>
       <p>{{ itemData.shortDescription }}</p>
-      <a mat-button>čítať viac..</a>
+      <a mat-button (click)="readMoreClicked.emit()">čítať viac..</a>
     </div>
   </div>
-  <div class="event__right-side" (click)="bookClicked.emit()">
+  <div *ngIf="!loggedInUser || loggedInUser.events?.indexOf(itemData.id) < 0" class="event__right-side" (click)="bookClicked.emit()">
     Rezervovať miesto
+  </div>
+  <div
+    *ngIf="loggedInUser && loggedInUser.events?.indexOf(itemData.id) >= 0"
+    class="event__right-side event__right-side--reserved"
+    (click)="unbookClicked.emit()"
+  >
+    Zrušiť rezerváciu
   </div>
 </li>

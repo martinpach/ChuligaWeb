@@ -7,6 +7,7 @@ import { NewsComponent } from './containers/news/news.component';
 import { AuthComponent } from './containers/auth/auth.component';
 import { ClientLoginGuard } from './guards/client-login.guard';
 import { EventsComponent } from './containers/events/events.component';
+import { EventDetailsComponent } from './containers/event-details/event-details.component';
 
 const clientRoutes: Routes = [
   {
@@ -29,6 +30,10 @@ const clientRoutes: Routes = [
       {
         path: 'events',
         component: EventsComponent
+      },
+      {
+        path: 'events/:id',
+        component: EventDetailsComponent
       }
     ]
   },

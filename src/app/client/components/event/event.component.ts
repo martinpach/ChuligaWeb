@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input, EventEmitter, Output } from '@angular/core';
-import { EventItem } from '../../../shared/models';
+import { EventItem, ClientUser } from '../../../shared/models';
 
 @Component({
   selector: 'app-event',
@@ -9,6 +9,8 @@ import { EventItem } from '../../../shared/models';
 })
 export class EventComponent {
   @Input() itemData: EventItem;
-  @Input() loggedIn: boolean;
+  @Input() loggedInUser: ClientUser;
   @Output() bookClicked = new EventEmitter();
+  @Output() unbookClicked = new EventEmitter();
+  @Output() readMoreClicked = new EventEmitter();
 }

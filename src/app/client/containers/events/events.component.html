@@ -4,8 +4,10 @@
     <app-event
       *ngFor="let event of (events$ | async); trackBy: trackByFn"
       [itemData]="event"
-      [loggedIn]="!!(loggedInUser$ | async)"
+      [loggedInUser]="loggedInUser$ | async"
       (bookClicked)="handleBookForEvent(event)"
+      (unbookClicked)="handleUnbookForEvent(event)"
+      (readMoreClicked)="navigateToEventDetails(event)"
     ></app-event>
   </ul>
   <button
