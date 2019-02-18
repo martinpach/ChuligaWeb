@@ -1,8 +1,20 @@
 <div *ngIf="(eventItem$ | async) as eventItem" class="margin-top7 container">
+  <h2 class="text-center">{{ eventItem.heading }}</h2>
   <header class="margin-bottom2">
-    <a mat-button><mat-icon>arrow_back</mat-icon></a>
-    <h2>{{ eventItem.heading }}</h2>
-    <button mat-flat-button color="primary">rezervovať miesto</button>
+    <a mat-button routerLink="/events"><mat-icon>arrow_back</mat-icon></a>
+    <button
+      *ngIf="(loggedInUser$ | async)?.events?.indexOf(eventItem.id) >= 0; else bookButton"
+      mat-flat-button
+      color="warn"
+      (click)="handleUnbookForEvent(eventItem)"
+    >
+      Zrušiť rezerváciu
+    </button>
+    <ng-template #bookButton>
+      <button mat-flat-button color="primary" (click)="handleBookForEvent(eventItem)">
+        Rezervovať miesto
+      </button>
+    </ng-template>
   </header>
   <p [innerHTML]="eventItem.description"></p>
   <img class="margin-top2" *ngIf="eventItem.picture" [src]="eventItem.picture.url" alt="eventItem.picture.name" />
