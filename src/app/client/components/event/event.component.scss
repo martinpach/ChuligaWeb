@@ -6,34 +6,27 @@
   margin-bottom: 20px;
   min-height: 10.625rem;
 
-  &__left-side,
-  &__right-side {
+  &__left-side {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
     width: 30%;
-  }
-
-  &__left-side {
     border-right: 1px solid $light-grey;
     color: $warn;
   }
 
   &__right-side {
-    border-left: 1px solid $light-grey;
-    background-color: $primary;
-    color: $white;
-    cursor: pointer;
+    border-radius: 0;
+    width: 30%;
     transition: all 0.5s;
-    &:hover {
+    &:not([disabled]):hover {
       background-color: darken($color: $primary, $amount: 5);
     }
 
     &--reserved {
-      background-color: $warn;
-      &:hover {
+      &:not([disabled]):hover {
         background-color: darken($color: $warn, $amount: 5);
       }
     }
@@ -53,6 +46,7 @@
     }
 
     &__text {
+      width: 100%;
       margin-left: 15px;
 
       h3 {

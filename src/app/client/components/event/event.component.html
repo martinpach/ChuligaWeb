@@ -11,14 +11,24 @@
       <a mat-button (click)="readMoreClicked.emit()">čítať viac..</a>
     </div>
   </div>
-  <div *ngIf="!loggedInUser || loggedInUser.events?.indexOf(itemData.id) < 0" class="event__right-side" (click)="bookClicked.emit()">
+  <button
+    mat-flat-button
+    color="primary"
+    *ngIf="(!loggedInUser || loggedInUser.events?.indexOf(itemData.id) < 0 || bookLoading) && !unbookLoading"
+    class="event__right-side"
+    (click)="bookClicked.emit()"
+    [disabled]="bookLoading"
+  >
     Rezervovať miesto
-  </div>
-  <div
-    *ngIf="loggedInUser && loggedInUser.events?.indexOf(itemData.id) >= 0"
+  </button>
+  <button
+    mat-flat-button
+    color="warn"
+    *ngIf="(loggedInUser && loggedInUser.events?.indexOf(itemData.id) >= 0 && !bookLoading) || (unbookLoading && !bookLoading)"
     class="event__right-side event__right-side--reserved"
     (click)="unbookClicked.emit()"
+    [disabled]="unbookLoading"
   >
     Zrušiť rezerváciu
-  </div>
+  </button>
 </li>

@@ -1,19 +1,21 @@
-<h1 class="text-center margin-top4">AKTUALITY</h1>
-<div class="container margin-top2 margin-bottom4">
-  <ul>
-    <app-news-item
-      *ngFor="let newsItem of (news$ | async); trackBy: trackByFn"
-      [itemData]="newsItem"
-      (clicked)="dialogService.openNewsItemDetailsDialog(newsItem)"
-    ></app-news-item>
-  </ul>
-  <button
-    mat-stroked-button
-    color="primary"
-    *ngIf="newsLength && newsLength < (newsCount$ | async)"
-    (click)="loadMore.next()"
-    [disabled]="isLoading"
-  >
-    načítať ďalšie
-  </button>
+<div class="main-wrapper">
+  <h1 class="text-center">AKTUALITY</h1>
+  <div class="container margin-top2 margin-bottom4">
+    <ul>
+      <app-news-item
+        *ngFor="let newsItem of (news$ | async); trackBy: trackByFn"
+        [itemData]="newsItem"
+        (clicked)="dialogService.openNewsItemDetailsDialog(newsItem)"
+      ></app-news-item>
+    </ul>
+    <button
+      mat-stroked-button
+      color="primary"
+      *ngIf="newsLength && newsLength < (newsCount$ | async)"
+      (click)="loadMore.next()"
+      [disabled]="isLoading"
+    >
+      načítať ďalšie
+    </button>
+  </div>
 </div>

@@ -1,22 +1,26 @@
-<h1 class="text-center margin-top4">PROGRAM</h1>
-<div class="container margin-top2 margin-bottom4">
-  <ul>
-    <app-event
-      *ngFor="let event of (events$ | async); trackBy: trackByFn"
-      [itemData]="event"
-      [loggedInUser]="loggedInUser$ | async"
-      (bookClicked)="handleBookForEvent(event)"
-      (unbookClicked)="handleUnbookForEvent(event)"
-      (readMoreClicked)="navigateToEventDetails(event)"
-    ></app-event>
-  </ul>
-  <button
-    mat-stroked-button
-    color="primary"
-    *ngIf="eventsLength && eventsLenght < (eventsCount$ | async)"
-    (click)="loadMore.next()"
-    [disabled]="isLoading"
-  >
-    načítať ďalšie
-  </button>
+<div class="main-wrapper">
+  <h1 class="text-center">PROGRAM</h1>
+  <div class="container margin-top2 margin-bottom4">
+    <ul>
+      <app-event
+        *ngFor="let event of (events$ | async); trackBy: trackByFn"
+        [itemData]="event"
+        [loggedInUser]="loggedInUser$ | async"
+        [bookLoading]="bookLoading"
+        [unbookLoading]="unbookLoading"
+        (bookClicked)="handleBookForEvent(event)"
+        (unbookClicked)="handleUnbookForEvent(event)"
+        (readMoreClicked)="navigateToEventDetails(event)"
+      ></app-event>
+    </ul>
+    <button
+      mat-stroked-button
+      color="primary"
+      *ngIf="eventsLength && eventsLenght < (eventsCount$ | async)"
+      (click)="loadMore.next()"
+      [disabled]="isLoadingEvents"
+    >
+      načítať ďalšie
+    </button>
+  </div>
 </div>

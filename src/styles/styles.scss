@@ -89,6 +89,17 @@
   font-weight: bold;
 }
 
+.swal-ok-button {
+  background-color: $primary;
+  &:not([disabled]):hover {
+    background-color: $primary;
+  }
+}
+
+.swal-footer {
+  text-align: center !important;
+}
+
 .selectable {
   position: relative;
   mat-checkbox {
@@ -100,4 +111,9 @@
 
 .mat-dialog-container {
   height: unset !important;
+}
+
+.main-wrapper {
+  min-height: calc(100vh - 17rem);
+  padding-top: 6rem;
 }
