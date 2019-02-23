@@ -16,7 +16,7 @@
     <button
       mat-stroked-button
       color="primary"
-      *ngIf="eventsLength && eventsLenght < (eventsCount$ | async)"
+      *ngIf="eventsLength && eventsLength < (eventsCount$ | async)"
       (click)="loadMore.next()"
       [disabled]="isLoadingEvents"
     >

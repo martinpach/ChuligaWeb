@@ -19,6 +19,7 @@ export class AdminCoursesListComponent extends GridWrapper {
   courses$: Observable<Course[]>;
   columnDefs: ColDef[] = [
     { headerName: 'Nadpis', field: 'heading', checkboxSelection: true, minWidth: 250, headerCheckboxSelection: true },
+    { headerName: 'Kategória', field: 'category', suppressAutoSize: true, suppressSizeToFit: true, width: 100 },
     {
       headerName: 'Dátum prihlasovania',
       field: 'deadlineDate',

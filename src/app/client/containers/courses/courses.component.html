@@ -1,0 +1,26 @@
+<div class="main-wrapper">
+  <h1 class="text-center">KURZY</h1>
+  <div class="container margin-top2 margin-bottom4">
+    <ul>
+      <app-course
+        *ngFor="let course of (courses$ | async); trackBy: trackByFn"
+        [itemData]="course"
+        [loggedInUser]="loggedInUser$ | async"
+        [bookLoading]="bookLoading"
+        [unbookLoading]="unbookLoading"
+        (bookClicked)="handleBookForCourse(course)"
+        (unbookClicked)="handleUnbookForCourse(course)"
+        (readMoreClicked)="navigateToCourseDetails(course)"
+      ></app-course>
+    </ul>
+    <button
+      mat-stroked-button
+      color="primary"
+      *ngIf="coursesLength && coursesLength < (coursesCount$ | async)"
+      (click)="loadMore.next()"
+      [disabled]="isLoadingCourses"
+    >
+      načítať ďalšie
+    </button>
+  </div>
+</div>

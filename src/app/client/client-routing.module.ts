@@ -8,6 +8,8 @@ import { AuthComponent } from './containers/auth/auth.component';
 import { ClientLoginGuard } from './guards/client-login.guard';
 import { EventsComponent } from './containers/events/events.component';
 import { EventDetailsComponent } from './containers/event-details/event-details.component';
+import { CoursesComponent } from './containers/courses/courses.component';
+import { CourseDetailsComponent } from './containers/course-details/course-details.component';
 
 const clientRoutes: Routes = [
   {
@@ -34,6 +36,14 @@ const clientRoutes: Routes = [
       {
         path: 'events/:id',
         component: EventDetailsComponent
+      },
+      {
+        path: 'courses',
+        component: CoursesComponent
+      },
+      {
+        path: 'courses/:id',
+        component: CourseDetailsComponent
       }
     ]
   },

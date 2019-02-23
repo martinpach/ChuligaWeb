@@ -1,0 +1,28 @@
+<div class="main-wrapper">
+  <div *ngIf="(course$ | async) as course" class="container">
+    <h1 class="text-center">{{ course.heading }}</h1>
+    <header class="margin-bottom2">
+      <a mat-button routerLink="/courses"><mat-icon>arrow_back</mat-icon></a>
+      <button
+        *ngIf="(!loggedInUser || loggedInUser.courses?.indexOf(course.id) < 0 || bookLoading) && !unbookLoading"
+        mat-flat-button
+        color="primary"
+        [disabled]="bookLoading"
+        (click)="handleBookForCourse(course)"
+      >
+        Rezervovať miesto
+      </button>
+      <button
+        *ngIf="(loggedInUser && loggedInUser.courses?.indexOf(course.id) >= 0 && !bookLoading) || (unbookLoading && !bookLoading)"
+        mat-flat-button
+        color="warn"
+        [disabled]="unbookLoading"
+        (click)="handleUnbookForCourse(course)"
+      >
+        Zrušiť rezerváciu
+      </button>
+    </header>
+    <p [innerHTML]="course.description"></p>
+    <img class="margin-top2" *ngIf="course.picture" [src]="course.picture.url" alt="course.picture.name" />
+  </div>
+</div>

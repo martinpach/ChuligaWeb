@@ -3,7 +3,7 @@ export interface ClientUser {
   email: string;
   displayName: string;
   picture?: string;
-  courses?: Course[];
+  courses?: string[];
   events?: string[];
 }
 
@@ -35,7 +35,8 @@ export enum EventCategory {
 
 export interface Course extends Item {
   capacity: number;
-  attendees: ClientUser[];
+  attendees: string[];
+  category: EventCategory;
   deadlineDate: any;
 }
 

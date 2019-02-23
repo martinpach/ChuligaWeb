@@ -16,3 +16,4 @@ function setupCounter(event, counterLocation) {
 
 exports.newsCounter = functions.firestore.document('news/{id}').onWrite(event => setupCounter(event, 'counts/news'));
 exports.eventsCounter = functions.firestore.document('events/{id}').onWrite(event => setupCounter(event, 'counts/events'));
+exports.coursesCounter = functions.firestore.document('courses/{id}').onWrite(event => setupCounter(event, 'counts/courses'));

@@ -1,5 +1,8 @@
 <form *ngIf="course" class="item-form" (ngSubmit)="onSubmit(f)" #f="ngForm">
   <mat-form-field> <input matInput name="heading" [ngModel]="course.heading" type="text" placeholder="Nadpis" /> </mat-form-field>
+  <mat-form-field>
+    <textarea matInput name="shortDescription" [ngModel]="course.shortDescription" placeholder="Krátky popis"></textarea>
+  </mat-form-field>
   <label>Popis</label>
   <app-ngx-editor
     [config]="wysiwygOptions"
@@ -22,6 +25,11 @@
   </mat-form-field>
   <mat-form-field class="small-input">
     <input matInput name="capacity" [ngModel]="course.capacity" type="number" placeholder="Kapacita" />
+  </mat-form-field>
+  <mat-form-field class="small-input">
+    <mat-select placeholder="Kategória" name="category" [ngModel]="course.category">
+      <mat-option *ngFor="let category of categories" [value]="category.value">{{ category.label }}</mat-option>
+    </mat-select>
   </mat-form-field>
   <label>Obrázok</label>
   <div class="item-form__upload-container"><ng-content></ng-content></div>

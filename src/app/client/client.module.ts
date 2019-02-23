@@ -14,6 +14,9 @@ import { AuthComponent } from './containers/auth/auth.component';
 import { EventsComponent } from './containers/events/events.component';
 import { EventComponent } from './components/event/event.component';
 import { EventDetailsComponent } from './containers/event-details/event-details.component';
+import { CoursesComponent } from './containers/courses/courses.component';
+import { CourseDetailsComponent } from './containers/course-details/course-details.component';
+import { CourseComponent } from './components/course/course.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,10 @@ import { EventDetailsComponent } from './containers/event-details/event-details.
     AuthComponent,
     EventsComponent,
     EventComponent,
-    EventDetailsComponent
+    EventDetailsComponent,
+    CoursesComponent,
+    CourseDetailsComponent,
+    CourseComponent
   ],
   imports: [ClientRoutingModule, SharedModule]
 })

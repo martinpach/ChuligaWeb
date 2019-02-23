@@ -1,0 +1,34 @@
+<li class="event">
+  <div class="event__left-side">
+    Prihlasovanie do <br />
+    {{ itemData.deadlineDate.toDate() | date: 'd.M.yyyy' }}
+  </div>
+  <div class="event__middle">
+    <img *ngIf="itemData.picture?.url" [src]="itemData.picture.url" />
+    <div class="event__middle__text">
+      <h3>{{ itemData.heading }}</h3>
+      <p>{{ itemData.shortDescription }}</p>
+      <a mat-button (click)="readMoreClicked.emit()">čítať viac..</a>
+    </div>
+  </div>
+  <button
+    mat-flat-button
+    color="primary"
+    *ngIf="(!loggedInUser || loggedInUser.courses?.indexOf(itemData.id) < 0 || bookLoading) && !unbookLoading"
+    class="event__right-side"
+    (click)="bookClicked.emit()"
+    [disabled]="bookLoading"
+  >
+    Rezervovať miesto
+  </button>
+  <button
+    mat-flat-button
+    color="warn"
+    *ngIf="(loggedInUser && loggedInUser.courses?.indexOf(itemData.id) >= 0 && !bookLoading) || (unbookLoading && !bookLoading)"
+    class="event__right-side event__right-side--reserved"
+    (click)="unbookClicked.emit()"
+    [disabled]="unbookLoading"
+  >
+    Zrušiť rezerváciu
+  </button>
+</li>

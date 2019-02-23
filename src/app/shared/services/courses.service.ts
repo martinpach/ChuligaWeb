@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, QueryFn } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Course } from '../models';
-import { map } from 'rxjs/operators';
+import { map, pluck } from 'rxjs/operators';
 import { mapToRenderObject } from '../utils/items-util';
 
 @Injectable({
@@ -30,6 +30,13 @@ export class CoursesService {
           return { ...item, deadlineDate };
         })
       );
+  }
+
+  getCoursesCount(): Observable<number> {
+    return this.db
+      .doc(`/counts${this.basePath}`)
+      .valueChanges()
+      .pipe(pluck('count'));
   }
 
   addCourse(course: Course) {
