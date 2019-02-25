@@ -57,9 +57,7 @@ export class AuthService {
       id: userCredential.user.uid,
       email: userCredential.user.email,
       displayName: userCredential.user.displayName,
-      picture: userCredential.user.photoURL,
-      courses: [],
-      events: []
+      picture: userCredential.user.photoURL
     };
     this.db
       .doc(this.usersPath + '/' + userCredential.user.uid)
@@ -67,6 +65,8 @@ export class AuthService {
       .pipe(take(1))
       .subscribe(u => {
         if (u.exists) return this.db.doc(this.usersPath + '/' + userCredential.user.uid).update(user);
+        user.events = [];
+        user.courses = [];
         this.db.doc(this.usersPath + '/' + userCredential.user.uid).set(user);
       });
   }
