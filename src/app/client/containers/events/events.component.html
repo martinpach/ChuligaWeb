@@ -2,16 +2,7 @@
   <h1 class="text-center">PROGRAM</h1>
   <div class="container margin-top2 margin-bottom4">
     <ul>
-      <app-event
-        *ngFor="let event of (events$ | async); trackBy: trackByFn"
-        [itemData]="event"
-        [loggedInUser]="loggedInUser$ | async"
-        [bookLoading]="bookLoading"
-        [unbookLoading]="unbookLoading"
-        (bookClicked)="handleBookForEvent(event)"
-        (unbookClicked)="handleUnbookForEvent(event)"
-        (readMoreClicked)="navigateToEventDetails(event)"
-      ></app-event>
+      <ng-container *ngTemplateOutlet="events; context: { user: loggedInUser$ | async }"></ng-container>
     </ul>
     <button
       mat-stroked-button
@@ -24,3 +15,15 @@
     </button>
   </div>
 </div>
+
+<ng-template #events let-loggedInUser="user">
+  <app-event
+    *ngFor="let event of (events$ | async); trackBy: trackByFn"
+    [itemData]="event"
+    [isBooked]="isBookedForUser(loggedInUser, event)"
+    [loading]="loadingId === event.id"
+    (bookClicked)="handleBookForEvent(event, loggedInUser)"
+    (unbookClicked)="handleUnbookForEvent(event, loggedInUser)"
+    (readMoreClicked)="navigateToEventDetails(event)"
+  ></app-event>
+</ng-template>

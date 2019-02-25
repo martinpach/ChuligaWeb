@@ -9,10 +9,17 @@ import { EventItem, ClientUser } from '../../../shared/models';
 })
 export class EventComponent {
   @Input() itemData: EventItem;
-  @Input() loggedInUser: ClientUser;
-  @Input() bookLoading: boolean;
-  @Input() unbookLoading: boolean;
+  @Input() isBooked: boolean;
+  @Input() loading: boolean;
   @Output() bookClicked = new EventEmitter();
   @Output() unbookClicked = new EventEmitter();
   @Output() readMoreClicked = new EventEmitter();
+
+  isSold(): boolean {
+    return this.itemData.capacity && this.itemData.attendees.length >= this.itemData.capacity;
+  }
+
+  handleClick() {
+    this.isBooked ? this.unbookClicked.emit() : this.bookClicked.emit();
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { Course, ClientUser } from '../../../shared/models';
 
 @Component({
@@ -9,10 +9,17 @@ import { Course, ClientUser } from '../../../shared/models';
 })
 export class CourseComponent {
   @Input() itemData: Course;
-  @Input() loggedInUser: ClientUser;
-  @Input() bookLoading: boolean;
-  @Input() unbookLoading: boolean;
+  @Input() isBooked: boolean;
+  @Input() loading: boolean;
   @Output() bookClicked = new EventEmitter();
   @Output() unbookClicked = new EventEmitter();
   @Output() readMoreClicked = new EventEmitter();
+
+  isSold(): boolean {
+    return this.itemData.capacity && this.itemData.attendees.length >= this.itemData.capacity;
+  }
+
+  handleClick() {
+    this.isBooked ? this.unbookClicked.emit() : this.bookClicked.emit();
+  }
 }

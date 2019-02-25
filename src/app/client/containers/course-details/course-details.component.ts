@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Course, ClientUser } from '../../../shared/models';
 import { NavigationService } from '../../services/navigation.service';
@@ -7,6 +7,7 @@ import { CoursesService } from '../../../shared/services/courses.service';
 import { CoursesRegistrationService } from '../../services/courses-registration.service';
 import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material';
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-course-details',
@@ -14,12 +15,12 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./course-details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CourseDetailsComponent implements OnDestroy {
+export class CourseDetailsComponent {
   course$: Observable<Course>;
   bookLoading = false;
   unbookLoading = false;
-  loggedInUser: ClientUser;
   loggedInUserSubscription: Subscription;
+  loggedInUser$: Observable<ClientUser>;
 
   constructor(
     navigationService: NavigationService,
@@ -33,36 +34,34 @@ export class CourseDetailsComponent implements OnDestroy {
   ) {
     const id = route.snapshot.params['id'];
     this.course$ = coursesService.getCourse(id);
+    this.loggedInUser$ = authService.loggedInUser;
     navigationService.scrollBreakpoint.next(0);
-    this.loggedInUserSubscription = authService.loggedInUser.subscribe(user => {
-      this.loggedInUser = user;
-      this.cd.markForCheck();
-    });
   }
 
-  async handleBookForCourse(course: Course) {
+  async handleBookForCourse(course: Course, attendee: ClientUser) {
     if (this.bookLoading || this.unbookLoading) return;
     this.bookLoading = true;
-    if (!this.loggedInUser) return this.router.navigate(['/auth']);
+    if (!attendee) return this.router.navigate(['/auth']);
     try {
-      await this.coursesRegistrationService.bookCourse(course, this.loggedInUser);
+      await this.coursesRegistrationService.bookCourse(course, attendee);
     } catch (e) {
       this.snackBar.open(`Niečo sa pokazilo. Skúste znova.`, null, { duration: 3000 });
     } finally {
       this.bookLoading = false;
       this.cd.markForCheck();
     }
-    await swal(`Kurz ${course.heading} bol úspešne rezervovaný.`, 'Tešíme sa na vás.', 'success', {
+    const opt: any = {
       button: {
         className: 'swal-ok-button'
       }
-    });
+    };
+    await swal(`Kurz ${course.heading} bol úspešne rezervovaný.`, 'Tešíme sa na vás.', 'success', { ...opt });
   }
 
-  async handleUnbookForCourse(course: Course) {
+  async handleUnbookForCourse(course: Course, attendee: ClientUser) {
     if (this.unbookLoading || this.bookLoading) return;
     this.unbookLoading = true;
-    if (!this.loggedInUser) return this.router.navigate(['/auth']);
+    if (!attendee) return this.router.navigate(['/auth']);
     const isUnbookAllowed = await swal(`Naozaj chcete zrušiť rezerváciu pre kurz ${course.heading}?`, {
       icon: 'warning',
       buttons: ['nie', 'áno'],
@@ -73,7 +72,7 @@ export class CourseDetailsComponent implements OnDestroy {
       return this.cd.markForCheck();
     }
     try {
-      await this.coursesRegistrationService.unbookCourse(course, this.loggedInUser);
+      await this.coursesRegistrationService.unbookCourse(course, attendee);
     } catch (e) {
       this.snackBar.open(`Niečo sa pokazilo. Skúste znova.`, null, { duration: 3000 });
     } finally {
@@ -83,7 +82,11 @@ export class CourseDetailsComponent implements OnDestroy {
     this.snackBar.open(`Rezervácia pre kurz "${course.heading}" bola úspešne zrušená!`, null, { duration: 5000 });
   }
 
-  ngOnDestroy() {
-    this.loggedInUserSubscription.unsubscribe();
+  isBookedForUser(loggedInUser: ClientUser, course: Course): boolean {
+    return loggedInUser && loggedInUser.courses.indexOf(course.id) >= 0;
+  }
+
+  isSold(course: Course): boolean {
+    return course.capacity && course.attendees.length >= course.capacity;
   }
 }

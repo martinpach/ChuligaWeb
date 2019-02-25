@@ -1,9 +1,9 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { NavigationService } from '../../services/navigation.service';
 import { EventItem, ClientUser } from '../../../shared/models';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { EventsService } from '../../../shared/services/events.service';
-import { tap, switchMap, take } from 'rxjs/operators';
+import { tap, switchMap, take, refCount, publish } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { EventsRegistrationService } from '../../services/events-registration.service';
@@ -24,8 +24,7 @@ export class EventsComponent {
   eventsLength = 0;
   limit = 5;
   loggedInUser$: Observable<ClientUser>;
-  bookLoading = false;
-  unbookLoading = false;
+  loadingId: string = null;
 
   constructor(
     private eventsService: EventsService,
@@ -36,7 +35,10 @@ export class EventsComponent {
     private snackBar: MatSnackBar,
     private cd: ChangeDetectorRef
   ) {
-    this.loggedInUser$ = authService.loggedInUser;
+    this.loggedInUser$ = authService.loggedInUser.pipe(
+      publish(),
+      refCount()
+    );
     this.events$ = this.loadMore.pipe(
       tap(() => (this.isLoadingEvents = true)),
       switchMap((_, index) =>
@@ -49,61 +51,68 @@ export class EventsComponent {
           )
           .pipe(tap(news => (this.eventsLength = news.length)))
       ),
-      tap(() => (this.isLoadingEvents = false))
+      tap(() => (this.isLoadingEvents = false)),
+      publish(),
+      refCount()
     );
     this.eventsCount$ = eventsService.getEventsCount();
     navigationService.scrollBreakpoint.next(0);
   }
 
-  handleBookForEvent(event: EventItem) {
-    if (this.bookLoading || this.unbookLoading) return;
-    this.bookLoading = true;
-    this.loggedInUser$.pipe(take(1)).subscribe(async attendee => {
-      if (!attendee) return this.router.navigate(['/auth']);
-      try {
-        await this.eventsRegistrationService.bookEvent(event, attendee);
-      } catch (e) {
+  async handleBookForEvent(event: EventItem, attendee: ClientUser) {
+    if (!attendee) return this.router.navigate(['/auth']);
+    this.loadingId = event.id;
+    this.eventsRegistrationService
+      .bookEvent(event, attendee)
+      .then()
+      .catch(() => {
         this.snackBar.open(`Niečo sa pokazilo. Skúste znova.`, null, { duration: 3000 });
-      } finally {
-        this.bookLoading = false;
-        this.cd.markForCheck();
-      }
-      await swal(`Udalosť ${event.heading} bola úspešne rezervovaná.`, 'Tešíme sa na vás.', 'success', {
-        button: {
-          className: 'swal-ok-button'
-        }
+        this.loadingId = null;
       });
-    });
+
+    combineLatest(this.events$, this.loggedInUser$)
+      .pipe(take(1))
+      .subscribe(() => {
+        const opt: any = {
+          button: {
+            className: 'swal-ok-button'
+          }
+        };
+        this.loadingId = null;
+        swal(`Udalosť ${event.heading} bola úspešne rezervovaná.`, 'Tešíme sa na vás.', 'success', { ...opt });
+      });
   }
 
-  handleUnbookForEvent(event: EventItem) {
-    if (this.unbookLoading || this.bookLoading) return;
-    this.unbookLoading = true;
-    this.loggedInUser$.pipe(take(1)).subscribe(async attendee => {
-      if (!attendee) return this.router.navigate(['/auth']);
-      const isUnbookAllowed = await swal(`Naozaj chcete zrušiť rezerváciu pre udalosť ${event.heading}?`, {
-        icon: 'warning',
-        buttons: ['nie', 'áno'],
-        dangerMode: true
-      });
-      if (!isUnbookAllowed) {
-        this.unbookLoading = false;
-        return this.cd.markForCheck();
-      }
-      try {
-        await this.eventsRegistrationService.unbookEvent(event, attendee);
-      } catch (e) {
-        this.snackBar.open(`Niečo sa pokazilo. Skúste znova.`, null, { duration: 3000 });
-      } finally {
-        this.unbookLoading = false;
-        this.cd.markForCheck();
-      }
-      this.snackBar.open(`Rezervácia pre udalosť "${event.heading}" bola úspešne zrušená!`, null, { duration: 5000 });
+  async handleUnbookForEvent(event: EventItem, attendee: ClientUser) {
+    if (!attendee) return this.router.navigate(['/auth']);
+    const isUnbookAllowed = await swal(`Naozaj chcete zrušiť rezerváciu pre udalosť ${event.heading}?`, {
+      icon: 'warning',
+      buttons: ['nie', 'áno'],
+      dangerMode: true
     });
+    if (!isUnbookAllowed) return;
+    this.loadingId = event.id;
+    this.eventsRegistrationService
+      .unbookEvent(event, attendee)
+      .then()
+      .catch(() => {
+        this.snackBar.open(`Niečo sa pokazilo. Skúste znova.`, null, { duration: 3000 });
+        this.loadingId = null;
+      });
+    combineLatest(this.events$, this.loggedInUser$)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.loadingId = null;
+        this.snackBar.open(`Rezervácia pre udalosť "${event.heading}" bola úspešne zrušená!`, null, { duration: 5000 });
+      });
   }
 
   navigateToEventDetails(event: EventItem) {
     this.router.navigate(['/events', event.id]);
+  }
+
+  isBookedForUser(loggedInUser: ClientUser, { id }: EventItem): boolean {
+    return loggedInUser && loggedInUser.events.indexOf(id) >= 0;
   }
 
   trackByFn(index: number) {

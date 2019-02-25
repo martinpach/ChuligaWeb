@@ -13,22 +13,16 @@
   </div>
   <button
     mat-flat-button
-    color="primary"
-    *ngIf="(!loggedInUser || loggedInUser.events?.indexOf(itemData.id) < 0 || bookLoading) && !unbookLoading"
+    [color]="isBooked ? 'warn' : 'primary'"
+    *ngIf="isBooked || !isSold()"
+    [class.event__right-side--reserved]="isBooked"
     class="event__right-side"
-    (click)="bookClicked.emit()"
-    [disabled]="bookLoading"
+    (click)="handleClick()"
+    [disabled]="loading"
   >
-    Rezervovať miesto
+    {{ !isBooked ? 'Rezervovať miesto' : 'Zrušiť rezerváciu' }}
   </button>
-  <button
-    mat-flat-button
-    color="warn"
-    *ngIf="(loggedInUser && loggedInUser.events?.indexOf(itemData.id) >= 0 && !bookLoading) || (unbookLoading && !bookLoading)"
-    class="event__right-side event__right-side--reserved"
-    (click)="unbookClicked.emit()"
-    [disabled]="unbookLoading"
-  >
-    Zrušiť rezerváciu
+  <button class="event__right-side" mat-flat-button disabled *ngIf="!isBooked && isSold() && !loading">
+    VYPREDANÉ
   </button>
 </li>

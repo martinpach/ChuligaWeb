@@ -3,26 +3,35 @@
     <h1 class="text-center">{{ course.heading }}</h1>
     <header class="margin-bottom2">
       <a mat-button routerLink="/courses"><mat-icon>arrow_back</mat-icon></a>
-      <button
-        *ngIf="(!loggedInUser || loggedInUser.courses?.indexOf(course.id) < 0 || bookLoading) && !unbookLoading"
-        mat-flat-button
-        color="primary"
-        [disabled]="bookLoading"
-        (click)="handleBookForCourse(course)"
-      >
-        Rezervovať miesto
-      </button>
-      <button
-        *ngIf="(loggedInUser && loggedInUser.courses?.indexOf(course.id) >= 0 && !bookLoading) || (unbookLoading && !bookLoading)"
-        mat-flat-button
-        color="warn"
-        [disabled]="unbookLoading"
-        (click)="handleUnbookForCourse(course)"
-      >
-        Zrušiť rezerváciu
-      </button>
+      <ng-container *ngTemplateOutlet="actionButtons; context: { user: loggedInUser$ | async, course: course }"></ng-container>
     </header>
     <p [innerHTML]="course.description"></p>
     <img class="margin-top2" *ngIf="course.picture" [src]="course.picture.url" alt="course.picture.name" />
   </div>
 </div>
+
+<ng-template #actionButtons let-loggedInUser="user" let-course="course">
+  <button
+    *ngIf="
+      ((bookLoading && isSold(course)) || !isSold(course)) && ((!isBookedForUser(loggedInUser, course) || bookLoading) && !unbookLoading)
+    "
+    mat-flat-button
+    color="primary"
+    [disabled]="bookLoading"
+    (click)="handleBookForCourse(course, loggedInUser)"
+  >
+    Rezervovať miesto
+  </button>
+  <button
+    *ngIf="(isBookedForUser(loggedInUser, course) && !bookLoading) || (unbookLoading && !bookLoading)"
+    mat-flat-button
+    color="warn"
+    [disabled]="unbookLoading"
+    (click)="handleUnbookForCourse(course, loggedInUser)"
+  >
+    Zrušiť rezerváciu
+  </button>
+  <button mat-flat-button disabled *ngIf="!isBookedForUser(loggedInUser, course) && isSold(course) && !bookLoading">
+    VYPREDANÉ
+  </button>
+</ng-template>
