@@ -45,7 +45,9 @@ export class AuthComponent {
     if (!f.valid) return;
     const user: ClientUser = {
       email: f.value.email,
-      displayName: f.value.firstName + ' ' + f.value.lastName
+      displayName: f.value.firstName + ' ' + f.value.lastName,
+      courses: [],
+      events: []
     };
 
     try {

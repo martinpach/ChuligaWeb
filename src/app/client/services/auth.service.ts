@@ -4,7 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { ClientUser } from '../../shared/models';
 import { SignupResponse, LoginResponse } from '../models';
 import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { UsersService } from '../../shared/services/users.service';
 
 @Injectable({
@@ -57,9 +57,18 @@ export class AuthService {
       id: userCredential.user.uid,
       email: userCredential.user.email,
       displayName: userCredential.user.displayName,
-      picture: userCredential.user.photoURL
+      picture: userCredential.user.photoURL,
+      courses: [],
+      events: []
     };
-    this.db.doc(this.usersPath + '/' + userCredential.user.uid).update(user);
+    this.db
+      .doc(this.usersPath + '/' + userCredential.user.uid)
+      .get()
+      .pipe(take(1))
+      .subscribe(u => {
+        if (u.exists) return this.db.doc(this.usersPath + '/' + userCredential.user.uid).update(user);
+        this.db.doc(this.usersPath + '/' + userCredential.user.uid).set(user);
+      });
   }
 
   logout(): Promise<void> {
