@@ -62,6 +62,7 @@ export class AdminCourseFormComponent {
       shortDescription: <string>f.value.shortDescription || '',
       description: <string>this.course.description,
       deadlineDate: this.course.deadlineDate,
+      displayDate: this.course.displayDate || this.course.deadlineDate,
       capacity: Math.abs(f.value.capacity) || null,
       category: f.value.category || EventCategory.GENERAL
     };

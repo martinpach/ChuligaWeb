@@ -38,7 +38,6 @@ export class EventDetailsComponent {
   }
 
   async handleBookForEvent(event: EventItem, attendee: ClientUser) {
-    console.log(event, attendee);
     if (this.bookLoading || this.unbookLoading) return;
     this.bookLoading = true;
     if (!attendee) return this.router.navigate(['/auth']);

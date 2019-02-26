@@ -16,7 +16,10 @@ export class CourseComponent {
   @Output() readMoreClicked = new EventEmitter();
 
   isSold(): boolean {
-    return this.itemData.capacity && this.itemData.attendees.length >= this.itemData.capacity;
+    return (
+      (this.itemData.capacity && this.itemData.attendees.length >= this.itemData.capacity) ||
+      this.itemData.deadlineDate.toDate() < new Date()
+    );
   }
 
   handleClick() {

@@ -13,15 +13,28 @@
   <mat-form-field class="small-input">
     <input
       matInput
-      [matDatepicker]="picker"
+      [matDatepicker]="picker1"
       placeholder="Dátum prihlasovania"
       [ngModelOptions]="{ standalone: true }"
       [(ngModel)]="course.deadlineDate"
       [value]="course.deadlineDate"
       disabled
     />
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker touchUi disabled="false"></mat-datepicker>
+    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker #picker1 touchUi disabled="false"></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field class="medium-input">
+    <input
+      matInput
+      [matDatepicker]="picker2"
+      placeholder="Dátum zobrazovania"
+      [ngModelOptions]="{ standalone: true }"
+      [(ngModel)]="course.displayDate"
+      [value]="course.displayDate"
+      disabled
+    />
+    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+    <mat-datepicker #picker2 touchUi disabled="false"></mat-datepicker>
   </mat-form-field>
   <mat-form-field class="small-input">
     <input matInput name="capacity" [ngModel]="course.capacity" type="number" placeholder="Kapacita" />

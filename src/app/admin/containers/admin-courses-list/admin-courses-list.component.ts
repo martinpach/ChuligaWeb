@@ -19,7 +19,7 @@ export class AdminCoursesListComponent extends GridWrapper {
   courses$: Observable<Course[]>;
   columnDefs: ColDef[] = [
     { headerName: 'Nadpis', field: 'heading', checkboxSelection: true, minWidth: 250, headerCheckboxSelection: true },
-    { headerName: 'Kategória', field: 'category', suppressAutoSize: true, suppressSizeToFit: true, width: 100 },
+    { headerName: 'Kategória', field: 'category', suppressAutoSize: true, suppressSizeToFit: true, width: 90 },
     {
       headerName: 'Dátum prihlasovania',
       field: 'deadlineDate',
@@ -30,14 +30,24 @@ export class AdminCoursesListComponent extends GridWrapper {
       width: 155,
       cellClass: ({ data }) => (data.deadlineDate.toDate() < new Date() ? 'warn-text' : '')
     },
-    { headerName: 'Kapacita', field: 'capacity', suppressAutoSize: true, suppressSizeToFit: true, width: 100 },
+    {
+      headerName: 'Dátum zobrazovania',
+      field: 'displayDate',
+      comparator: dateComparator,
+      cellRenderer: dateRenderer('dd.MM.yyyy'),
+      suppressAutoSize: true,
+      suppressSizeToFit: true,
+      width: 150,
+      cellClass: ({ data }) => (data.deadlineDate.toDate() < new Date() ? 'warn-text' : '')
+    },
+    { headerName: 'Kapacita', field: 'capacity', suppressAutoSize: true, suppressSizeToFit: true, width: 90 },
     {
       headerName: 'Nahlásení',
       field: 'attendees.length',
       suppressAutoSize: true,
       cellRenderer: ({ data }) => (data.attendees && data.attendees.length ? data.attendees.length : '0'),
       suppressSizeToFit: true,
-      width: 100,
+      width: 90,
       cellClass: ({ data }) => (data.capacity && data.attendees && data.capacity - data.attendees.length <= 5 ? 'warn-text' : '')
     },
     {
@@ -61,7 +71,7 @@ export class AdminCoursesListComponent extends GridWrapper {
     cd: ChangeDetectorRef
   ) {
     super(cd);
-    this.courses$ = coursesService.getCourses(ref => ref.orderBy('deadlineDate', 'asc'));
+    this.courses$ = coursesService.getCourses(ref => ref.orderBy('displayDate', 'asc'));
   }
 
   editClicked({ event, data }: CellClickedEvent) {

@@ -27,7 +27,8 @@ export class CoursesService {
         map(item => {
           if (!item) return item;
           const deadlineDate = item.deadlineDate ? item.deadlineDate.toDate() : item.deadlineDate;
-          return { ...item, deadlineDate };
+          const displayDate = item.displayDate ? item.displayDate.toDate() : item.displayDate;
+          return { ...item, deadlineDate, displayDate };
         })
       );
   }

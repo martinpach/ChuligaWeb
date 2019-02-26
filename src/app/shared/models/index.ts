@@ -38,6 +38,7 @@ export interface Course extends Item {
   attendees: string[];
   category: EventCategory;
   deadlineDate: any;
+  displayDate?: any;
 }
 
 export interface ServiceItem {

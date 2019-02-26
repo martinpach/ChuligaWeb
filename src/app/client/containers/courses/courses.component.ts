@@ -45,11 +45,11 @@ export class CoursesComponent {
         coursesService
           .getCourses(ref =>
             ref
-              .orderBy('deadlineDate', 'asc')
+              .orderBy('displayDate', 'asc')
               .limit(this.limit * (index + 1))
               .startAt(new Date())
           )
-          .pipe(tap(news => (this.coursesLength = news.length)))
+          .pipe(tap(courses => (this.coursesLength = courses.length)))
       ),
       tap(() => (this.isLoadingCourses = false)),
       publish(),
