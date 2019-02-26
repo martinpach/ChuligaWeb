@@ -17,6 +17,7 @@ import { EventDetailsComponent } from './containers/event-details/event-details.
 import { CoursesComponent } from './containers/courses/courses.component';
 import { CourseDetailsComponent } from './containers/course-details/course-details.component';
 import { CourseComponent } from './components/course/course.component';
+import { ClientGalleryComponent } from './containers/client-gallery/client-gallery.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { CourseComponent } from './components/course/course.component';
     EventDetailsComponent,
     CoursesComponent,
     CourseDetailsComponent,
-    CourseComponent
+    CourseComponent,
+    ClientGalleryComponent
   ],
   imports: [ClientRoutingModule, SharedModule]
 })

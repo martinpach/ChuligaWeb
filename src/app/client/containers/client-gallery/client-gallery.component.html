@@ -1,0 +1,12 @@
+<div class="main-wrapper">
+  <div class="container">
+    <app-gallery
+      *ngIf="(album$ | async) as album"
+      [album]="album"
+      [isAdmin]="false"
+      (onNavigateToParent)="navigateToParent($event)"
+      (onNavigateToChild)="navigateToChild($event)"
+    >
+    </app-gallery>
+  </div>
+</div>

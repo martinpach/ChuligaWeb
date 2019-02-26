@@ -19,6 +19,10 @@
   justify-content: space-between;
   align-items: center;
 
+  &--center {
+    justify-content: center;
+  }
+
   &__left {
     display: flex;
     align-items: center;
@@ -31,7 +35,7 @@
   margin: 1em 0;
   justify-content: center;
   & > * {
-    margin: 0 1em 1em 0;
+    margin: 0 1em 1em;
   }
 }
 

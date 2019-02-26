@@ -1,4 +1,4 @@
-<div class="gallery-header margin-top1">
+<div class="gallery-header margin-top1" [class.gallery-header--center]="!isAdmin">
   <div class="gallery-header__left">
     <button mat-icon-button *ngIf="album?.parentId" (click)="onNavigateToParent.emit(album.parentId)">
       <mat-icon>arrow_back</mat-icon>

@@ -49,7 +49,7 @@ export class EventsComponent {
               .limit(this.limit * (index + 1))
               .startAt(new Date())
           )
-          .pipe(tap(news => (this.eventsLength = news.length)))
+          .pipe(tap(events => (this.eventsLength = events.length)))
       ),
       tap(() => (this.isLoadingEvents = false)),
       publish(),
