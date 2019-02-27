@@ -87,6 +87,6 @@ export class CourseDetailsComponent {
   }
 
   isSold(course: Course): boolean {
-    return course.capacity && course.attendees.length >= course.capacity;
+    return (course.capacity && course.attendees.length >= course.capacity) || course.deadlineDate < new Date();
   }
 }
