@@ -1,0 +1,31 @@
+.service-item {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  color: white;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://picsum.photos/500/500/?random');
+  background-repeat: no-repeat;
+  background-size: cover;
+  &__gallery {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__image-wrapper {
+    max-width: 6rem;
+    max-height: 6rem;
+    margin-right: -1rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    img {
+      border: 0.25rem solid white;
+      border-radius: 50%;
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

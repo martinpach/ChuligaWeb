@@ -1,0 +1,7 @@
+<div class="main-wrapper">
+  <div class="container">
+    <div class="service-items-wrapper">
+      <app-service-item *ngFor="let service of (services$ | async); trackBy: trackByFn" [serviceItem]="service"> </app-service-item>
+    </div>
+  </div>
+</div>

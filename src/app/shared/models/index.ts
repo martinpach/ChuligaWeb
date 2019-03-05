@@ -45,7 +45,8 @@ export interface ServiceItem {
   id?: string;
   name: string;
   description: string;
-  picture: ServerImageInfo;
+  pictures: ServerImageInfo[];
+  backgroundPicture: ServerImageInfo;
   category: ServiceCategory;
 }
 

@@ -18,6 +18,9 @@ import { CoursesComponent } from './containers/courses/courses.component';
 import { CourseDetailsComponent } from './containers/course-details/course-details.component';
 import { CourseComponent } from './components/course/course.component';
 import { ClientGalleryComponent } from './containers/client-gallery/client-gallery.component';
+import { ServicesNavigationComponent } from './components/services-navigation/services-navigation.component';
+import { ServicesComponent } from './containers/services/services.component';
+import { ServiceItemComponent } from './components/service-item/service-item.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,10 @@ import { ClientGalleryComponent } from './containers/client-gallery/client-galle
     CoursesComponent,
     CourseDetailsComponent,
     CourseComponent,
-    ClientGalleryComponent
+    ClientGalleryComponent,
+    ServicesNavigationComponent,
+    ServicesComponent,
+    ServiceItemComponent
   ],
   imports: [ClientRoutingModule, SharedModule]
 })

@@ -14,7 +14,8 @@ import {
   DateAdapter,
   MAT_DATE_FORMATS,
   MatProgressSpinnerModule,
-  MatTabsModule
+  MatTabsModule,
+  MatExpansionModule
 } from '@angular/material';
 import { MatConfirmDialogComponent } from './components/mat-confirm-dialog/mat-confirm-dialog.component';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
@@ -60,7 +61,8 @@ import { MatPasswordResetDialogComponent } from './components/mat-password-reset
     MatSnackBarModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
-    MatTabsModule
+    MatTabsModule,
+    MatExpansionModule
   ],
   providers: [
     { provide: DateAdapter, useClass: MyDateAdapter },

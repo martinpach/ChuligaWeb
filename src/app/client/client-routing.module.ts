@@ -11,6 +11,8 @@ import { EventDetailsComponent } from './containers/event-details/event-details.
 import { CoursesComponent } from './containers/courses/courses.component';
 import { CourseDetailsComponent } from './containers/course-details/course-details.component';
 import { ClientGalleryComponent } from './containers/client-gallery/client-gallery.component';
+import { ServicesNavigationComponent } from './components/services-navigation/services-navigation.component';
+import { ServicesComponent } from './containers/services/services.component';
 
 const clientRoutes: Routes = [
   {
@@ -53,6 +55,14 @@ const clientRoutes: Routes = [
       {
         path: 'gallery/:id',
         component: ClientGalleryComponent
+      },
+      {
+        path: 'services',
+        component: ServicesNavigationComponent
+      },
+      {
+        path: 'services/:category',
+        component: ServicesComponent
       }
     ]
   },

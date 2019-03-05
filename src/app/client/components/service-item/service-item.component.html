@@ -1,0 +1,21 @@
+<div
+  class="service-item"
+  [ngStyle]="{ 'background-image': 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(' + serviceItem.backgroundPicture + ')' }"
+>
+  <h1 class="text-center margin-bottom1">{{ serviceItem.name }}</h1>
+  <div class="service-item__gallery margin-bottom2">
+    <div class="service-item__image-wrapper" *ngFor="let picture of serviceItem.pictures">
+      <img src="picture.url" />
+    </div>
+  </div>
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Detaily
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p [innerHTML]="serviceItem.description"></p>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
