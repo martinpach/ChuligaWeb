@@ -13,7 +13,9 @@
     </mat-select>
   </mat-form-field>
   <label>Obrázky</label>
-  <div class="item-form__upload-container"><ng-content></ng-content></div>
+  <div class="item-form__upload-container"><ng-content select="[titlePictures]"></ng-content></div>
+  <label>Obrázok pozadia</label>
+  <div class="item-form__upload-container"><ng-content select="[backgroundPicture]"></ng-content></div>
   <mat-error *ngIf="!isValid">Hodnoty 'názov' a 'popis' nesmú byť prázdne</mat-error>
   <mat-error *ngIf="isError">Nastala chyba. Skúste znova.</mat-error>
   <button mat-flat-button color="primary" class="item-form__submit-button" type="submit" [disabled]="isLoading">Publikovať</button>

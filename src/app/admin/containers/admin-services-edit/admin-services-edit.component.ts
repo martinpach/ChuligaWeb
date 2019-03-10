@@ -20,6 +20,8 @@ export class AdminServicesEditComponent {
   isError = false;
   deletedImages: string[];
   images: ImageInfo[] = [];
+  deletedBackgroundPicture: string;
+  backgroundPicture: ImageInfo = {};
   deleteMessage = 'Naozaj chcete vymazať túto službu?';
   imgFolder = 'services/';
 
@@ -32,11 +34,12 @@ export class AdminServicesEditComponent {
   ) {
     this.id = route.snapshot.params['id'];
     this.serviceItem$ = this.id
-      ? servicesService
-          .getServiceItem(this.id)
-          .pipe(
-            tap((item: ServiceItem) => (this.images = item && item.pictures ? item.pictures.map(picture => ({ fromServer: picture })) : []))
-          )
+      ? servicesService.getServiceItem(this.id).pipe(
+          tap((item: ServiceItem) => {
+            this.images = item && item.pictures ? item.pictures.map(picture => ({ fromServer: picture })) : [];
+            this.backgroundPicture.fromServer = item && item.backgroundPicture ? item.backgroundPicture : undefined;
+          })
+        )
       : of({});
   }
 
@@ -51,12 +54,19 @@ export class AdminServicesEditComponent {
       .filter(({ currentUpload }) => currentUpload)
       .map(img => this.fileService.upload(img.currentUpload.file, this.imgFolder));
 
+    let uploadedBackgroundPictureUrl;
+    if (this.backgroundPicture && this.backgroundPicture.currentUpload) {
+      const uploadedBackgroundPicture = await this.fileService.upload(this.backgroundPicture.currentUpload.file, this.imgFolder);
+      uploadedBackgroundPictureUrl = await uploadedBackgroundPicture.ref.getDownloadURL();
+    }
+
     const uploadedImages = await Promise.all(imageUploadPromises);
     const imgUrlsPromises = uploadedImages.map(img => img.ref.getDownloadURL());
     const imgUrls = await Promise.all(imgUrlsPromises);
     serviceItem = {
       ...serviceItem,
-      pictures: [...(serviceItem.pictures || []), ...imgUrls]
+      pictures: [...(serviceItem.pictures || []), ...imgUrls],
+      backgroundPicture: uploadedBackgroundPictureUrl || null
     };
 
     if (!this.id) {
@@ -66,12 +76,15 @@ export class AdminServicesEditComponent {
         ...serviceItem,
         pictures: this.deletedImages
           ? serviceItem.pictures.filter(picture => this.deletedImages.indexOf(picture) === -1)
-          : serviceItem.pictures
+          : serviceItem.pictures,
+        backgroundPicture: this.deletedBackgroundPicture ? null : serviceItem.backgroundPicture
       };
 
-      const deleteImagePromises = this.deletedImages
-        ? this.deletedImages.map(img => this.fileService.deleteByUrl(img))
-        : [Promise.resolve()];
+      let deleteImagePromises = this.deletedImages ? this.deletedImages.map(img => this.fileService.deleteByUrl(img)) : [Promise.resolve()];
+
+      deleteImagePromises = this.deletedBackgroundPicture
+        ? [...deleteImagePromises, this.fileService.deleteByUrl(this.deletedBackgroundPicture)]
+        : deleteImagePromises;
 
       const updateServiceItemPromise = this.servicesService.updateServiceItem(this.id, serviceItem);
       promises = [...deleteImagePromises, updateServiceItemPromise];
@@ -90,6 +103,13 @@ export class AdminServicesEditComponent {
     this.images = this.images.filter(({ currentUpload }) => !currentUpload || currentUpload.base64 !== image.currentUpload.base64);
   }
 
+  onBackgroundPictureDelete(image: ImageInfo) {
+    if (image.fromServer) {
+      this.deletedBackgroundPicture = image.fromServer;
+    }
+    this.backgroundPicture = {};
+  }
+
   onImageUploaded(image: File) {
     const reader = new FileReader();
     reader.onloadend = () =>
@@ -103,6 +123,17 @@ export class AdminServicesEditComponent {
         }
       ]);
 
+    reader.readAsDataURL(image);
+  }
+
+  onBackgroundPictureUploaded(image: File) {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      this.backgroundPicture.currentUpload = {
+        file: image,
+        base64: reader.result
+      };
+    };
     reader.readAsDataURL(image);
   }
 
