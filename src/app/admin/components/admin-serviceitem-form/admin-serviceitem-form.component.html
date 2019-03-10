@@ -12,7 +12,7 @@
       <mat-option *ngFor="let category of categories" [value]="category.value">{{ category.label }}</mat-option>
     </mat-select>
   </mat-form-field>
-  <label>Obrázok</label>
+  <label>Obrázky</label>
   <div class="item-form__upload-container"><ng-content></ng-content></div>
   <mat-error *ngIf="!isValid">Hodnoty 'názov' a 'popis' nesmú byť prázdne</mat-error>
   <mat-error *ngIf="isError">Nastala chyba. Skúste znova.</mat-error>

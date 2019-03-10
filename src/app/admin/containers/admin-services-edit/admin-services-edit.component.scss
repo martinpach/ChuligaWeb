@@ -8,6 +8,8 @@
 }
 
 .picture-wrapper {
+  display: inline-block;
+  margin-right: 1rem;
   max-width: 200px;
   height: auto;
   & > * {

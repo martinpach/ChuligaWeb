@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { ServiceItem, ServerImageInfo, ImageInfo } from '../../../shared/models';
+import { ServiceItem, ImageInfo } from '../../../shared/models';
 import { Observable, of } from 'rxjs';
 import { ServicesService } from '../../../shared/services/services.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,8 +18,8 @@ export class AdminServicesEditComponent {
   serviceItem$: Observable<ServiceItem | {}>;
   isLoading = false;
   isError = false;
-  deletedImage: ServerImageInfo;
-  image: ImageInfo = {};
+  deletedImages: string[];
+  images: ImageInfo[] = [];
   deleteMessage = 'Naozaj chcete vymazať túto službu?';
   imgFolder = 'services/';
 
@@ -34,7 +34,9 @@ export class AdminServicesEditComponent {
     this.serviceItem$ = this.id
       ? servicesService
           .getServiceItem(this.id)
-          .pipe(tap((item: ServiceItem) => (this.image.fromServer = item && item.picture ? item.picture : undefined)))
+          .pipe(
+            tap((item: ServiceItem) => (this.images = item && item.pictures ? item.pictures.map(picture => ({ fromServer: picture })) : []))
+          )
       : of({});
   }
 
@@ -45,50 +47,62 @@ export class AdminServicesEditComponent {
   async onSubmit(serviceItem: ServiceItem) {
     this.onAsync();
     let promises = [];
-    if (this.image.currentUpload) {
-      const uploadedImage = await this.fileService.upload(this.image.currentUpload.file, this.imgFolder);
-      serviceItem = {
-        ...serviceItem,
-        picture: {
-          url: await uploadedImage.ref.getDownloadURL(),
-          name: uploadedImage.metadata.name
-        }
-      };
-    }
+    const imageUploadPromises = this.images
+      .filter(({ currentUpload }) => currentUpload)
+      .map(img => this.fileService.upload(img.currentUpload.file, this.imgFolder));
+
+    const uploadedImages = await Promise.all(imageUploadPromises);
+    const imgUrlsPromises = uploadedImages.map(img => img.ref.getDownloadURL());
+    const imgUrls = await Promise.all(imgUrlsPromises);
+    serviceItem = {
+      ...serviceItem,
+      pictures: [...(serviceItem.pictures || []), ...imgUrls]
+    };
+
     if (!this.id) {
       promises = [this.servicesService.addServiceItem(serviceItem)];
     } else {
-      if (this.deletedImage) {
-        serviceItem = {
-          ...serviceItem,
-          picture: null
-        };
-      }
-      const deleteImagePromise = this.deletedImage ? this.fileService.delete(this.deletedImage.name, this.imgFolder) : Promise.resolve();
-      const updateServiceItemPromise = this.servicesService.updateServiceItem(this.id, serviceItem);
-      promises = [deleteImagePromise, updateServiceItemPromise];
-    }
+      serviceItem = {
+        ...serviceItem,
+        pictures: this.deletedImages
+          ? serviceItem.pictures.filter(picture => this.deletedImages.indexOf(picture) === -1)
+          : serviceItem.pictures
+      };
 
+      const deleteImagePromises = this.deletedImages
+        ? this.deletedImages.map(img => this.fileService.deleteByUrl(img))
+        : [Promise.resolve()];
+
+      const updateServiceItemPromise = this.servicesService.updateServiceItem(this.id, serviceItem);
+      promises = [...deleteImagePromises, updateServiceItemPromise];
+    }
     Promise.all(promises)
       .then(() => this.router.navigate(['admin', 'services', 'list']))
       .catch(() => this.onError());
   }
 
-  onImageDelete() {
-    if (this.image.fromServer) {
-      this.deletedImage = this.image.fromServer;
+  onImageDelete(image: ImageInfo) {
+    if (image.fromServer) {
+      this.deletedImages = [...(this.deletedImages || []), image.fromServer];
+      this.images = this.images.filter(({ fromServer }) => fromServer !== image.fromServer);
+      return;
     }
-    this.image = {};
+    this.images = this.images.filter(({ currentUpload }) => !currentUpload || currentUpload.base64 !== image.currentUpload.base64);
   }
 
   onImageUploaded(image: File) {
     const reader = new FileReader();
-    reader.onloadend = () => {
-      this.image.currentUpload = {
-        file: image,
-        base64: reader.result
-      };
-    };
+    reader.onloadend = () =>
+      (this.images = [
+        ...this.images,
+        {
+          currentUpload: {
+            file: image,
+            base64: reader.result
+          }
+        }
+      ]);
+
     reader.readAsDataURL(image);
   }
 
@@ -99,11 +113,11 @@ export class AdminServicesEditComponent {
       .subscribe((res: boolean) => {
         if (!res) return;
         this.onAsync();
-        const deleteImagePromise = this.image.fromServer
-          ? this.fileService.delete(this.image.fromServer.name, this.imgFolder)
-          : Promise.resolve();
+        const deleteImagePromises = this.images.map(img =>
+          img.fromServer ? this.fileService.deleteByUrl(img.fromServer) : Promise.resolve()
+        );
         const deleteServiceItemPromise = this.servicesService.deleteServiceItem(this.id);
-        Promise.all([deleteImagePromise, deleteServiceItemPromise])
+        Promise.all([deleteImagePromises, deleteServiceItemPromise])
           .then(() => this.router.navigate(['admin', 'services', 'list']))
           .catch(() => this.onError());
       });
