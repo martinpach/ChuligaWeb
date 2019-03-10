@@ -78,8 +78,8 @@ export class AdminEventsListComponent extends GridWrapper {
         if (!res) return;
         await this.eventsService.deleteEvents(this.selectedRows.map(row => row.id));
         this.selectedRows.forEach((row: EventItem) => {
-          if (!row.picture || !row.picture.name) return;
-          this.fileService.delete(row.picture.name, 'events/');
+          if (!row.picture) return;
+          this.fileService.deleteByUrl(row.picture);
         });
         this.gridOptions.api.deselectAll();
       });

@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Course, ServerImageInfo, ImageInfo } from '../../../shared/models';
+import { Course, ImageInfo } from '../../../shared/models';
 import { CoursesService } from '../../../shared/services/courses.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileService } from '../../../shared/services/files.service';
@@ -18,7 +18,7 @@ export class AdminCoursesEditComponent {
   course$: Observable<Course | {}>;
   isLoading = false;
   isError = false;
-  deletedImage: ServerImageInfo;
+  deletedImage: string;
   image: ImageInfo = {};
   deleteMessage = 'Naozaj chcete vymazať tento kurz?';
   imgFolder = 'courses/';
@@ -49,10 +49,7 @@ export class AdminCoursesEditComponent {
       const uploadedImage = await this.fileService.upload(this.image.currentUpload.file, this.imgFolder);
       course = {
         ...course,
-        picture: {
-          url: await uploadedImage.ref.getDownloadURL(),
-          name: uploadedImage.metadata.name
-        }
+        picture: await uploadedImage.ref.getDownloadURL()
       };
     }
     if (!this.id) {
@@ -64,7 +61,7 @@ export class AdminCoursesEditComponent {
           picture: null
         };
       }
-      const deleteImagePromise = this.deletedImage ? this.fileService.delete(this.deletedImage.name, this.imgFolder) : Promise.resolve();
+      const deleteImagePromise = this.deletedImage ? this.fileService.deleteByUrl(this.deletedImage) : Promise.resolve();
       const updateCoursePromise = this.coursesService.updateCourse(this.id, course);
       promises = [deleteImagePromise, updateCoursePromise];
     }
@@ -99,9 +96,7 @@ export class AdminCoursesEditComponent {
       .subscribe((res: boolean) => {
         if (!res) return;
         this.onAsync();
-        const deleteImagePromise = this.image.fromServer
-          ? this.fileService.delete(this.image.fromServer.name, this.imgFolder)
-          : Promise.resolve();
+        const deleteImagePromise = this.image.fromServer ? this.fileService.deleteByUrl(this.image.fromServer) : Promise.resolve();
         const deleteCoursePromise = this.coursesService.deleteCourse(this.id);
         Promise.all([deleteImagePromise, deleteCoursePromise])
           .then(() => this.router.navigate(['admin', 'courses', 'list']))

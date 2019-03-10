@@ -12,7 +12,7 @@ export interface Item {
   heading: string;
   description: string;
   shortDescription: string;
-  picture: ServerImageInfo;
+  picture: string;
 }
 
 export interface NewsItem extends Item {
@@ -63,7 +63,7 @@ export interface Contact {
   description: string;
   phone: string;
   email: string;
-  picture: ServerImageInfo;
+  picture: string;
 }
 
 export interface OthersItem {
@@ -81,8 +81,6 @@ export interface ImageInfo {
   fromServer?: string;
   currentUpload?: LocalImageInfo;
 }
-
-export interface ServerImageInfo extends ServerFileInfo {}
 
 export interface LocalImageInfo {
   file: File;

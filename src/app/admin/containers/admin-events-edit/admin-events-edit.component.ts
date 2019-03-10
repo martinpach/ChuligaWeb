@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { EventItem, ServerImageInfo, ImageInfo } from '../../../shared/models';
+import { EventItem, ImageInfo } from '../../../shared/models';
 import { Observable, of } from 'rxjs';
 import { EventsService } from '../../../shared/services/events.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,7 +18,7 @@ export class AdminEventsEditComponent {
   eventItem$: Observable<EventItem | {}>;
   isLoading = false;
   isError = false;
-  deletedImage: ServerImageInfo;
+  deletedImage: string;
   image: ImageInfo = {};
   deleteMessage = 'Naozaj chcete vymazať túto udalosť?';
   imgFolder = 'events/';
@@ -49,10 +49,7 @@ export class AdminEventsEditComponent {
       const uploadedImage = await this.fileService.upload(this.image.currentUpload.file, this.imgFolder);
       eventItem = {
         ...eventItem,
-        picture: {
-          url: await uploadedImage.ref.getDownloadURL(),
-          name: uploadedImage.metadata.name
-        }
+        picture: await uploadedImage.ref.getDownloadURL()
       };
     }
     if (!this.id) {
@@ -64,7 +61,7 @@ export class AdminEventsEditComponent {
           picture: null
         };
       }
-      const deleteImagePromise = this.deletedImage ? this.fileService.delete(this.deletedImage.name, this.imgFolder) : Promise.resolve();
+      const deleteImagePromise = this.deletedImage ? this.fileService.deleteByUrl(this.deletedImage) : Promise.resolve();
       const updateEventItemPromise = this.eventsService.updateEventItem(this.id, eventItem);
       promises = [deleteImagePromise, updateEventItemPromise];
     }
@@ -99,9 +96,7 @@ export class AdminEventsEditComponent {
       .subscribe((res: boolean) => {
         if (!res) return;
         this.onAsync();
-        const deleteImagePromise = this.image.fromServer
-          ? this.fileService.delete(this.image.fromServer.name, this.imgFolder)
-          : Promise.resolve();
+        const deleteImagePromise = this.image.fromServer ? this.fileService.deleteByUrl(this.image.fromServer) : Promise.resolve();
         const deleteEventItemPromise = this.eventsService.deleteEventItem(this.id);
         Promise.all([deleteImagePromise, deleteEventItemPromise])
           .then(() => this.router.navigate(['admin', 'events', 'list']))

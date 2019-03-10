@@ -67,8 +67,8 @@ export class AdminContactsListComponent extends GridWrapper {
         if (!res) return;
         await this.contactsService.deleteContacts(this.selectedRows.map(row => row.id));
         this.selectedRows.forEach((row: Contact) => {
-          if (!row.picture || !row.picture.name) return;
-          this.fileService.delete(row.picture.name, 'contacts/');
+          if (!row.picture) return;
+          this.fileService.deleteByUrl(row.picture);
         });
         this.gridOptions.api.deselectAll();
       });

@@ -89,8 +89,8 @@ export class AdminCoursesListComponent extends GridWrapper {
         if (!res) return;
         await this.coursesService.deleteCourses(this.selectedRows.map(row => row.id));
         this.selectedRows.forEach((row: Course) => {
-          if (!row.picture || !row.picture.name) return;
-          this.fileService.delete(row.picture.name, 'courses/');
+          if (!row.picture) return;
+          this.fileService.deleteByUrl(row.picture);
         });
         this.gridOptions.api.deselectAll();
       });

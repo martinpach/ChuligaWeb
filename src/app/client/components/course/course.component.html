@@ -4,7 +4,7 @@
     {{ itemData.deadlineDate.toDate() | date: 'd.M.yyyy' }}
   </div>
   <div class="event__middle">
-    <img *ngIf="itemData.picture?.url" [src]="itemData.picture.url" />
+    <img *ngIf="itemData.picture" [src]="itemData.picture" />
     <div class="event__middle__text">
       <h3>{{ itemData.heading }}</h3>
       <p>{{ itemData.shortDescription }}</p>

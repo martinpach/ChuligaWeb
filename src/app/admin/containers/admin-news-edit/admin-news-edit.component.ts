@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { NewsService } from '../../../shared/services/news.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NewsItem, ImageInfo, ServerImageInfo } from '../../../shared/models';
+import { NewsItem, ImageInfo } from '../../../shared/models';
 import { Observable, of } from 'rxjs';
 import { FileService } from '../../../shared/services/files.service';
 import { DialogService } from '../../../material/services/dialog.service';
@@ -18,7 +18,7 @@ export class AdminNewsEditComponent {
   newsItem$: Observable<NewsItem | {}>;
   isLoading = false;
   isError = false;
-  deletedImage: ServerImageInfo;
+  deletedImage: string;
   image: ImageInfo = {};
   deleteMessage = 'Naozaj chcete vymazať túto aktualitu?';
   imgFolder = 'news/';
@@ -49,10 +49,7 @@ export class AdminNewsEditComponent {
       const uploadedImage = await this.fileService.upload(this.image.currentUpload.file, this.imgFolder);
       newsItem = {
         ...newsItem,
-        picture: {
-          url: await uploadedImage.ref.getDownloadURL(),
-          name: uploadedImage.metadata.name
-        }
+        picture: await uploadedImage.ref.getDownloadURL()
       };
     }
     if (!this.id) {
@@ -64,7 +61,7 @@ export class AdminNewsEditComponent {
           picture: null
         };
       }
-      const deleteImagePromise = this.deletedImage ? this.fileService.delete(this.deletedImage.name, this.imgFolder) : Promise.resolve();
+      const deleteImagePromise = this.deletedImage ? this.fileService.deleteByUrl(this.deletedImage) : Promise.resolve();
       const updateNewsItemPromise = this.newsService.updateNewsItem(this.id, newsItem);
       promises = [deleteImagePromise, updateNewsItemPromise];
     }
@@ -99,9 +96,7 @@ export class AdminNewsEditComponent {
       .subscribe((res: boolean) => {
         if (!res) return;
         this.onAsync();
-        const deleteImagePromise = this.image.fromServer
-          ? this.fileService.delete(this.image.fromServer.name, this.imgFolder)
-          : Promise.resolve();
+        const deleteImagePromise = this.image.fromServer ? this.fileService.deleteByUrl(this.image.fromServer) : Promise.resolve();
         const deleteNewsItemPromise = this.newsService.deleteNewsItem(this.id);
         Promise.all([deleteImagePromise, deleteNewsItemPromise])
           .then(() => this.router.navigate(['admin', 'news', 'list']))

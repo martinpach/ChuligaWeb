@@ -68,8 +68,8 @@ export class AdminNewsListComponent extends GridWrapper {
         if (!res) return;
         await this.newsService.deleteNews(this.selectedRows.map(row => row.id));
         this.selectedRows.forEach((row: NewsItem) => {
-          if (!row.picture || !row.picture.name) return;
-          this.fileService.delete(row.picture.name, 'news/');
+          if (!row.picture) return;
+          this.fileService.deleteByUrl(row.picture);
         });
         this.gridOptions.api.deselectAll();
       });

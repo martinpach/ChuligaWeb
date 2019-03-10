@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Contact, ServerImageInfo, ImageInfo } from '../../../shared/models';
+import { Contact, ImageInfo } from '../../../shared/models';
 import { ContactsService } from '../../../shared/services/contacts.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileService } from '../../../shared/services/files.service';
@@ -18,7 +18,7 @@ export class AdminContactsEditComponent {
   contact$: Observable<Contact | {}>;
   isLoading = false;
   isError = false;
-  deletedImage: ServerImageInfo;
+  deletedImage: string;
   image: ImageInfo = {};
   deleteMessage = 'Naozaj chcete vymazať tento kontakt?';
   imgFolder = 'contacts/';
@@ -49,10 +49,7 @@ export class AdminContactsEditComponent {
       const uploadedImage = await this.fileService.upload(this.image.currentUpload.file, this.imgFolder);
       contact = {
         ...contact,
-        picture: {
-          url: await uploadedImage.ref.getDownloadURL(),
-          name: uploadedImage.metadata.name
-        }
+        picture: await uploadedImage.ref.getDownloadURL()
       };
     }
     if (!this.id) {
@@ -64,7 +61,7 @@ export class AdminContactsEditComponent {
           picture: null
         };
       }
-      const deleteImagePromise = this.deletedImage ? this.fileService.delete(this.deletedImage.name, this.imgFolder) : Promise.resolve();
+      const deleteImagePromise = this.deletedImage ? this.fileService.deleteByUrl(this.deletedImage) : Promise.resolve();
       const updateServiceItemPromise = this.contactsService.updateContact(this.id, contact);
       promises = [deleteImagePromise, updateServiceItemPromise];
     }
@@ -99,9 +96,7 @@ export class AdminContactsEditComponent {
       .subscribe((res: boolean) => {
         if (!res) return;
         this.onAsync();
-        const deleteImagePromise = this.image.fromServer
-          ? this.fileService.delete(this.image.fromServer.name, this.imgFolder)
-          : Promise.resolve();
+        const deleteImagePromise = this.image.fromServer ? this.fileService.deleteByUrl(this.image.fromServer) : Promise.resolve();
         const deleteContactPromise = this.contactsService.deleteContact(this.id);
         Promise.all([deleteImagePromise, deleteContactPromise])
           .then(() => this.router.navigate(['admin', 'contacts', 'list']))
