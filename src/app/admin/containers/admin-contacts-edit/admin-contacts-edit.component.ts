@@ -55,7 +55,7 @@ export class AdminContactsEditComponent {
     if (!this.id) {
       promises = [this.contactsService.addContact(contact)];
     } else {
-      if (this.deletedImage) {
+      if (this.deletedImage && !this.image.currentUpload) {
         contact = {
           ...contact,
           picture: null

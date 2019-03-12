@@ -1,6 +1,6 @@
 <div class="wrapper">
   <div *ngIf="!loading">
-    <input class="hidden" type="file" (change)="onFileSelected($event)" #fileInput />
+    <input class="hidden" type="file" (change)="onFileSelected($event)" #fileInput accept="image/*" />
     <button mat-flat-button color="accent" (click)="fileInput.click()" class="upload-button" type="button">
       <mat-icon>cloud_upload</mat-icon>
       nahrať

@@ -55,7 +55,7 @@ export class AdminNewsEditComponent {
     if (!this.id) {
       promises = [this.newsService.addNewsItem(newsItem)];
     } else {
-      if (this.deletedImage) {
+      if (this.deletedImage && !this.image.currentUpload) {
         newsItem = {
           ...newsItem,
           picture: null

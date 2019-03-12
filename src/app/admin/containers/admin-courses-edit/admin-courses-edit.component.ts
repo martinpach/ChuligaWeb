@@ -55,7 +55,7 @@ export class AdminCoursesEditComponent {
     if (!this.id) {
       promises = [this.coursesService.addCourse(course)];
     } else {
-      if (this.deletedImage) {
+      if (this.deletedImage && !this.image.currentUpload) {
         course = {
           ...course,
           picture: null

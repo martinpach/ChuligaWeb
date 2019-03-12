@@ -55,7 +55,7 @@ export class AdminEventsEditComponent {
     if (!this.id) {
       promises = [this.eventsService.addEventItem(eventItem)];
     } else {
-      if (this.deletedImage) {
+      if (this.deletedImage && !this.image.currentUpload) {
         eventItem = {
           ...eventItem,
           picture: null
