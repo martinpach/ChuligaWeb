@@ -1,0 +1,19 @@
+<mat-card class="contact">
+  <div>
+    <mat-card-header>
+      <mat-card-title>{{ contact.firstName }} {{ contact.lastName }}</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image [src]="contact.picture" />
+    <mat-card-content>
+      <p [innerHTML]="contact.description"></p>
+    </mat-card-content>
+  </div>
+  <mat-card-actions class="contact__information">
+    <div>
+      tel.: <a href="tel:{{ contact.phone }}"> {{ contact.phone }}</a>
+    </div>
+    <div>
+      email: <a href="mailto:{{ contact.email }}"> {{ contact.email }}</a>
+    </div>
+  </mat-card-actions>
+</mat-card>

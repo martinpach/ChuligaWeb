@@ -10,6 +10,9 @@
     [(ngModel)]="contact.description"
     [ngModelOptions]="{ standalone: true }"
   ></app-ngx-editor>
+  <mat-form-field class="small-input">
+    <input matInput name="order" [ngModel]="contact.order" type="number" placeholder="Poradie" />
+  </mat-form-field>
   <label>Obrázok</label>
   <div class="item-form__upload-container"><ng-content></ng-content></div>
   <mat-error *ngIf="!isValid">Prosím vyplnte všetky položky.</mat-error>

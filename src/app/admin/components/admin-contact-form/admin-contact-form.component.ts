@@ -45,7 +45,8 @@ export class AdminContactFormComponent {
       lastName: <string>f.value.lastName,
       email: <string>f.value.email,
       phone: <string>f.value.phone,
-      description: <string>this.contact.description
+      description: <string>this.contact.description,
+      order: <number>f.value.order || null
     };
     this.submitted.emit(this.contact);
   }

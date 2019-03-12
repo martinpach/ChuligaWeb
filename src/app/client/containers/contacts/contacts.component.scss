@@ -1,0 +1,14 @@
+.contacts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  & > * {
+    margin: 0 2rem;
+    margin-bottom: 2rem;
+
+    @media screen and (max-width: 450px) {
+      margin: 0 0 2rem;
+    }
+  }
+}

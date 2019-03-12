@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, QueryFn } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Contact } from '../models';
 import { map } from 'rxjs/operators';
@@ -12,9 +12,15 @@ export class ContactsService {
   basePath = '/contacts';
   constructor(private db: AngularFirestore) {}
 
-  getContacts(): Observable<Contact[]> {
+  getContacts(queryFn: QueryFn = null): Observable<Contact[]> {
+    if (!queryFn) {
+      return this.db
+        .collection<Contact>(this.basePath)
+        .snapshotChanges()
+        .pipe(map(data => mapToRenderObject(data)));
+    }
     return this.db
-      .collection<Contact>(this.basePath)
+      .collection<Contact>(this.basePath, queryFn)
       .snapshotChanges()
       .pipe(map(data => mapToRenderObject(data)));
   }

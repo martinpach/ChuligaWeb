@@ -49,7 +49,7 @@ export class AdminContactsListComponent extends GridWrapper {
     private fileService: FileService
   ) {
     super(cd);
-    this.contacts$ = this.contactsService.getContacts();
+    this.contacts$ = this.contactsService.getContacts(contacts => contacts.orderBy('order', 'asc'));
   }
 
   editClicked({ event, data }: CellClickedEvent) {

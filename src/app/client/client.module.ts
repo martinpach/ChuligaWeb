@@ -21,6 +21,8 @@ import { ClientGalleryComponent } from './containers/client-gallery/client-galle
 import { ServicesNavigationComponent } from './components/services-navigation/services-navigation.component';
 import { ServicesComponent } from './containers/services/services.component';
 import { ServiceItemComponent } from './components/service-item/service-item.component';
+import { ContactsComponent } from './containers/contacts/contacts.component';
+import { ContactComponent } from './components/contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { ServiceItemComponent } from './components/service-item/service-item.com
     ClientGalleryComponent,
     ServicesNavigationComponent,
     ServicesComponent,
-    ServiceItemComponent
+    ServiceItemComponent,
+    ContactsComponent,
+    ContactComponent
   ],
   imports: [ClientRoutingModule, SharedModule]
 })

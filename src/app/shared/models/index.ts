@@ -64,6 +64,7 @@ export interface Contact {
   phone: string;
   email: string;
   picture: string;
+  order?: number;
 }
 
 export interface OthersItem {

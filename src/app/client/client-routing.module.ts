@@ -13,6 +13,7 @@ import { CourseDetailsComponent } from './containers/course-details/course-detai
 import { ClientGalleryComponent } from './containers/client-gallery/client-gallery.component';
 import { ServicesNavigationComponent } from './components/services-navigation/services-navigation.component';
 import { ServicesComponent } from './containers/services/services.component';
+import { ContactsComponent } from './containers/contacts/contacts.component';
 
 const clientRoutes: Routes = [
   {
@@ -63,6 +64,10 @@ const clientRoutes: Routes = [
       {
         path: 'services/:category',
         component: ServicesComponent
+      },
+      {
+        path: 'contacts',
+        component: ContactsComponent
       }
     ]
   },
