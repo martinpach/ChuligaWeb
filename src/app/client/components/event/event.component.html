@@ -4,7 +4,9 @@
     {{ itemData.date.toDate() | date: 'HH:mm' }}
   </div>
   <div class="event__middle">
-    <img *ngIf="itemData.picture" [src]="itemData.picture" />
+    <div class="event__middle__picture" *ngIf="itemData.picture">
+      <img [src]="itemData.picture" />
+    </div>
     <div class="event__middle__text">
       <h3>{{ itemData.heading }}</h3>
       <p>{{ itemData.shortDescription }}</p>
