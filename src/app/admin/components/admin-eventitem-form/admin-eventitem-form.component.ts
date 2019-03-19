@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from 
 import { EventItem, ImageInfo, EventCategory } from '../../../shared/models';
 import { NgForm } from '@angular/forms';
 import { wysiwygOptions } from '../../../shared/utils/wysiwyg-util';
+import { addAttributeToIframe } from '../../utils';
 
 @Component({
   selector: 'app-admin-eventitem-form',
@@ -69,7 +70,7 @@ export class AdminEventitemFormComponent {
       ...this.eventItem,
       heading: <string>f.value.heading,
       shortDescription: <string>f.value.shortDescription || '',
-      description: <string>this.eventItem.description,
+      description: <string>addAttributeToIframe(this.eventItem.description, ' allowfullscreen '),
       date: this.eventItem.date,
       capacity: Math.abs(f.value.capacity) || null,
       category: f.value.category || EventCategory.GENERAL

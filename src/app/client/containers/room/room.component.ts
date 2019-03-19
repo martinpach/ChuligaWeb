@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { OthersService } from '../../../shared/services/others.service';
 import { OthersItem } from '../../../shared/models';
 import { Observable } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-room',
@@ -20,7 +21,12 @@ export class RoomComponent {
     familyCenter: 'RODINNÉ CENTRUM'
   };
 
-  constructor(navigationService: NavigationService, route: ActivatedRoute, othersService: OthersService) {
+  constructor(
+    navigationService: NavigationService,
+    route: ActivatedRoute,
+    othersService: OthersService,
+    private domSanitizer: DomSanitizer
+  ) {
     navigationService.scrollBreakpoint.next(0);
     this.id = route.snapshot.params['id'];
     this.serverData$ = othersService.getOthersItem(this.id);

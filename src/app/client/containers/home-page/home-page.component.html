@@ -9,7 +9,10 @@
   <button class="move-down-button" mat-icon-button (click)="scrollDown()"><mat-icon>expand_more</mat-icon></button>
 </header>
 <div *ngIf="(serverData$ | async) as serverData">
-  <app-page-description [description]="serverData.mainDescription.description" #pageDescription></app-page-description>
+  <app-page-description
+    [description]="domSanitizer.bypassSecurityTrustHtml(serverData.mainDescription.description)"
+    #pageDescription
+  ></app-page-description>
   <section class="main-cards">
     <app-picture-card
       heading="DOM KREATIVITY"

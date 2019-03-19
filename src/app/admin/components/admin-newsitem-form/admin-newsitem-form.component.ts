@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from 
 import { ImageInfo, NewsItem } from '../../../shared/models';
 import { NgForm } from '@angular/forms';
 import { wysiwygOptions } from '../../../shared/utils/wysiwyg-util';
+import { addAttributeToIframe } from '../../utils';
 
 @Component({
   selector: 'app-admin-newsitem-form',
@@ -42,7 +43,7 @@ export class AdminNewsitemFormComponent {
     this.newsItem = {
       ...this.newsItem,
       heading: <string>f.value.heading,
-      description: <string>this.newsItem.description,
+      description: <string>addAttributeToIframe(this.newsItem.description, ' allowfullscreen '),
       shortDescription: <string>f.value.shortDescription || '',
       date: new Date()
     };

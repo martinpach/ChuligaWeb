@@ -1,7 +1,11 @@
 <div class="margin-top8 text-center">
   <div class="container">
     <h1>{{ roomHeadings[id] }}</h1>
-    <p *ngIf="(serverData$ | async) as serverData" class="margin-top2" [innerHTML]="serverData.description"></p>
+    <p
+      *ngIf="(serverData$ | async) as serverData"
+      class="margin-top2"
+      [innerHTML]="domSanitizer.bypassSecurityTrustHtml(serverData.description)"
+    ></p>
   </div>
   <div class="cards">
     <div class="card"><h2>GALÉRIA</h2></div>

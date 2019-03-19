@@ -24,7 +24,7 @@ export class HomePageComponent implements OnInit {
     breakpointObserver: BreakpointObserver,
     private scroller: ViewportScroller,
     private othersService: OthersService,
-    domSanitazer: DomSanitizer,
+    private domSanitizer: DomSanitizer,
     private router: Router,
     private navigationService: NavigationService
   ) {

@@ -9,6 +9,4 @@ import { ServiceItem } from '../../../shared/models';
 })
 export class ServiceItemComponent {
   @Input() serviceItem: ServiceItem;
-
-  constructor() {}
 }

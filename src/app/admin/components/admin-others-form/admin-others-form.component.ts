@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy, Input, EventEmitter, Output } from 
 import { OthersItem } from '../../../shared/models';
 import { wysiwygOptions } from '../../../shared/utils/wysiwyg-util';
 import { NgForm } from '@angular/forms';
+import { addAttributeToIframe } from '../../utils';
 
 @Component({
   selector: 'app-admin-others-form',
@@ -28,7 +29,7 @@ export class AdminOthersFormComponent {
   onSubmit(f: NgForm) {
     this.othersItem = {
       ...this.othersItem,
-      description: <string>this.othersItem.description,
+      description: <string>addAttributeToIframe(this.othersItem.description, ' allowfullscreen '),
       shortDescription: <string>f.value.shortDescription || ''
     };
     this.submitted.emit(this.othersItem);

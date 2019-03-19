@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from 
 import { wysiwygOptions } from '../../../shared/utils/wysiwyg-util';
 import { Course, ImageInfo, EventCategory } from '../../../shared/models';
 import { NgForm } from '@angular/forms';
+import { addAttributeToIframe } from '../../utils';
 
 @Component({
   selector: 'app-admin-course-form',
@@ -60,7 +61,7 @@ export class AdminCourseFormComponent {
       ...this.course,
       heading: <string>f.value.heading,
       shortDescription: <string>f.value.shortDescription || '',
-      description: <string>this.course.description,
+      description: <string>addAttributeToIframe(this.course.description, ' allowfullscreen '),
       deadlineDate: this.course.deadlineDate,
       displayDate: this.course.displayDate || this.course.deadlineDate,
       capacity: Math.abs(f.value.capacity) || null,

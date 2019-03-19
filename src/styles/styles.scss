@@ -117,3 +117,10 @@
   min-height: calc(100vh - 13rem);
   padding-top: 6rem;
 }
+
+iframe {
+  width: 35rem;
+  height: 19rem;
+  max-width: 100%;
+  border: 0;
+}

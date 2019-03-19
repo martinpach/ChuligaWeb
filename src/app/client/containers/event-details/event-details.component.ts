@@ -8,6 +8,8 @@ import { EventsRegistrationService } from '../../services/events-registration.se
 import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material';
 import swal from 'sweetalert';
+import { DomSanitizer } from '@angular/platform-browser';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-event-details',
@@ -29,10 +31,13 @@ export class EventDetailsComponent {
     authService: AuthService,
     private snackBar: MatSnackBar,
     private cd: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    domSanitazer: DomSanitizer
   ) {
     const id = route.snapshot.params['id'];
-    this.eventItem$ = eventsService.getEventItem(id);
+    this.eventItem$ = eventsService
+      .getEventItem(id)
+      .pipe(map(event => ({ ...event, description: <string>domSanitazer.bypassSecurityTrustHtml(event.description) })));
     this.loggedInUser$ = authService.loggedInUser;
     navigationService.scrollBreakpoint.next(0);
   }
