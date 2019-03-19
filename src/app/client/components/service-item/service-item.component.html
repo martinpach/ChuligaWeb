@@ -4,9 +4,7 @@
 >
   <h1 class="text-center margin-bottom1">{{ serviceItem.name }}</h1>
   <div class="service-item__gallery margin-bottom2">
-    <div class="service-item__image-wrapper" *ngFor="let picture of serviceItem.pictures">
-      <img [src]="picture" />
-    </div>
+    <img *ngFor="let picture of serviceItem.pictures" [src]="picture" />
   </div>
   <mat-accordion>
     <mat-expansion-panel>

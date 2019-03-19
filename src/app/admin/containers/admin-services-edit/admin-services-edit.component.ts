@@ -66,7 +66,7 @@ export class AdminServicesEditComponent {
     serviceItem = {
       ...serviceItem,
       pictures: [...(serviceItem.pictures || []), ...imgUrls],
-      backgroundPicture: uploadedBackgroundPictureUrl || null
+      backgroundPicture: uploadedBackgroundPictureUrl || serviceItem.backgroundPicture || null
     };
 
     if (!this.id) {
