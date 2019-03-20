@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { fixImageRotation } from '../../../admin/utils';
 
 @Component({
   selector: 'app-upload',
@@ -12,8 +13,8 @@ export class UploadComponent {
   @Output()
   fileUploaded = new EventEmitter<File>();
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    this.fileUploaded.emit(file);
+  async onFileSelected(event: any) {
+    const file = await fixImageRotation([event.target.files[0]]);
+    this.fileUploaded.emit(...file);
   }
 }
