@@ -34,7 +34,7 @@
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles/modules"]
             },
-            "scripts": []
+            "scripts": ["./node_modules/blueimp-canvas-to-blob/js/canvas-to-blob.min.js"]
           },
           "configurations": {
             "production": {

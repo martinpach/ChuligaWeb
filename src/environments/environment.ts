@@ -5,12 +5,12 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyCuagZEtvXqVqWLfzTsVx0-47LlvQlZDj0",
-    authDomain: "haliganda-dev.firebaseapp.com",
-    databaseURL: "https://haliganda-dev.firebaseio.com",
-    projectId: "haliganda-dev",
-    storageBucket: "haliganda-dev.appspot.com",
-    messagingSenderId: "287976100626"
+    apiKey: 'AIzaSyCuagZEtvXqVqWLfzTsVx0-47LlvQlZDj0',
+    authDomain: 'haliganda-dev.firebaseapp.com',
+    databaseURL: 'https://haliganda-dev.firebaseio.com',
+    projectId: 'haliganda-dev',
+    storageBucket: 'haliganda-dev.appspot.com',
+    messagingSenderId: '287976100626'
   }
 };
 

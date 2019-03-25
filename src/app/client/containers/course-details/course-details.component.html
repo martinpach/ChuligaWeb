@@ -5,7 +5,7 @@
       <a mat-button routerLink="/courses"><mat-icon>arrow_back</mat-icon></a>
       <ng-container *ngTemplateOutlet="actionButtons; context: { user: loggedInUser$ | async, course: course }"></ng-container>
     </header>
-    <p [innerHTML]="course.description"></p>
+    <p [innerHTML]="domSanitizer.bypassSecurityTrustHtml(course.description)"></p>
     <img class="margin-top2" *ngIf="course.picture" [src]="course.picture" alt="course.picture.name" />
   </div>
 </div>

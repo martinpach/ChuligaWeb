@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { ServiceItem } from '../../../shared/models';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-service-item',
@@ -9,4 +10,6 @@ import { ServiceItem } from '../../../shared/models';
 })
 export class ServiceItemComponent {
   @Input() serviceItem: ServiceItem;
+
+  constructor(private domSanitizer: DomSanitizer) {}
 }

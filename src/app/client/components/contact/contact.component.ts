@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Contact } from '../../../shared/models';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-contact',
@@ -10,5 +11,5 @@ import { Contact } from '../../../shared/models';
 export class ContactComponent {
   @Input() contact: Contact;
 
-  constructor() {}
+  constructor(private domSanitizer: DomSanitizer) {}
 }

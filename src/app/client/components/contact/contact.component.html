@@ -5,7 +5,7 @@
     </mat-card-header>
     <img mat-card-image [src]="contact.picture" />
     <mat-card-content>
-      <p [innerHTML]="contact.description"></p>
+      <p [innerHTML]="domSanitizer.bypassSecurityTrustHtml(contact.description)"></p>
     </mat-card-content>
   </div>
   <mat-card-actions class="contact__information">

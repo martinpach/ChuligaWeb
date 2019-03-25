@@ -9,7 +9,6 @@ import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material';
 import swal from 'sweetalert';
 import { DomSanitizer } from '@angular/platform-browser';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-course-details',
@@ -33,12 +32,10 @@ export class CourseDetailsComponent {
     private snackBar: MatSnackBar,
     private cd: ChangeDetectorRef,
     private router: Router,
-    domSanitazer: DomSanitizer
+    private domSanitizer: DomSanitizer
   ) {
     const id = route.snapshot.params['id'];
-    this.course$ = coursesService
-      .getCourse(id)
-      .pipe(map(course => ({ ...course, description: <string>domSanitazer.bypassSecurityTrustHtml(course.description) })));
+    this.course$ = coursesService.getCourse(id);
     this.loggedInUser$ = authService.loggedInUser;
     navigationService.scrollBreakpoint.next(0);
   }

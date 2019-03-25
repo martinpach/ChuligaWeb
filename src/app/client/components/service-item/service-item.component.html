@@ -13,7 +13,7 @@
           Detaily
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <p [innerHTML]="serviceItem.description"></p>
+      <p [innerHTML]="domSanitizer.bypassSecurityTrustHtml(serviceItem.description)"></p>
     </mat-expansion-panel>
   </mat-accordion>
 </div>

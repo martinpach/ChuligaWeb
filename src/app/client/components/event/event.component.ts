@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input, EventEmitter, Output } from '@angular/core';
-import { EventItem, ClientUser } from '../../../shared/models';
+import { EventItem } from '../../../shared/models';
 
 @Component({
   selector: 'app-event',

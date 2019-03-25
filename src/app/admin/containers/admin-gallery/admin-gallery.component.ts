@@ -6,6 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { FileService } from '../../../shared/services/files.service';
 import { DialogService } from '../../../material/services/dialog.service';
+import { ImageManipulationService } from '../../services/image-manipulation.service';
 
 @Component({
   selector: 'app-admin-gallery',
@@ -28,7 +29,8 @@ export class AdminGalleryComponent implements OnDestroy {
     private router: Router,
     private fileService: FileService,
     private dialogService: DialogService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private imageManipulationService: ImageManipulationService
   ) {
     this.idSubscription = route.params.subscribe(({ id }) => {
       this.id = id || 'root';
@@ -65,7 +67,7 @@ export class AdminGalleryComponent implements OnDestroy {
       .subscribe(async (res: boolean) => {
         if (!res) return;
         await this.galleryService.deleteImages(this.id, this.picturesForDeletion);
-        this.picturesForDeletion.forEach(picture => this.fileService.deleteByUrl(picture));
+        this.picturesForDeletion.forEach(picture => picture.split(',').forEach(this.fileService.deleteByUrl));
         this.picturesForDeletion = [];
       });
   }
@@ -83,7 +85,7 @@ export class AdminGalleryComponent implements OnDestroy {
         if (!res) return;
         await this.galleryService.deleteAlbum(this.id);
         await this.galleryService.deleteChild(album.parentId, `${album.name}:${this.id}`);
-        album.pictures.forEach(this.fileService.deleteByUrl);
+        album.pictures.forEach(picture => picture.split(',').forEach(this.fileService.deleteByUrl));
         this.navigateToParent();
       });
   }
@@ -113,16 +115,23 @@ export class AdminGalleryComponent implements OnDestroy {
   async uploadFiles(event: any) {
     this.loading = true;
     const fileList: FileList = event.target.files;
-    let uploads: PromiseLike<any>[] = [];
+    let uploads: firebase.storage.UploadTask[][] = [];
     for (let i = 0; i < fileList.length; i++) {
-      uploads = [...uploads, this.fileService.upload(fileList.item(i), this.picturesFolder)];
+      const file = fileList.item(i);
+      const { image, thumbnail } = await this.imageManipulationService.compressAndCreateThumbnail(file, true);
+      uploads = [
+        ...uploads,
+        [this.fileService.upload(image, this.picturesFolder), this.fileService.upload(thumbnail, this.picturesFolder)]
+      ];
     }
     try {
-      const uploadedImages = await Promise.all(uploads);
-      const mappedImages: string[] = await Promise.all(
-        uploadedImages.map(async (file: firebase.storage.UploadTaskSnapshot) => await file.ref.getDownloadURL())
+      const uploadedImages = await Promise.all(uploads.map(innerPromiseArray => Promise.all(innerPromiseArray)));
+      const uploadedUrls = await Promise.all(
+        uploadedImages.map(
+          async ([img, thumbnailImg]) => (await img.ref.getDownloadURL()) + ',' + (await thumbnailImg.ref.getDownloadURL())
+        )
       );
-      this.galleryService.addImages(this.id, mappedImages);
+      this.galleryService.addImages(this.id, uploadedUrls);
     } catch (e) {
       this.snackBar.open('Niečo sa pokazilo. Skúste znova.', null, { duration: 3000 });
     } finally {

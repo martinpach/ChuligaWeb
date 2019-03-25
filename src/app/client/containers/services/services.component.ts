@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { ServiceItem, ServiceCategory } from '../../../shared/models';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-services',
@@ -22,18 +21,12 @@ export class ServicesComponent {
     forPublic: ServiceCategory.P
   };
 
-  constructor(navigationService: NavigationService, servicesService: ServicesService, route: ActivatedRoute, domSanitizer: DomSanitizer) {
+  constructor(navigationService: NavigationService, servicesService: ServicesService, route: ActivatedRoute) {
     navigationService.scrollBreakpoint.next(0);
     this.servicesCategory = route.snapshot.params['category'];
     this.services$ = servicesService
       .getServices()
-      .pipe(
-        map(services =>
-          services
-            .filter(service => service.category === this.categoriesMapping[this.servicesCategory])
-            .map(service => ({ ...service, description: <string>domSanitizer.bypassSecurityTrustHtml(service.description) }))
-        )
-      );
+      .pipe(map(services => services.filter(service => service.category === this.categoriesMapping[this.servicesCategory])));
   }
 
   trackByFn(index: number) {

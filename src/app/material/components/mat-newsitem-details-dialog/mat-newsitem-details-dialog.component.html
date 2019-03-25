@@ -4,7 +4,7 @@
     <div *ngIf="data.newsItem.picture" class="newsitem-details__picture-wrapper"><img [src]="data.newsItem.picture" /></div>
     <div class="newsitem-details__text">
       <h2>{{ data.newsItem.heading }}</h2>
-      <p class="margin-top1" [innerHTML]="data.newsItem.description"></p>
+      <p class="margin-top1" [innerHTML]="domSanitizer.bypassSecurityTrustHtml(data.newsItem.description)"></p>
     </div>
   </div>
 </div>

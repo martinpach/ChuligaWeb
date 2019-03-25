@@ -10,6 +10,7 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
+import { Ng2ImgMaxModule } from 'ng2-img-max';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +23,8 @@ import { SharedModule } from './shared/shared.module';
     AngularFireAuthModule,
     AppRoutingModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    Ng2ImgMaxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

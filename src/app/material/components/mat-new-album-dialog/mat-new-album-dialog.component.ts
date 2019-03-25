@@ -8,7 +8,7 @@ import { MatDialogRef } from '@angular/material';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MatNewAlbumDialogComponent {
-  album: string;
+  albumName: string;
   constructor(public dialogRef: MatDialogRef<MatNewAlbumDialogComponent>) {}
 
   onNoClick() {

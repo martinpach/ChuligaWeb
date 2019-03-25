@@ -15,7 +15,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class RoomComponent {
   id: string;
   serverData$: Observable<OthersItem>;
-  roomHeadings = {
+  roomHeadings: { [key: string]: string } = {
     houseOfCreativity: 'DOM KREATIVITY',
     montessori: 'MONTESSORI',
     familyCenter: 'RODINNÉ CENTRUM'

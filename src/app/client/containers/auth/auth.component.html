@@ -7,7 +7,6 @@
             <mat-form-field> <input matInput type="email" name="email" placeholder="Email" ngModel required /> </mat-form-field>
             <mat-form-field> <input matInput type="password" name="password" placeholder="Heslo" ngModel required /> </mat-form-field>
 
-            <mat-error *ngIf="areCredentialsValid" class="login__invalid-message">Nesprávne prihlasovacie údaje</mat-error>
             <button mat-flat-button [disabled]="loginInProcess" color="accent">PRIHLÁSIŤ SA</button>
           </form>
           <a class="reset-password" (click)="resetPassword()">Obnoviť heslo</a>
