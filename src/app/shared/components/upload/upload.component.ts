@@ -16,7 +16,6 @@ export class UploadComponent {
   constructor(private imgManipulationService: ImageManipulationService) {}
 
   async onFileSelected(event: any) {
-    const file = await this.imgManipulationService.fixImageRotation([event.target.files[0]]);
-    this.fileUploaded.emit(...file);
+    this.fileUploaded.emit(event.target.files[0]);
   }
 }

@@ -31,17 +31,17 @@ export class ImageManipulationService {
     return { image: compressedFile, thumbnail: thumbnailFile };
   }
 
-  async fixImageRotation(arrayOfFiles: any[]): Promise<any[]> {
+  async fixImageRotation(arrayOfFiles: File[]): Promise<File[]> {
     for (let i = 0; i < arrayOfFiles.length; i++) {
       const { name } = arrayOfFiles[i];
       const { type } = arrayOfFiles[i];
-      arrayOfFiles[i] = await this.fixRotationOfFile(arrayOfFiles[i], type);
-      arrayOfFiles[i] = new File([arrayOfFiles[i]], name, { type });
+      const blob = await this.fixRotationOfFile(arrayOfFiles[i], type);
+      arrayOfFiles[i] = new File([blob], name, { type });
     }
     return arrayOfFiles;
   }
 
-  private fixRotationOfFile(file: any, type = 'image/jpeg') {
+  private fixRotationOfFile(file: any, type = 'image/jpeg'): Promise<Blob> {
     return new Promise(resolve => {
       loadImage(
         file,
