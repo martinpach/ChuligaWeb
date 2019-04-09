@@ -90,7 +90,8 @@ export class AdminCoursesListComponent extends GridWrapper {
         await this.coursesService.deleteCourses(this.selectedRows.map(row => row.id));
         this.selectedRows.forEach((row: Course) => {
           if (!row.picture) return;
-          this.fileService.deleteByUrl(row.picture);
+          const pics = row.picture.split(',');
+          pics.forEach(pic => this.fileService.deleteByUrl(pic));
         });
         this.gridOptions.api.deselectAll();
       });

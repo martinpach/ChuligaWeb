@@ -5,7 +5,7 @@
   </div>
   <div class="event__middle">
     <div *ngIf="itemData.picture" class="event__middle__picture">
-      <img [src]="itemData.picture" />
+      <img [src]="itemData.picture.split(',')[1]" />
     </div>
     <div class="event__middle__text">
       <h3>{{ itemData.heading }}</h3>

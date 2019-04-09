@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FileService } from '../../../shared/services/files.service';
 import { DialogService } from '../../../material/services/dialog.service';
 import { tap } from 'rxjs/operators';
+import { ImageManipulationService } from '../../services/image-manipulation.service';
 
 @Component({
   selector: 'app-admin-courses-edit',
@@ -28,7 +29,8 @@ export class AdminCoursesEditComponent {
     private route: ActivatedRoute,
     private router: Router,
     private fileService: FileService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private imgManipulationService: ImageManipulationService
   ) {
     this.id = route.snapshot.params['id'];
     this.course$ = this.id
@@ -46,10 +48,14 @@ export class AdminCoursesEditComponent {
     this.onAsync();
     let promises = [];
     if (this.image.currentUpload) {
-      const uploadedImage = await this.fileService.upload(this.image.currentUpload.file, this.imgFolder);
+      const { image, thumbnail } = await this.imgManipulationService.compressAndCreateThumbnail(this.image.currentUpload.file);
+      const thumbnailUploadPromise = this.fileService.upload(thumbnail, this.imgFolder);
+      const originalImageUploadPromise = this.fileService.upload(image, this.imgFolder);
+
+      const uploadedImages = await Promise.all([originalImageUploadPromise, thumbnailUploadPromise]);
       course = {
         ...course,
-        picture: await uploadedImage.ref.getDownloadURL()
+        picture: (await await uploadedImages[0].ref.getDownloadURL()) + ',' + (await uploadedImages[1].ref.getDownloadURL())
       };
     }
     if (!this.id) {
@@ -61,9 +67,9 @@ export class AdminCoursesEditComponent {
           picture: null
         };
       }
-      const deleteImagePromise = this.deletedImage ? this.fileService.deleteByUrl(this.deletedImage) : Promise.resolve();
+      const deleteImagePromises = this.deletedImage ? this.deletedImage.split(',').map(this.fileService.deleteByUrl) : [Promise.resolve()];
       const updateCoursePromise = this.coursesService.updateCourse(this.id, course);
-      promises = [deleteImagePromise, updateCoursePromise];
+      promises = [...deleteImagePromises, updateCoursePromise];
     }
 
     Promise.all(promises)
@@ -96,9 +102,12 @@ export class AdminCoursesEditComponent {
       .subscribe((res: boolean) => {
         if (!res) return;
         this.onAsync();
-        const deleteImagePromise = this.image.fromServer ? this.fileService.deleteByUrl(this.image.fromServer) : Promise.resolve();
+        const deleteImagePromises = this.image.fromServer
+          ? this.image.fromServer.split(',').map(this.fileService.deleteByUrl)
+          : [Promise.resolve()];
+
         const deleteCoursePromise = this.coursesService.deleteCourse(this.id);
-        Promise.all([deleteImagePromise, deleteCoursePromise])
+        Promise.all([...deleteImagePromises, deleteCoursePromise])
           .then(() => this.router.navigate(['admin', 'courses', 'list']))
           .catch(() => this.onError());
       });
