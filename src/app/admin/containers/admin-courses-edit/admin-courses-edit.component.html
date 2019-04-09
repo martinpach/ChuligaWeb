@@ -2,7 +2,11 @@
 
 <button *ngIf="!!id" mat-flat-button color="warn" class="delete-button" (click)="onCourseDelete()">Vymazať kurz</button>
 <app-admin-course-form [isError]="isError" [isLoading]="isLoading" [course]="course$ | async" (submitted)="onSubmit($event)">
-  <app-upload *ngIf="!image.fromServer && !image.currentUpload" (fileUploaded)="onImageUploaded($event)"></app-upload>
+  <app-upload
+    *ngIf="!image.fromServer && !image.currentUpload"
+    (fileUploaded)="onImageUploaded($event)"
+    [loading]="isImageLoading"
+  ></app-upload>
   <div *ngIf="image.fromServer || image.currentUpload" class="overlayed-element picture-wrapper" (click)="onImageDelete()">
     <img *ngIf="image.fromServer" [src]="image.fromServer.split(',')[1]" />
     <img *ngIf="image.currentUpload" [src]="image.currentUpload.base64" />

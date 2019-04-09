@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Contact, ImageInfo } from '../../../shared/models';
 import { ContactsService } from '../../../shared/services/contacts.service';
@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FileService } from '../../../shared/services/files.service';
 import { DialogService } from '../../../material/services/dialog.service';
 import { tap } from 'rxjs/operators';
+import { ImageManipulationService } from '../../services/image-manipulation.service';
 
 @Component({
   selector: 'app-admin-contacts-edit',
@@ -18,6 +19,7 @@ export class AdminContactsEditComponent {
   contact$: Observable<Contact | {}>;
   isLoading = false;
   isError = false;
+  isImageLoading = false;
   deletedImage: string;
   image: ImageInfo = {};
   deleteMessage = 'Naozaj chcete vymazať tento kontakt?';
@@ -28,7 +30,9 @@ export class AdminContactsEditComponent {
     private route: ActivatedRoute,
     private router: Router,
     private fileService: FileService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private imgManipulationService: ImageManipulationService,
+    private cd: ChangeDetectorRef
   ) {
     this.id = route.snapshot.params['id'];
     this.contact$ = this.id
@@ -78,15 +82,19 @@ export class AdminContactsEditComponent {
     this.image = {};
   }
 
-  onImageUploaded(image: File) {
+  async onImageUploaded(image: File) {
     const reader = new FileReader();
+    this.isImageLoading = true;
+    [image] = await this.imgManipulationService.fixImageRotation([image]);
+    reader.readAsDataURL(image);
     reader.onloadend = () => {
       this.image.currentUpload = {
         file: image,
         base64: reader.result
       };
+      this.isImageLoading = false;
+      this.cd.markForCheck();
     };
-    reader.readAsDataURL(image);
   }
 
   onContactDelete() {

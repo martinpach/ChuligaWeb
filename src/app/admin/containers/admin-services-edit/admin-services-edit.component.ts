@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ServiceItem, ImageInfo } from '../../../shared/models';
 import { Observable, of } from 'rxjs';
 import { ServicesService } from '../../../shared/services/services.service';
@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FileService } from '../../../shared/services/files.service';
 import { DialogService } from '../../../material/services/dialog.service';
 import { tap } from 'rxjs/operators';
+import { ImageManipulationService } from '../../services/image-manipulation.service';
 
 @Component({
   selector: 'app-admin-services-edit',
@@ -18,6 +19,8 @@ export class AdminServicesEditComponent {
   serviceItem$: Observable<ServiceItem | {}>;
   isLoading = false;
   isError = false;
+  isImageLoading = false;
+  isBgImageLoading = false;
   deletedImages: string[];
   images: ImageInfo[] = [];
   deletedBackgroundPicture: string;
@@ -30,7 +33,9 @@ export class AdminServicesEditComponent {
     private route: ActivatedRoute,
     private router: Router,
     private fileService: FileService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private imgManipulationService: ImageManipulationService,
+    private cd: ChangeDetectorRef
   ) {
     this.id = route.snapshot.params['id'];
     this.serviceItem$ = this.id
@@ -110,10 +115,12 @@ export class AdminServicesEditComponent {
     this.backgroundPicture = {};
   }
 
-  onImageUploaded(image: File) {
+  async onImageUploaded(image: File) {
     const reader = new FileReader();
-    reader.onloadend = () =>
-      (this.images = [
+    this.isImageLoading = true;
+    reader.readAsDataURL(image);
+    reader.onloadend = () => {
+      this.images = [
         ...this.images,
         {
           currentUpload: {
@@ -121,20 +128,24 @@ export class AdminServicesEditComponent {
             base64: reader.result
           }
         }
-      ]);
-
-    reader.readAsDataURL(image);
+      ];
+      this.isImageLoading = false;
+      this.cd.markForCheck();
+    };
   }
 
-  onBackgroundPictureUploaded(image: File) {
+  async onBackgroundPictureUploaded(image: File) {
     const reader = new FileReader();
+    this.isBgImageLoading = true;
+    reader.readAsDataURL(image);
     reader.onloadend = () => {
       this.backgroundPicture.currentUpload = {
         file: image,
         base64: reader.result
       };
+      this.isBgImageLoading = false;
+      this.cd.markForCheck();
     };
-    reader.readAsDataURL(image);
   }
 
   onServiceItemDelete() {

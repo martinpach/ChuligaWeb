@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Course, ImageInfo } from '../../../shared/models';
 import { CoursesService } from '../../../shared/services/courses.service';
@@ -19,6 +19,7 @@ export class AdminCoursesEditComponent {
   course$: Observable<Course | {}>;
   isLoading = false;
   isError = false;
+  isImageLoading = false;
   deletedImage: string;
   image: ImageInfo = {};
   deleteMessage = 'Naozaj chcete vymazať tento kurz?';
@@ -30,7 +31,8 @@ export class AdminCoursesEditComponent {
     private router: Router,
     private fileService: FileService,
     private dialogService: DialogService,
-    private imgManipulationService: ImageManipulationService
+    private imgManipulationService: ImageManipulationService,
+    private cd: ChangeDetectorRef
   ) {
     this.id = route.snapshot.params['id'];
     this.course$ = this.id
@@ -84,15 +86,19 @@ export class AdminCoursesEditComponent {
     this.image = {};
   }
 
-  onImageUploaded(image: File) {
+  async onImageUploaded(image: File) {
     const reader = new FileReader();
+    this.isImageLoading = true;
+    [image] = await this.imgManipulationService.fixImageRotation([image]);
+    reader.readAsDataURL(image);
     reader.onloadend = () => {
       this.image.currentUpload = {
         file: image,
         base64: reader.result
       };
+      this.isImageLoading = false;
+      this.cd.markForCheck();
     };
-    reader.readAsDataURL(image);
   }
 
   onCourseDelete() {

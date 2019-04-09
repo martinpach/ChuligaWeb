@@ -3,7 +3,7 @@
 <button *ngIf="!!id" mat-flat-button color="warn" class="delete-button" (click)="onServiceItemDelete()">Vymazať službu</button>
 <app-admin-serviceitem-form [isError]="isError" [isLoading]="isLoading" [serviceItem]="serviceItem$ | async" (submitted)="onSubmit($event)">
   <ng-container titlePictures>
-    <app-upload *ngIf="!images || images.length < 4" (fileUploaded)="onImageUploaded($event)"></app-upload>
+    <app-upload *ngIf="!images || images.length < 4" (fileUploaded)="onImageUploaded($event)" [loading]="isImageLoading"></app-upload>
     <div *ngFor="let image of images" class="overlayed-element picture-wrapper margin-top1" (click)="onImageDelete(image)">
       <img *ngIf="image.fromServer" [src]="image.fromServer" /> <img *ngIf="image.currentUpload" [src]="image.currentUpload.base64" />
       <div class="overlayed-element__overlay overlayed-element__overlay--warn">
@@ -15,6 +15,7 @@
     <app-upload
       *ngIf="!backgroundPicture.fromServer && !backgroundPicture.currentUpload"
       (fileUploaded)="onBackgroundPictureUploaded($event)"
+      [loading]="isBgImageLoading"
     ></app-upload>
     <div
       *ngIf="backgroundPicture.fromServer || backgroundPicture.currentUpload"
