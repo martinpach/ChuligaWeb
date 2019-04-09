@@ -1,7 +1,7 @@
 <div class="wrapper">
   <button mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
   <div class="newsitem-details">
-    <div *ngIf="data.newsItem.picture" class="newsitem-details__picture-wrapper"><img [src]="data.newsItem.picture" /></div>
+    <div *ngIf="data.newsItem.picture" class="newsitem-details__picture-wrapper"><img [src]="data.newsItem.picture.split(',')[0]" /></div>
     <div class="newsitem-details__text">
       <h2>{{ data.newsItem.heading }}</h2>
       <p class="margin-top1" [innerHTML]="domSanitizer.bypassSecurityTrustHtml(data.newsItem.description)"></p>

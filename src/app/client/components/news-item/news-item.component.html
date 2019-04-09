@@ -1,6 +1,6 @@
 <li class="overlayed-element" (click)="clicked.emit()">
   <div class="news-item">
-    <img *ngIf="itemData.picture" [src]="itemData.picture" class="news-item__picture" />
+    <img *ngIf="itemData.picture" [src]="itemData.picture.split(',')[1]" class="news-item__picture" />
     <div class="news-item__content">
       <h3 class="news-item__heading">{{ itemData.heading }}</h3>
       <p>{{ itemData.shortDescription }}</p>
