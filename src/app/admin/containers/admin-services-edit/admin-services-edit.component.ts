@@ -55,9 +55,14 @@ export class AdminServicesEditComponent {
   async onSubmit(serviceItem: ServiceItem) {
     this.onAsync();
     let promises = [];
-    const imageUploadPromises = this.images
+
+    const processedImagesPromises = this.images
       .filter(({ currentUpload }) => currentUpload)
-      .map(img => this.fileService.upload(img.currentUpload.file, this.imgFolder));
+      .map(img => this.imgManipulationService.resizeAndCompressImage(img.currentUpload.file, 200, 200));
+
+    const processedImages = await Promise.all(processedImagesPromises);
+
+    const imageUploadPromises = processedImages.map(img => this.fileService.upload(img, this.imgFolder));
 
     let uploadedBackgroundPictureUrl;
     if (this.backgroundPicture && this.backgroundPicture.currentUpload) {
@@ -118,6 +123,7 @@ export class AdminServicesEditComponent {
   async onImageUploaded(image: File) {
     const reader = new FileReader();
     this.isImageLoading = true;
+    [image] = await this.imgManipulationService.fixImageRotation([image]);
     reader.readAsDataURL(image);
     reader.onloadend = () => {
       this.images = [

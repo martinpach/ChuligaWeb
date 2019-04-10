@@ -1,5 +1,4 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { ImageManipulationService } from '../../../admin/services/image-manipulation.service';
 
 @Component({
   selector: 'app-upload',
@@ -12,8 +11,6 @@ export class UploadComponent {
 
   @Output()
   fileUploaded = new EventEmitter<File>();
-
-  constructor(private imgManipulationService: ImageManipulationService) {}
 
   async onFileSelected(event: any) {
     this.fileUploaded.emit(event.target.files[0]);
