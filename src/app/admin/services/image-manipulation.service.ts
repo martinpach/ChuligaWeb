@@ -16,6 +16,12 @@ export class ImageManipulationService {
     return new Promise(resolve => this.imgMaxService.compressImage(image, 3).subscribe(resized => resolve(resized)));
   }
 
+  async resizeAndCompressImage(image: File, width: number, height: number): Promise<File> {
+    const resizedBlob = await this.resizeImage(image, width, height);
+    const compressedBlob = await this.compressImage(new File([resizedBlob], image.name, { type: image.type }));
+    return new File([compressedBlob], image.name, { type: image.type });
+  }
+
   async compressAndCreateThumbnail(image: File, fixRotation: boolean = false): Promise<{ image: File; thumbnail: File }> {
     let fixedFile;
     let compressedBlob;

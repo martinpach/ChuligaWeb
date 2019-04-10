@@ -50,7 +50,9 @@ export class AdminContactsEditComponent {
     this.onAsync();
     let promises = [];
     if (this.image.currentUpload) {
-      const uploadedImage = await this.fileService.upload(this.image.currentUpload.file, this.imgFolder);
+      const processedImage = await this.imgManipulationService.resizeAndCompressImage(this.image.currentUpload.file, 500, 500);
+      const uploadedImage = await this.fileService.upload(processedImage, this.imgFolder);
+
       contact = {
         ...contact,
         picture: await uploadedImage.ref.getDownloadURL()
