@@ -24,6 +24,7 @@ export interface EventItem extends Item {
   capacity: number;
   category: EventCategory;
   attendees: string[];
+  resolvedAttendees?: ClientUser[];
 }
 
 export enum EventCategory {

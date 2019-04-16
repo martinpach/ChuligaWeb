@@ -1,17 +1,22 @@
 <h2 class="margin-top1 text-center">{{ heading }}</h2>
 
 <button *ngIf="!!id" mat-flat-button color="warn" class="delete-button" (click)="onEventItemDelete()">Vymazať udalosť</button>
-<app-admin-eventitem-form [isError]="isError" [isLoading]="isLoading" [eventItem]="eventItem$ | async" (submitted)="onSubmit($event)">
-  <app-upload
-    *ngIf="!image.fromServer && !image.currentUpload"
-    (fileUploaded)="onImageUploaded($event)"
-    [loading]="isImageLoading"
-  ></app-upload>
-  <div *ngIf="image.fromServer || image.currentUpload" class="overlayed-element picture-wrapper" (click)="onImageDelete()">
-    <img *ngIf="image.fromServer" [src]="image.fromServer.split(',')[1]" />
-    <img *ngIf="image.currentUpload" [src]="image.currentUpload.base64" />
-    <div class="overlayed-element__overlay overlayed-element__overlay--warn">
-      <span> <mat-icon class="delete-icon">delete</mat-icon> </span>
+<ng-container *ngIf="(eventItem$ | async) as eventItem">
+  <app-admin-eventitem-form [isError]="isError" [isLoading]="isLoading" [eventItem]="eventItem" (submitted)="onSubmit($event)">
+    <app-upload
+      *ngIf="!image.fromServer && !image.currentUpload"
+      (fileUploaded)="onImageUploaded($event)"
+      [loading]="isImageLoading"
+    ></app-upload>
+    <div *ngIf="image.fromServer || image.currentUpload" class="overlayed-element picture-wrapper" (click)="onImageDelete()">
+      <img *ngIf="image.fromServer" [src]="image.fromServer.split(',')[1]" />
+      <img *ngIf="image.currentUpload" [src]="image.currentUpload.base64" />
+      <div class="overlayed-element__overlay overlayed-element__overlay--warn">
+        <span> <mat-icon class="delete-icon">delete</mat-icon> </span>
+      </div>
     </div>
-  </div>
-</app-admin-eventitem-form>
+  </app-admin-eventitem-form>
+  <h3 class="margin-top2 margin-bottom1">Prihlásení užívatelia:</h3>
+  <app-admin-attendees [attendees]="eventItem.resolvedAttendees"> </app-admin-attendees>
+  <div class="margin-bottom2"></div>
+</ng-container>

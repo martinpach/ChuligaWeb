@@ -5,8 +5,9 @@ import { EventsService } from '../../../shared/services/events.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileService } from '../../../shared/services/files.service';
 import { DialogService } from '../../../material/services/dialog.service';
-import { tap } from 'rxjs/operators';
+import { tap, switchMap, map } from 'rxjs/operators';
 import { ImageManipulationService } from '../../services/image-manipulation.service';
+import { UsersService } from '../../../shared/services/users.service';
 
 @Component({
   selector: 'app-admin-events-edit',
@@ -27,6 +28,7 @@ export class AdminEventsEditComponent {
 
   constructor(
     private eventsService: EventsService,
+    private usersService: UsersService,
     private route: ActivatedRoute,
     private router: Router,
     private fileService: FileService,
@@ -36,9 +38,12 @@ export class AdminEventsEditComponent {
   ) {
     this.id = route.snapshot.params['id'];
     this.eventItem$ = this.id
-      ? eventsService
-          .getEventItem(this.id)
-          .pipe(tap((item: EventItem) => (this.image.fromServer = item && item.picture ? item.picture : undefined)))
+      ? eventsService.getEventItem(this.id).pipe(
+          switchMap((item: EventItem) =>
+            this.usersService.getUsersByIds(item.attendees).pipe(map(resolvedAttendees => ({ ...item, resolvedAttendees })))
+          ),
+          tap((item: EventItem) => (this.image.fromServer = item && item.picture ? item.picture : undefined))
+        )
       : of({});
   }
 
