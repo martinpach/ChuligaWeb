@@ -4,7 +4,7 @@ import { ClientUser } from '../../../shared/models';
 import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import * as firebase from 'firebase';
+import { auth } from 'firebase/app';
 import { DialogService } from '../../../material/services/dialog.service';
 
 @Component({
@@ -24,7 +24,7 @@ export class AuthComponent {
   ) {}
 
   async onGoogleLogin() {
-    await this.authService.providerLogin(new firebase.auth.GoogleAuthProvider());
+    await this.authService.providerLogin(new auth.GoogleAuthProvider());
     this.router.navigate(['/']);
   }
 
