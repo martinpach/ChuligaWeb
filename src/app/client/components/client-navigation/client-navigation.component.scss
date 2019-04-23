@@ -1,6 +1,8 @@
 @import '_variables';
 
-@mixin selectedStyle() {
+*:not(mat-icon) {
+  font-family: 'Dekko', cursive;
+  font-size: 1.1rem;
 }
 
 .transparent-theme,

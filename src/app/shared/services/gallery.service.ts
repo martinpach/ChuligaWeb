@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { GalleryAlbum } from '../models';
 import { Observable } from 'rxjs';
-import { firestore } from 'firebase/app';
+import * as firebase from 'firebase/app';
+import 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -25,25 +26,25 @@ export class GalleryService {
 
   addImages(id: string, pictures: string[]): Promise<any> {
     return this.db.doc(`${this.path}/${id}`).update({
-      pictures: firestore.FieldValue.arrayUnion(...pictures)
+      pictures: firebase.firestore.FieldValue.arrayUnion(...pictures)
     });
   }
 
   deleteImages(id: string, pictures: string[]) {
     return this.db.doc(`${this.path}/${id}`).update({
-      pictures: firestore.FieldValue.arrayRemove(...pictures)
+      pictures: firebase.firestore.FieldValue.arrayRemove(...pictures)
     });
   }
 
   addChild(id: string, child: string) {
     return this.db.doc(`${this.path}/${id}`).update({
-      childrens: firestore.FieldValue.arrayUnion(child)
+      childrens: firebase.firestore.FieldValue.arrayUnion(child)
     });
   }
 
   deleteChild(id: string, child: string) {
     return this.db.doc(`${this.path}/${id}`).update({
-      childrens: firestore.FieldValue.arrayRemove(child)
+      childrens: firebase.firestore.FieldValue.arrayRemove(child)
     });
   }
 }

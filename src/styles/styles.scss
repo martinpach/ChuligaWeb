@@ -4,7 +4,8 @@
 @import '~ag-grid-community/dist/styles/ag-theme-balham.css';
 @import '_item-form.scss';
 @import '_utils.scss';
-@import url('https://fonts.googleapis.com/css?family=Thasadith');
+@import url('https://fonts.googleapis.com/css?family=Thasadith:400,700');
+@import url('https://fonts.googleapis.com/css?family=Dekko');
 
 * {
   margin: 0;
@@ -123,4 +124,9 @@ iframe {
   height: 19rem;
   max-width: 100%;
   border: 0;
+}
+
+h1,
+h2 {
+  font-family: 'Dekko', cursive;
 }

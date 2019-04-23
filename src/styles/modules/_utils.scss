@@ -19,6 +19,11 @@
   text-align: center;
 }
 
+.block-center {
+  display: block;
+  margin: 0 auto;
+}
+
 .full-width {
   width: 100%;
 }
@@ -38,6 +43,12 @@
 
 .bold {
   font-weight: bold;
+}
+
+.clearfix::after {
+  content: '';
+  clear: both;
+  display: table;
 }
 
 @include attr-x('margin-top', 12, 1, 'em');

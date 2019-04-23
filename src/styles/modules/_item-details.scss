@@ -1,0 +1,20 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.content {
+  p {
+    text-align: justify;
+    margin-right: 1rem;
+  }
+
+  img {
+    margin: 0 0 1rem 1rem;
+    float: right;
+    max-width: 50%;
+    height: auto;
+  }
+}

@@ -4,7 +4,7 @@
     "source": "functions"
   },
   "hosting": {
-    "public": "dist",
+    "public": "dist/ChuligaWeb",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {

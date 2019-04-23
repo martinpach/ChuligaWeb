@@ -1,11 +1,2 @@
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-}
+@import '_utils';
+@import '_item-details';
