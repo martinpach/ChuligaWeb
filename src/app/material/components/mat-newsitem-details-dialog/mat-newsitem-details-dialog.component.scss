@@ -1,3 +1,5 @@
+@import '_utils';
+
 .wrapper {
   position: relative;
   button {
@@ -8,39 +10,15 @@
 }
 
 .newsitem-details {
-  display: flex;
-
-  @media screen and (max-width: 800px) {
-    text-align: center;
-    flex-direction: column;
-
-    & > * {
-      width: 100%;
-    }
-
-    &__text {
-      order: 1;
-    }
-
-    &__picture-wrapper {
-      margin-top: 1rem;
-      order: 2;
-    }
+  p {
+    text-align: justify;
+    margin-right: 1rem;
   }
 
-  &__text {
-    width: 59%;
-    margin-left: 1%;
-  }
-
-  &__picture-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40%;
-    img {
-      max-width: 100%;
-      width: auto;
-    }
+  img {
+    margin: 0 0 1rem 1rem;
+    float: right;
+    max-width: 40%;
+    height: auto;
   }
 }
