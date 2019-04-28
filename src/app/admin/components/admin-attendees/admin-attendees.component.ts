@@ -30,4 +30,8 @@ export class AdminAttendeesComponent extends GridWrapper {
   constructor(cd: ChangeDetectorRef) {
     super(cd);
   }
+
+  exportEmails() {
+    this.gridOptions.api.exportDataAsCsv({ onlySelected: true, skipHeader: true, columnKeys: ['email'] });
+  }
 }

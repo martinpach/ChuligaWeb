@@ -1,7 +1,7 @@
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { ClientUser } from '../models';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -20,6 +20,7 @@ export class UsersService {
   }
 
   getUsersByIds(ids: string[]): Observable<ClientUser[]> {
+    if (!ids) return of([]);
     return this.db
       .collection(this.basePath)
       .valueChanges()
