@@ -40,6 +40,7 @@ export interface Course extends Item {
   category: EventCategory;
   deadlineDate: any;
   displayDate?: any;
+  resolvedAttendees?: ClientUser[];
 }
 
 export interface ServiceItem {

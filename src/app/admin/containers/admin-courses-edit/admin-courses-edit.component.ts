@@ -5,8 +5,9 @@ import { CoursesService } from '../../../shared/services/courses.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileService } from '../../../shared/services/files.service';
 import { DialogService } from '../../../material/services/dialog.service';
-import { tap } from 'rxjs/operators';
+import { tap, switchMap, map } from 'rxjs/operators';
 import { ImageManipulationService } from '../../services/image-manipulation.service';
+import { UsersService } from '../../../shared/services/users.service';
 
 @Component({
   selector: 'app-admin-courses-edit',
@@ -27,6 +28,7 @@ export class AdminCoursesEditComponent {
 
   constructor(
     private coursesService: CoursesService,
+    private usersService: UsersService,
     private route: ActivatedRoute,
     private router: Router,
     private fileService: FileService,
@@ -36,9 +38,12 @@ export class AdminCoursesEditComponent {
   ) {
     this.id = route.snapshot.params['id'];
     this.course$ = this.id
-      ? coursesService
-          .getCourse(this.id)
-          .pipe(tap((item: Course) => (this.image.fromServer = item && item.picture ? item.picture : undefined)))
+      ? coursesService.getCourse(this.id).pipe(
+          switchMap((item: Course) =>
+            this.usersService.getUsersByIds(item.attendees).pipe(map(resolvedAttendees => ({ ...item, resolvedAttendees })))
+          ),
+          tap((item: Course) => (this.image.fromServer = item && item.picture ? item.picture : undefined))
+        )
       : of({});
   }
 
