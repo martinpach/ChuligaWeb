@@ -1,4 +1,12 @@
-<video *ngIf="!isMobile" class="fullscreen-background" autoplay loop oncanplay="this.muted=true">
+<video
+  *ngIf="!isMobile"
+  class="fullscreen-background"
+  preload="auto"
+  autoplay
+  loop
+  oncanplay="this.muted=true"
+  poster="/assets/img/bg-image.jpg"
+>
   <source src="/assets/video/bg-video.mp4" type="video/mp4" />
   <img src="/assets/img/bg-image.jpg" />
 </video>
