@@ -50,7 +50,9 @@ export class AdminNewsEditComponent {
     this.onAsync();
     let promises = [];
     if (this.image.currentUpload) {
-      const { image, thumbnail } = await this.imgManipulationService.compressAndCreateThumbnail(this.image.currentUpload.file);
+      const { image, thumbnail } = await this.imgManipulationService.compressAndCreateThumbnail(this.image.currentUpload.file, {
+        size: { width: 500, height: 500 }
+      });
       const thumbnailUploadPromise = this.fileService.upload(thumbnail, this.imgFolder);
       const originalImageUploadPromise = this.fileService.upload(image, this.imgFolder);
 

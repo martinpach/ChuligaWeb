@@ -118,7 +118,10 @@ export class AdminGalleryComponent implements OnDestroy {
     let uploads: firebase.storage.UploadTask[][] = [];
     for (let i = 0; i < fileList.length; i++) {
       const file = fileList.item(i);
-      const { image, thumbnail } = await this.imageManipulationService.compressAndCreateThumbnail(file, true);
+      const { image, thumbnail } = await this.imageManipulationService.compressAndCreateThumbnail(file, {
+        fixRotation: true,
+        size: { width: 1000, height: 1000 }
+      });
       uploads = [
         ...uploads,
         [this.fileService.upload(image, this.picturesFolder), this.fileService.upload(thumbnail, this.picturesFolder)]

@@ -22,19 +22,26 @@ export class ImageManipulationService {
     return new File([compressedBlob], image.name, { type: image.type });
   }
 
-  async compressAndCreateThumbnail(image: File, fixRotation: boolean = false): Promise<{ image: File; thumbnail: File }> {
-    let fixedFile;
-    let compressedBlob;
-    if (fixRotation) {
-      fixedFile = await this.fixImageRotation([image]);
-      compressedBlob = await this.compressImage(fixedFile[0]);
-    } else {
-      compressedBlob = await this.compressImage(image);
+  async compressAndCreateThumbnail(
+    image: File,
+    options: { fixRotation?: boolean; size?: { width: number; height: number } } = {}
+  ): Promise<{ image: File; thumbnail: File }> {
+    let processedImage = image;
+    if (options.fixRotation) {
+      [processedImage] = await this.fixImageRotation([image]);
     }
-    const compressedFile = new File([compressedBlob], image.name, { type: image.type });
-    const thumbnailBlob = await this.resizeImage(compressedFile, 300, 300);
+
+    if (options.size) {
+      const resizedBlob = await this.resizeImage(processedImage, options.size.width, options.size.height);
+      processedImage = new File([resizedBlob], image.name, { type: image.type });
+    } else {
+      const compressedBlob = await this.compressImage(processedImage);
+      processedImage = new File([compressedBlob], image.name, { type: image.type });
+    }
+
+    const thumbnailBlob = await this.resizeImage(processedImage, 250, 250);
     const thumbnailFile = new File([thumbnailBlob], '@thumbnail_' + image.name, { type: image.type });
-    return { image: compressedFile, thumbnail: thumbnailFile };
+    return { image: processedImage, thumbnail: thumbnailFile };
   }
 
   async fixImageRotation(arrayOfFiles: File[]): Promise<File[]> {
