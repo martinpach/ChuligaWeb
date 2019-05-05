@@ -10,5 +10,5 @@ import { DomSanitizer } from '@angular/platform-browser';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MatNewsitemDetailsDialogComponent {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { newsItem: NewsItem }, private domSanitizer: DomSanitizer) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { newsItem: NewsItem }, public domSanitizer: DomSanitizer) {}
 }

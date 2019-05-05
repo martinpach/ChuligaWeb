@@ -11,5 +11,5 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class ContactComponent {
   @Input() contact: Contact;
 
-  constructor(private domSanitizer: DomSanitizer) {}
+  constructor(public domSanitizer: DomSanitizer) {}
 }

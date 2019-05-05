@@ -11,5 +11,5 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class ServiceItemComponent {
   @Input() serviceItem: ServiceItem;
 
-  constructor(private domSanitizer: DomSanitizer) {}
+  constructor(public domSanitizer: DomSanitizer) {}
 }
