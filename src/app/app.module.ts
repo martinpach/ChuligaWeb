@@ -16,7 +16,7 @@ import { Ng2ImgMaxModule } from 'ng2-img-max';
   declarations: [AppComponent],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule.enablePersistence(),
+    AngularFirestoreModule,
     BrowserModule,
     BrowserAnimationsModule,
     AngularFirestoreModule,

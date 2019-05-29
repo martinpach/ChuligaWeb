@@ -23,6 +23,7 @@ import { ServicesComponent } from './containers/services/services.component';
 import { ServiceItemComponent } from './components/service-item/service-item.component';
 import { ContactsComponent } from './containers/contacts/contacts.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { StagingComponent } from './containers/staging/staging.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { ContactComponent } from './components/contact/contact.component';
     ServicesComponent,
     ServiceItemComponent,
     ContactsComponent,
-    ContactComponent
+    ContactComponent,
+    StagingComponent
   ],
   imports: [ClientRoutingModule, SharedModule]
 })

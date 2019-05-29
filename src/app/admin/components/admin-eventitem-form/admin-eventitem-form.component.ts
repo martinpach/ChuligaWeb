@@ -19,12 +19,12 @@ export class AdminEventitemFormComponent {
       value: EventCategory.DK
     },
     {
-      label: 'Montessori',
-      value: EventCategory.MONTESSORI
+      label: 'Divadlo Haliganda',
+      value: EventCategory.DH
     },
     {
-      label: 'Rodinné centrum',
-      value: EventCategory.RC
+      label: 'Kreatívne školy pre deti',
+      value: EventCategory.KS
     },
     {
       label: 'Všeobecné',

@@ -29,18 +29,23 @@ export interface EventItem extends Item {
 
 export enum EventCategory {
   DK = 'DK',
-  MONTESSORI = 'M',
-  RC = 'RC',
+  DH = 'DH',
+  KS = 'KS',
   GENERAL = 'V'
 }
 
 export interface Course extends Item {
   capacity: number;
   attendees: string[];
-  category: EventCategory;
+  category: CourseCategory;
   deadlineDate: any;
   displayDate?: any;
   resolvedAttendees?: ClientUser[];
+}
+
+export enum CourseCategory {
+  KS = 'KS',
+  GENERAL = 'V'
 }
 
 export interface ServiceItem {
@@ -54,7 +59,7 @@ export interface ServiceItem {
 
 export enum ServiceCategory {
   S = 'školy',
-  P = 'verejnosť',
+  K = 'kreatíva',
   C = 'firmy'
 }
 

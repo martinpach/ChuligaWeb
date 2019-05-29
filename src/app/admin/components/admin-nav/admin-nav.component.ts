@@ -26,6 +26,10 @@ export class AdminNavComponent {
       path: '/admin/services'
     },
     {
+      label: 'Inscenácie',
+      path: '/admin/stagings'
+    },
+    {
       label: 'Galéria',
       path: '/admin/gallery'
     },

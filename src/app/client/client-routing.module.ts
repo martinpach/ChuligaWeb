@@ -14,6 +14,7 @@ import { ClientGalleryComponent } from './containers/client-gallery/client-galle
 import { ServicesNavigationComponent } from './components/services-navigation/services-navigation.component';
 import { ServicesComponent } from './containers/services/services.component';
 import { ContactsComponent } from './containers/contacts/contacts.component';
+import { StagingComponent } from './containers/staging/staging.component';
 
 const clientRoutes: Routes = [
   {
@@ -68,6 +69,10 @@ const clientRoutes: Routes = [
       {
         path: 'contacts',
         component: ContactsComponent
+      },
+      {
+        path: 'staging',
+        component: StagingComponent
       }
     ]
   },

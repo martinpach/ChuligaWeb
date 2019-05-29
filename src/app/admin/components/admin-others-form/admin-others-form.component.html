@@ -1,5 +1,5 @@
 <form class="item-form" *ngIf="othersItem" (ngSubmit)="onSubmit(f)" #f="ngForm">
-  <mat-form-field *ngIf="othersItem.shortDescription">
+  <mat-form-field *ngIf="id !== 'mainDescription'">
     <textarea matInput name="shortDescription" [ngModel]="othersItem.shortDescription" placeholder="Krátky popis"></textarea>
   </mat-form-field>
   <label>Popis</label>

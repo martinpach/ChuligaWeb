@@ -3,6 +3,7 @@ import { OthersItem } from '../../../shared/models';
 import { wysiwygOptions } from '../../../shared/utils/wysiwyg-util';
 import { NgForm } from '@angular/forms';
 import { addAttributeToIframe } from '../../utils';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-admin-others-form',
@@ -12,9 +13,10 @@ import { addAttributeToIframe } from '../../utils';
 })
 export class AdminOthersFormComponent {
   wysiwygOptions = wysiwygOptions;
+  id: string;
 
   @Input()
-  othersItem: OthersItem = { description: '', shortDescription: '' };
+  othersItem: OthersItem;
 
   @Input()
   isLoading: boolean;
@@ -22,8 +24,8 @@ export class AdminOthersFormComponent {
   @Output()
   submitted = new EventEmitter<OthersItem>();
 
-  constructor() {
-    this.othersItem = { description: 'serus', shortDescription: 'nazdar' };
+  constructor(route: ActivatedRoute) {
+    this.id = route.snapshot.params['id'];
   }
 
   onSubmit(f: NgForm) {

@@ -1,0 +1,7 @@
+<div class="main-wrapper">
+  <div class="container">
+    <div class="stagings-wrapper">
+      <app-service-item *ngFor="let staging of stagings$ | async; trackBy: trackByFn" [serviceItem]="staging"> </app-service-item>
+    </div>
+  </div>
+</div>

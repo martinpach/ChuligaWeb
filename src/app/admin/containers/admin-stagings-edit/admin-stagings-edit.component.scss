@@ -1,0 +1,19 @@
+.delete-button {
+  display: flex;
+  margin-left: auto;
+}
+
+.delete-icon {
+  font-size: 30px;
+}
+
+.picture-wrapper {
+  display: inline-block;
+  margin-right: 1rem;
+  max-width: 200px;
+  height: auto;
+  & > * {
+    max-width: inherit;
+    height: inherit;
+  }
+}

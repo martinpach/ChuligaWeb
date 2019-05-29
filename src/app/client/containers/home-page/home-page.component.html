@@ -16,7 +16,7 @@
   <h1>HALIGANDA</h1>
   <button class="move-down-button" mat-icon-button (click)="scrollDown()"><mat-icon>expand_more</mat-icon></button>
 </header>
-<div *ngIf="(serverData$ | async) as serverData">
+<div *ngIf="serverData$ | async as serverData">
   <app-page-description
     [description]="domSanitizer.bypassSecurityTrustHtml(serverData.mainDescription.description)"
     #pageDescription
@@ -25,20 +25,20 @@
     <app-picture-card
       heading="DOM KREATIVITY"
       [description]="serverData.houseOfCreativity.shortDescription"
-      imagePath="https://picsum.photos/200/300/?random"
+      imagePath="/assets/img/dk-title.jpg"
       (moreClicked)="navigateTo('/rooms/houseOfCreativity')"
     ></app-picture-card>
     <app-picture-card
-      heading="MONTESSORI"
-      [description]="serverData.montessori.shortDescription"
-      imagePath="https://picsum.photos/200/300/?random"
-      (moreClicked)="navigateTo('/rooms/montessori')"
+      heading="DIVADLO HALIGANDA"
+      [description]="serverData.theater.shortDescription"
+      imagePath="/assets/img/divadlo-title.jpg"
+      (moreClicked)="navigateTo('/rooms/theater')"
     ></app-picture-card>
     <app-picture-card
-      heading="RODINNÉ CENTRUM"
-      [description]="serverData.familyCenter.shortDescription"
-      imagePath="https://picsum.photos/200/300/?random"
-      (moreClicked)="navigateTo('/rooms/familyCenter')"
+      heading="KREATÍVNE ŠKOLY PRE DETI"
+      [description]="serverData.creativeSchools.shortDescription"
+      imagePath="/assets/img/ks-title.jpg"
+      (moreClicked)="navigateTo('/rooms/creativeSchools')"
     ></app-picture-card>
   </section>
 </div>

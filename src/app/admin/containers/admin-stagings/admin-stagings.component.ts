@@ -1,25 +1,24 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { GridWrapper } from '../../../shared/utils/grid-wrapper';
-import { ServiceItem } from '../../../shared/models';
 import { Observable } from 'rxjs';
-import { ServicesService } from '../../../shared/services/services.service';
+import { ServiceItem } from '../../../shared/models';
 import { ColDef, CellClickedEvent } from 'ag-grid-community';
+import { StagingsService } from '../../../shared/services/stagings.service';
 import { Router } from '@angular/router';
 import { DialogService } from '../../../material/services/dialog.service';
 import { FileService } from '../../../shared/services/files.service';
+import { GridWrapper } from '../../../shared/utils/grid-wrapper';
 
 @Component({
-  selector: 'app-admin-services',
-  templateUrl: './admin-services.component.html',
-  styleUrls: ['./admin-services.component.scss'],
+  selector: 'app-admin-stagings',
+  templateUrl: './admin-stagings.component.html',
+  styleUrls: ['./admin-stagings.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AdminServicesListComponent extends GridWrapper {
-  services$: Observable<ServiceItem[]>;
+export class AdminStagingsComponent extends GridWrapper {
+  stagings$: Observable<ServiceItem[]>;
   selectedRows: any[] = [];
   columnDefs: ColDef[] = [
     { headerName: 'Názov', field: 'name', checkboxSelection: true, minWidth: 250, headerCheckboxSelection: true },
-    { headerName: 'Kategória', field: 'category', suppressAutoSize: true, suppressSizeToFit: true, width: 100 },
     {
       headerName: 'Akcia',
       field: 'action',
@@ -35,29 +34,29 @@ export class AdminServicesListComponent extends GridWrapper {
 
   constructor(
     cd: ChangeDetectorRef,
-    private servicesService: ServicesService,
+    private stagingsService: StagingsService,
     private router: Router,
     private dialogService: DialogService,
     private fileService: FileService
   ) {
     super(cd);
-    this.services$ = this.servicesService.getServices();
+    this.stagings$ = this.stagingsService.getStagings();
   }
 
   editClicked({ event, data }: CellClickedEvent) {
     const element: any = event.target;
     if (element.tagName === 'BUTTON') {
-      this.router.navigate(['/admin', 'services', data.id, 'edit']);
+      this.router.navigate(['/admin', 'stagings', data.id, 'edit']);
     }
   }
 
   deleteClicked() {
     this.dialogService
-      .openConfirmDialog('Naozaj chcete vymazať zvolené služby?')
+      .openConfirmDialog('Naozaj chcete vymazať zvolené inscenácie?')
       .afterClosed()
       .subscribe(async (res: boolean) => {
         if (!res) return;
-        await this.servicesService.deleteServices(this.selectedRows.map(row => row.id));
+        await this.stagingsService.deleteStagings(this.selectedRows.map(row => row.id));
         this.selectedRows.forEach((row: ServiceItem) => {
           this.fileService.deleteByUrl(row.backgroundPicture);
           row.pictures.forEach(picture => this.fileService.deleteByUrl(picture));

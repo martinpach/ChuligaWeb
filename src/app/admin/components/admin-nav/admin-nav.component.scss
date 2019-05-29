@@ -14,14 +14,14 @@
 
   &__trigger {
     display: none;
-    @media screen and (max-width: 929px) {
+    @media screen and (max-width: 979px) {
       display: inline-block;
     }
   }
 
   &__menu-wrapper {
     display: none;
-    @media screen and (min-width: 930px) {
+    @media screen and (min-width: 980px) {
       // TODO: when initialized on mobile view and then changed to desktop view nav slider need to recalculate width
       display: block;
     }

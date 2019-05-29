@@ -4,9 +4,9 @@ import { Course, ClientUser } from '../../../shared/models';
 import { CoursesService } from '../../../shared/services/courses.service';
 import { NavigationService } from '../../services/navigation.service';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
-import { tap, switchMap, publishReplay, refCount, publish, take } from 'rxjs/operators';
+import { tap, switchMap, refCount, publish, take } from 'rxjs/operators';
 import { CoursesRegistrationService } from '../../services/courses-registration.service';
 import swal from 'sweetalert';
 
@@ -25,6 +25,8 @@ export class CoursesComponent {
   limit = 5;
   loggedInUser$: Observable<ClientUser>;
   loadingId: string = null;
+  filter: string;
+  filterString: string = '';
 
   constructor(
     private coursesService: CoursesService,
@@ -33,29 +35,48 @@ export class CoursesComponent {
     private router: Router,
     private coursesRegistrationService: CoursesRegistrationService,
     private snackBar: MatSnackBar,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    route: ActivatedRoute
   ) {
+    this.filter = route.snapshot.queryParamMap.get('filter');
+    switch (this.filter) {
+      case 'KS':
+        this.filterString = '(Kreatívne školy)';
+        break;
+      default:
+        '';
+    }
     this.loggedInUser$ = authService.loggedInUser.pipe(
       publish(),
       refCount()
     );
+
+    let queryFn: any;
+
+    if (this.filter) {
+      queryFn = (index: number) => (ref: firebase.firestore.CollectionReference) =>
+        ref
+          .orderBy('displayDate', 'asc')
+          .limit(this.limit * (index + 1))
+          .startAt(new Date())
+          .where('category', '==', this.filter);
+    } else {
+      queryFn = (index: number) => (ref: firebase.firestore.CollectionReference) =>
+        ref
+          .orderBy('displayDate', 'asc')
+          .limit(this.limit * (index + 1))
+          .startAt(new Date());
+    }
+
     this.courses$ = this.loadMore.pipe(
       tap(() => (this.isLoadingCourses = true)),
-      switchMap((_, index) =>
-        coursesService
-          .getCourses(ref =>
-            ref
-              .orderBy('displayDate', 'asc')
-              .limit(this.limit * (index + 1))
-              .startAt(new Date())
-          )
-          .pipe(tap(courses => (this.coursesLength = courses.length)))
-      ),
+      switchMap((_, index) => coursesService.getCourses(queryFn(index)).pipe(tap(courses => (this.coursesLength = courses.length)))),
       tap(() => (this.isLoadingCourses = false)),
       publish(),
       refCount()
     );
     this.coursesCount$ = coursesService.getCoursesCount();
+
     navigationService.scrollBreakpoint.next(0);
   }
 

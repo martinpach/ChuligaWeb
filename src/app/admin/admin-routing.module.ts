@@ -17,6 +17,8 @@ import { AdminOthersItemComponent } from './containers/admin-others-item/admin-o
 import { AdminGalleryComponent } from './containers/admin-gallery/admin-gallery.component';
 import { AdminCoursesEditComponent } from './containers/admin-courses-edit/admin-courses-edit.component';
 import { AdminCoursesListComponent } from './containers/admin-courses-list/admin-courses-list.component';
+import { AdminStagingsComponent } from './containers/admin-stagings/admin-stagings.component';
+import { AdminStagingsEditComponent } from './containers/admin-stagings-edit/admin-stagings-edit.component';
 
 const adminRoutes: Routes = [
   {
@@ -84,6 +86,22 @@ const adminRoutes: Routes = [
       {
         path: 'services/:id/edit',
         component: AdminServicesEditComponent
+      },
+      {
+        path: 'stagings',
+        redirectTo: 'stagings/list'
+      },
+      {
+        path: 'stagings/list',
+        component: AdminStagingsComponent
+      },
+      {
+        path: 'stagings/new',
+        component: AdminStagingsEditComponent
+      },
+      {
+        path: 'stagings/:id/edit',
+        component: AdminStagingsEditComponent
       },
       {
         path: 'contacts',

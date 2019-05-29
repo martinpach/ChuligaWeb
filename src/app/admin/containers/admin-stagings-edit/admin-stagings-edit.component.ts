@@ -1,20 +1,20 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { ServiceItem, ImageInfo } from '../../../shared/models';
 import { Observable, of } from 'rxjs';
-import { ServicesService } from '../../../shared/services/services.service';
+import { ServiceItem, ImageInfo } from '../../../shared/models';
+import { StagingsService } from '../../../shared/services/stagings.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileService } from '../../../shared/services/files.service';
 import { DialogService } from '../../../material/services/dialog.service';
-import { tap } from 'rxjs/operators';
 import { ImageManipulationService } from '../../services/image-manipulation.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-admin-services-edit',
-  templateUrl: './admin-services-edit.component.html',
-  styleUrls: ['./admin-services-edit.component.scss'],
+  selector: 'app-admin-stagings-edit',
+  templateUrl: './admin-stagings-edit.component.html',
+  styleUrls: ['./admin-stagings-edit.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AdminServicesEditComponent {
+export class AdminStagingsEditComponent {
   id: string;
   serviceItem$: Observable<ServiceItem | {}>;
   isLoading = false;
@@ -25,11 +25,11 @@ export class AdminServicesEditComponent {
   images: ImageInfo[] = [];
   deletedBackgroundPicture: string;
   backgroundPicture: ImageInfo = {};
-  deleteMessage = 'Naozaj chcete vymazať túto službu?';
-  imgFolder = 'services/';
+  deleteMessage = 'Naozaj chcete vymazať túto inscenáciu?';
+  imgFolder = 'stagings/';
 
   constructor(
-    private servicesService: ServicesService,
+    private stagingsService: StagingsService,
     private route: ActivatedRoute,
     private router: Router,
     private fileService: FileService,
@@ -39,7 +39,7 @@ export class AdminServicesEditComponent {
   ) {
     this.id = route.snapshot.params['id'];
     this.serviceItem$ = this.id
-      ? servicesService.getServiceItem(this.id).pipe(
+      ? stagingsService.getStaging(this.id).pipe(
           tap((item: ServiceItem) => {
             this.images = item && item.pictures ? item.pictures.map(picture => ({ fromServer: picture })) : [];
             this.backgroundPicture.fromServer = item && item.backgroundPicture ? item.backgroundPicture : undefined;
@@ -49,7 +49,7 @@ export class AdminServicesEditComponent {
   }
 
   get heading() {
-    return !!this.id ? 'ÚPRAVA SLUŽY' : 'NOVÁ SLUŽBA';
+    return !!this.id ? 'ÚPRAVA INSCENÁCIE' : 'NOVÁ INSCENÁCIA';
   }
 
   async onSubmit(serviceItem: ServiceItem) {
@@ -80,7 +80,7 @@ export class AdminServicesEditComponent {
     };
 
     if (!this.id) {
-      promises = [this.servicesService.addServiceItem(serviceItem)];
+      promises = [this.stagingsService.addStaging(serviceItem)];
     } else {
       serviceItem = {
         ...serviceItem,
@@ -96,11 +96,11 @@ export class AdminServicesEditComponent {
         ? [...deleteImagePromises, this.fileService.deleteByUrl(this.deletedBackgroundPicture)]
         : deleteImagePromises;
 
-      const updateServiceItemPromise = this.servicesService.updateServiceItem(this.id, serviceItem);
+      const updateServiceItemPromise = this.stagingsService.updateStaging(this.id, serviceItem);
       promises = [...deleteImagePromises, updateServiceItemPromise];
     }
     Promise.all(promises)
-      .then(() => this.router.navigate(['admin', 'services', 'list']))
+      .then(() => this.router.navigate(['admin', 'stagings', 'list']))
       .catch(() => this.onError());
   }
 
@@ -167,9 +167,9 @@ export class AdminServicesEditComponent {
         if (this.backgroundPicture.fromServer) {
           deleteImagePromises = [...deleteImagePromises, this.fileService.deleteByUrl(this.backgroundPicture.fromServer)];
         }
-        const deleteServiceItemPromise = this.servicesService.deleteServiceItem(this.id);
+        const deleteServiceItemPromise = this.stagingsService.deleteStaging(this.id);
         Promise.all([deleteImagePromises, deleteServiceItemPromise])
-          .then(() => this.router.navigate(['admin', 'services', 'list']))
+          .then(() => this.router.navigate(['admin', 'stagings', 'list']))
           .catch(() => this.onError());
       });
   }

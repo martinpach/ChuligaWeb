@@ -18,7 +18,7 @@ export class ServicesComponent {
   categoriesMapping: { [key: string]: ServiceCategory } = {
     forCompanies: ServiceCategory.C,
     forSchools: ServiceCategory.S,
-    forPublic: ServiceCategory.P
+    creatives: ServiceCategory.K
   };
 
   constructor(navigationService: NavigationService, servicesService: ServicesService, route: ActivatedRoute) {

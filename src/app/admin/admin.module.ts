@@ -26,6 +26,8 @@ import { AdminCoursesListComponent } from './containers/admin-courses-list/admin
 import { AdminCoursesEditComponent } from './containers/admin-courses-edit/admin-courses-edit.component';
 import { AdminCourseFormComponent } from './components/admin-course-form/admin-course-form.component';
 import { AdminAttendeesComponent } from './components/admin-attendees/admin-attendees.component';
+import { AdminStagingsComponent } from './containers/admin-stagings/admin-stagings.component';
+import { AdminStagingsEditComponent } from './containers/admin-stagings-edit/admin-stagings-edit.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { AdminAttendeesComponent } from './components/admin-attendees/admin-atte
     AdminCoursesListComponent,
     AdminCoursesEditComponent,
     AdminCourseFormComponent,
-    AdminAttendeesComponent
+    AdminAttendeesComponent,
+    AdminStagingsComponent,
+    AdminStagingsEditComponent
   ],
   imports: [AdminRoutingModule, SharedModule, LayoutModule, AgGridModule.withComponents([])]
 })

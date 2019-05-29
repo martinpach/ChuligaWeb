@@ -35,12 +35,12 @@ export class AdminOthersItemComponent {
     switch (this.id) {
       case 'houseOfCreativity':
         return 'Dom kreativity';
-      case 'familyCenter':
-        return 'Rodinné centrum';
+      case 'theater':
+        return 'Divadlo Haliganda';
       case 'mainDescription':
         return 'Hlavný popis stránky';
       default:
-        return 'Montessori';
+        return 'Kreatívne školy pre deti';
     }
   }
 

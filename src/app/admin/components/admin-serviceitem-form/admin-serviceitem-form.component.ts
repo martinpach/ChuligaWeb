@@ -43,8 +43,8 @@ export class AdminServiceitemFormComponent {
       value: ServiceCategory.S
     },
     {
-      label: 'Pre verejnosť',
-      value: ServiceCategory.P
+      label: 'Kreatíva',
+      value: ServiceCategory.K
     }
   ];
 
@@ -59,7 +59,7 @@ export class AdminServiceitemFormComponent {
       ...this.serviceItem,
       name: <string>f.value.name,
       description: <string>addAttributeToIframe(this.serviceItem.description, ' allowfullscreen '),
-      category: f.value.category || ServiceCategory.P
+      category: f.value.category || ServiceCategory.K
     };
     this.submitted.emit(this.serviceItem);
   }

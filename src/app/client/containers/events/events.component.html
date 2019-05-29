@@ -1,5 +1,5 @@
 <div class="main-wrapper">
-  <h1 class="text-center">PROGRAM</h1>
+  <h1 class="text-center">PROGRAM {{ filterString }}</h1>
   <div class="container margin-top2 margin-bottom4">
     <ul>
       <ng-container *ngTemplateOutlet="events; context: { user: loggedInUser$ | async }"></ng-container>
@@ -18,7 +18,7 @@
 
 <ng-template #events let-loggedInUser="user">
   <app-event
-    *ngFor="let event of (events$ | async); trackBy: trackByFn"
+    *ngFor="let event of events$ | async; trackBy: trackByFn"
     [itemData]="event"
     [isBooked]="isBookedForUser(loggedInUser, event)"
     [loading]="loadingId === event.id"

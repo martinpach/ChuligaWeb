@@ -2,14 +2,34 @@
   <div class="container">
     <h1>{{ roomHeadings[id] }}</h1>
     <p
-      *ngIf="(serverData$ | async) as serverData"
+      *ngIf="serverData$ | async as serverData"
       class="margin-top2"
       [innerHTML]="domSanitizer.bypassSecurityTrustHtml(serverData.description)"
     ></p>
   </div>
   <div class="cards">
-    <div class="card"><h2>GALÉRIA</h2></div>
-    <div class="card"><h2>PROGRAM</h2></div>
-    <div class="card"><h2>KURZY</h2></div>
+    <div
+      [routerLink]="cardsLinks[0]"
+      class="card"
+      [ngStyle]="{ 'background-image': 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(' + cardsImages[0] + ')' }"
+    >
+      <h2>GALÉRIA</h2>
+    </div>
+    <div
+      class="card"
+      [routerLink]="cardsLinks[1].link"
+      [queryParams]="cardsLinks[1].queryParams"
+      [ngStyle]="{ 'background-image': 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(' + cardsImages[1] + ')' }"
+    >
+      <h2>PROGRAM</h2>
+    </div>
+    <div
+      class="card"
+      [routerLink]="cardsLinks[2].link"
+      [queryParams]="cardsLinks[2].queryParams"
+      [ngStyle]="{ 'background-image': 'linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(' + cardsImages[2] + ')' }"
+    >
+      <h2>{{ thirdCardTitle }}</h2>
+    </div>
   </div>
 </div>
