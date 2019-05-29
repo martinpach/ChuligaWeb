@@ -65,11 +65,16 @@ header {
   justify-content: space-around;
   flex-wrap: wrap;
   background-color: $white;
-  padding-bottom: 10rem;
+  padding-bottom: 6rem;
 
   & > * {
     margin-top: 2rem;
   }
+}
+
+.map {
+  padding-bottom: 6rem;
+  background-color: $white;
 }
 
 @keyframes bounceDown {
