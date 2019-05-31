@@ -3,3 +3,15 @@
 a {
   text-decoration: none;
 }
+
+.creatives {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/assets/img/sluzby-kreativa.jpg');
+}
+
+.companies {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/assets/img/sluzby-firmy.jpg');
+}
+
+.schools {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/assets/img/sluzby-skoly.jpg');
+}
