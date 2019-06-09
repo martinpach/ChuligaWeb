@@ -57,7 +57,8 @@ export class AdminCourseFormComponent {
       deadlineDate: this.course.deadlineDate,
       displayDate: this.course.displayDate || this.course.deadlineDate,
       capacity: Math.abs(f.value.capacity) || null,
-      category: f.value.category || CourseCategory.GENERAL
+      category: f.value.category || CourseCategory.GENERAL,
+      attendees: this.course.attendees || []
     };
 
     this.submitted.emit(this.course);

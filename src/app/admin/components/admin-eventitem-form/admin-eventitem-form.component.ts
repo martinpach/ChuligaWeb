@@ -73,7 +73,8 @@ export class AdminEventitemFormComponent {
       description: <string>addAttributeToIframe(this.eventItem.description, ' allowfullscreen '),
       date: this.eventItem.date,
       capacity: Math.abs(f.value.capacity) || null,
-      category: f.value.category || EventCategory.GENERAL
+      category: f.value.category || EventCategory.GENERAL,
+      attendees: this.eventItem.attendees || []
     };
 
     this.submitted.emit(this.eventItem);
