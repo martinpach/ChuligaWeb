@@ -1,16 +1,7 @@
-<video
-  *ngIf="!isMobile"
-  class="fullscreen-background"
-  preload="auto"
-  autoplay
-  loop
-  oncanplay="this.muted=true"
-  poster="/assets/img/bg-image.jpg"
->
+<video class="fullscreen-background" preload="auto" autoplay loop oncanplay="this.muted=true" poster="/assets/img/bg-image.jpg">
   <source src="/assets/video/bg-video.mp4" type="video/mp4" />
   <img src="/assets/img/bg-image.jpg" />
 </video>
-<img *ngIf="isMobile" class="fullscreen-background" src="/assets/img/bg-image.jpg" />
 <div class="overlay"></div>
 <header class="text-center" #header>
   <h1>HALIGANDA</h1>
